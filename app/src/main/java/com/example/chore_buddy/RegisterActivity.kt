@@ -38,13 +38,13 @@ import androidx.compose.ui.text.font.Font
 
 
 
-class LoginActivity : ComponentActivity() {
+class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                    LoginScreen()
+                RegisterScreen()
             }
         }
     }
@@ -53,9 +53,12 @@ class LoginActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun LoginScreen() {
+fun RegisterScreen() {
+    var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var repeatPassword by remember { mutableStateOf("") }
+
 
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
@@ -75,7 +78,7 @@ fun LoginScreen() {
         Logo()
 
         Text(
-            text = "Login",
+            text = "Register",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
@@ -92,14 +95,33 @@ fun LoginScreen() {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Email Input
+            // Username Input
+            Text(
+                text = "Username",
+                color = Color.White,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 16.dp),
+
+                style = TextStyle(
+                    fontFamily = interFontFamily
+                )
+            )
+
+            UserInput(
+                value = username,
+                onValueChange = { username = it }
+            )
+
+            // Password Input
             Text(
                 text = "Email",
                 color = Color.White,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 16.dp),
+                    .padding(start = 16.dp, top = 16.dp),
 
                 style = TextStyle(
                     fontFamily = interFontFamily
@@ -130,37 +152,37 @@ fun LoginScreen() {
                 onValueChange = { password = it },
             )
 
+
+            // Password Input
+            Text(
+                text = "Repeat password",
+                color = Color.White,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 16.dp, top = 16.dp),
+
+                style = TextStyle(
+                    fontFamily = interFontFamily
+                )
+            )
+
+            PasswordInput(
+                value = repeatPassword,
+                onValueChange = { repeatPassword = it },
+            )
+
             Spacer(modifier = Modifier.height(32.dp))
 
             // Login Button
             CustomButton(
-                text = "LOGIN",
+                text = "REGISTER",
                 onClick = { /* coś tam */ }
             )
 
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-
-
-        // Reset Password and Register
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            TextButton(
-                onClick = { /* TODO: Handle reset password */ }
-            ) {
-                Text("RESET PASSWORD", color = Color.White)
-            }
-            TextButton(
-                onClick = { /* TODO: Handle register account */ }
-            ) {
-                Text("REGISTER ACCOUNT", color = Color.White)
-            }
-        }
-
-
         //Spacer(modifier = Modifier.height(32.dp))
     }
 }

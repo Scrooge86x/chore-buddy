@@ -38,13 +38,13 @@ import androidx.compose.ui.text.font.Font
 
 
 
-class LoginActivity : ComponentActivity() {
+class RestorePasswordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                    LoginScreen()
+                RestorePasswordScreen()
             }
         }
     }
@@ -53,9 +53,9 @@ class LoginActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun LoginScreen() {
+fun RestorePasswordScreen() {
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+
 
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
@@ -75,7 +75,7 @@ fun LoginScreen() {
         Logo()
 
         Text(
-            text = "Login",
+            text = "Restore Password",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
@@ -111,56 +111,27 @@ fun LoginScreen() {
                 onValueChange = { email = it }
             )
 
-            // Password Input
-            Text(
-                text = "Password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
-            PasswordInput(
-                value = password,
-                onValueChange = { password = it },
-            )
 
             Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+
 
             // Login Button
             CustomButton(
-                text = "LOGIN",
+                text = "SEND RESET EMAIL",
                 onClick = { /* coś tam */ }
             )
 
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-
-
-        // Reset Password and Register
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            TextButton(
-                onClick = { /* TODO: Handle reset password */ }
-            ) {
-                Text("RESET PASSWORD", color = Color.White)
-            }
-            TextButton(
-                onClick = { /* TODO: Handle register account */ }
-            ) {
-                Text("REGISTER ACCOUNT", color = Color.White)
-            }
-        }
-
-
         //Spacer(modifier = Modifier.height(32.dp))
     }
 }

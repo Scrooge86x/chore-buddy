@@ -38,13 +38,13 @@ import androidx.compose.ui.text.font.Font
 
 
 
-class LoginActivity : ComponentActivity() {
+class ChangePasswordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                    LoginScreen()
+                ChangePasswordScreen()
             }
         }
     }
@@ -53,9 +53,10 @@ class LoginActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun LoginScreen() {
-    var email by remember { mutableStateOf("") }
+fun ChangePasswordScreen() {
     var password by remember { mutableStateOf("") }
+    var restorePassword by remember { mutableStateOf("") }
+
 
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
@@ -75,7 +76,7 @@ fun LoginScreen() {
         Logo()
 
         Text(
-            text = "Login",
+            text = "Restore Password",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
@@ -92,28 +93,9 @@ fun LoginScreen() {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Email Input
-            Text(
-                text = "Email",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
-            UserInput(
-                value = email,
-                onValueChange = { email = it }
-            )
-
             // Password Input
             Text(
-                text = "Password",
+                text = "New Password",
                 color = Color.White,
                 fontSize = 18.sp,
                 modifier = Modifier
@@ -130,37 +112,42 @@ fun LoginScreen() {
                 onValueChange = { password = it },
             )
 
+            // Password Input
+            Text(
+                text = "Repeat new password",
+                color = Color.White,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 16.dp, top = 16.dp),
+
+                style = TextStyle(
+                    fontFamily = interFontFamily
+                )
+            )
+
+            PasswordInput(
+                value = restorePassword,
+                onValueChange = { restorePassword = it },
+            )
+
+
             Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+
 
             // Login Button
             CustomButton(
-                text = "LOGIN",
+                text = "CHANGE PASSWORD",
                 onClick = { /* coś tam */ }
             )
 
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-
-
-        // Reset Password and Register
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            TextButton(
-                onClick = { /* TODO: Handle reset password */ }
-            ) {
-                Text("RESET PASSWORD", color = Color.White)
-            }
-            TextButton(
-                onClick = { /* TODO: Handle register account */ }
-            ) {
-                Text("REGISTER ACCOUNT", color = Color.White)
-            }
-        }
-
-
         //Spacer(modifier = Modifier.height(32.dp))
     }
 }
