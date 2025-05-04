@@ -1,4 +1,4 @@
-package com.example.chore_buddy
+package com.example.chore_buddy.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -25,20 +25,19 @@ import com.example.chore_buddy.ui.theme.ChorebuddyTheme
 
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
-import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
 import androidx.compose.ui.text.font.Font
+import com.example.chore_buddy.R
 
 
-
-class RegisterUserActivity : ComponentActivity() {
+class RestorePasswordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                RegisterUserScreen()
+                RestorePasswordScreen()
             }
         }
     }
@@ -47,11 +46,8 @@ class RegisterUserActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun RegisterUserScreen() {
-    var username by remember { mutableStateOf("") }
+fun RestorePasswordScreen() {
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var repeatPassword by remember { mutableStateOf("") }
 
 
     val interFontFamily = FontFamily(
@@ -67,11 +63,11 @@ fun RegisterUserScreen() {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.height(0.dp))
-
+        
         Logo()
 
         Text(
-            text = "Register",
+            text = "Restore Password",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
@@ -89,7 +85,7 @@ fun RegisterUserScreen() {
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "Username",
+                text = "Email",
                 color = Color.White,
                 fontSize = 18.sp,
                 modifier = Modifier
@@ -102,69 +98,24 @@ fun RegisterUserScreen() {
             )
 
             UserInput(
-                value = username,
-                onValueChange = { username = it }
-            )
-
-            Text(
-                text = "Email",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
-            UserInput(
                 value = email,
                 onValueChange = { email = it }
             )
 
-            Text(
-                text = "Password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
-            PasswordInput(
-                value = password,
-                onValueChange = { password = it },
-            )
-
-
-            Text(
-                text = "Repeat password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
-            PasswordInput(
-                value = repeatPassword,
-                onValueChange = { repeatPassword = it },
-            )
 
             Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+
 
             CustomButton(
-                text = "REGISTER",
+                text = "SEND RESET EMAIL",
                 onClick = { /* coś tam */ }
             )
 

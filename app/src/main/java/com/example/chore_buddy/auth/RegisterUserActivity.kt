@@ -1,4 +1,4 @@
-package com.example.chore_buddy
+package com.example.chore_buddy.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,20 +24,21 @@ import androidx.compose.ui.text.font.FontFamily
 import com.example.chore_buddy.ui.theme.ChorebuddyTheme
 
 import com.example.chore_buddy.components.Logo
+import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
 import androidx.compose.ui.text.font.Font
+import com.example.chore_buddy.R
 
 
-
-class ChangePasswordActivity : ComponentActivity() {
+class RegisterUserActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                ChangePasswordScreen()
+                RegisterUserScreen()
             }
         }
     }
@@ -46,9 +47,11 @@ class ChangePasswordActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun ChangePasswordScreen() {
+fun RegisterUserScreen() {
+    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var restorePassword by remember { mutableStateOf("") }
+    var repeatPassword by remember { mutableStateOf("") }
 
 
     val interFontFamily = FontFamily(
@@ -68,7 +71,7 @@ fun ChangePasswordScreen() {
         Logo()
 
         Text(
-            text = "Restore Password",
+            text = "Register",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
@@ -84,9 +87,45 @@ fun ChangePasswordScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-            
+
             Text(
-                text = "New Password",
+                text = "Username",
+                color = Color.White,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 16.dp),
+
+                style = TextStyle(
+                    fontFamily = interFontFamily
+                )
+            )
+
+            UserInput(
+                value = username,
+                onValueChange = { username = it }
+            )
+
+            Text(
+                text = "Email",
+                color = Color.White,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 16.dp, top = 16.dp),
+
+                style = TextStyle(
+                    fontFamily = interFontFamily
+                )
+            )
+
+            UserInput(
+                value = email,
+                onValueChange = { email = it }
+            )
+
+            Text(
+                text = "Password",
                 color = Color.White,
                 fontSize = 18.sp,
                 modifier = Modifier
@@ -103,8 +142,9 @@ fun ChangePasswordScreen() {
                 onValueChange = { password = it },
             )
 
+
             Text(
-                text = "Repeat new password",
+                text = "Repeat password",
                 color = Color.White,
                 fontSize = 18.sp,
                 modifier = Modifier
@@ -117,20 +157,14 @@ fun ChangePasswordScreen() {
             )
 
             PasswordInput(
-                value = restorePassword,
-                onValueChange = { restorePassword = it },
+                value = repeatPassword,
+                onValueChange = { repeatPassword = it },
             )
 
-
             Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-
 
             CustomButton(
-                text = "CHANGE PASSWORD",
+                text = "REGISTER",
                 onClick = { /* coś tam */ }
             )
 
