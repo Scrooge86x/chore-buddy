@@ -4,9 +4,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -58,16 +55,6 @@ fun PasswordInput(
         ),
         textStyle = textStyle,
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        trailingIcon = {
-            val image = if (passwordVisible)
-                Icons.Filled.Visibility
-            else
-                Icons.Filled.VisibilityOff
-
-            IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                Icon(imageVector = image, contentDescription = null)
-            }
-        },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
         ),
