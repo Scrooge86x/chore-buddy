@@ -65,7 +65,6 @@ fun ChangePasswordScreen() {
     ) {
         Spacer(modifier = Modifier.height(0.dp))
 
-        //Logo
         Logo()
 
         Text(
@@ -85,8 +84,7 @@ fun ChangePasswordScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-
-            // Password Input
+            
             Text(
                 text = "New Password",
                 color = Color.White,
@@ -105,7 +103,6 @@ fun ChangePasswordScreen() {
                 onValueChange = { password = it },
             )
 
-            // Password Input
             Text(
                 text = "Repeat new password",
                 color = Color.White,
@@ -132,7 +129,6 @@ fun ChangePasswordScreen() {
             Spacer(modifier = Modifier.height(32.dp))
 
 
-            // Login Button
             CustomButton(
                 text = "CHANGE PASSWORD",
                 onClick = { /* coś tam */ }
@@ -141,6 +137,5 @@ fun ChangePasswordScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-        //Spacer(modifier = Modifier.height(32.dp))
     }
 }

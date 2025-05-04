@@ -63,8 +63,7 @@ fun RestorePasswordScreen() {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.height(0.dp))
-
-        //Logo
+        
         Logo()
 
         Text(
@@ -85,7 +84,6 @@ fun RestorePasswordScreen() {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Email Input
             Text(
                 text = "Email",
                 color = Color.White,
@@ -116,7 +114,6 @@ fun RestorePasswordScreen() {
             Spacer(modifier = Modifier.height(32.dp))
 
 
-            // Login Button
             CustomButton(
                 text = "SEND RESET EMAIL",
                 onClick = { /* coś tam */ }
@@ -125,6 +122,5 @@ fun RestorePasswordScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-        //Spacer(modifier = Modifier.height(32.dp))
     }
 }
