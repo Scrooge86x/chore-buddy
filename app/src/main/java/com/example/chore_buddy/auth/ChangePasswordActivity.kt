@@ -47,6 +47,7 @@ class ChangePasswordActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun ChangePasswordScreen() {
+    var oldPassword by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var restorePassword by remember { mutableStateOf("") }
 
@@ -63,9 +64,11 @@ fun ChangePasswordScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(0.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Logo()
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = "Restore Password",
@@ -79,11 +82,32 @@ fun ChangePasswordScreen() {
             )
         )
 
+        Spacer(modifier = Modifier.height(32.dp))
+
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
+
+            Text(
+                text = "Old Password",
+                color = Color.White,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 16.dp, top = 16.dp),
+
+                style = TextStyle(
+                    fontFamily = interFontFamily
+                )
+            )
+
+            PasswordInput(
+                value = oldPassword,
+                onValueChange = { oldPassword = it },
+            )
             
             Text(
                 text = "New Password",
@@ -125,8 +149,7 @@ fun ChangePasswordScreen() {
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
+
 
 
             CustomButton(
@@ -135,7 +158,7 @@ fun ChangePasswordScreen() {
             )
 
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(64.dp))
         }
     }
 }
