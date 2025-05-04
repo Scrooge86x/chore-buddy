@@ -1,4 +1,4 @@
-package com.example.chore_buddy.auth
+package com.example.chore_buddy
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
