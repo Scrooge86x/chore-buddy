@@ -1,4 +1,4 @@
-package com.example.chore_buddy
+package com.example.chore_buddy.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,20 +24,20 @@ import androidx.compose.ui.text.font.FontFamily
 import com.example.chore_buddy.ui.theme.ChorebuddyTheme
 
 import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.components.UserInput
+import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
 import androidx.compose.ui.text.font.Font
+import com.example.chore_buddy.R
 
 
-
-class RestorePasswordActivity : ComponentActivity() {
+class ChangePasswordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                RestorePasswordScreen()
+                ChangePasswordScreen()
             }
         }
     }
@@ -46,8 +46,9 @@ class RestorePasswordActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun RestorePasswordScreen() {
-    var email by remember { mutableStateOf("") }
+fun ChangePasswordScreen() {
+    var password by remember { mutableStateOf("") }
+    var restorePassword by remember { mutableStateOf("") }
 
 
     val interFontFamily = FontFamily(
@@ -85,30 +86,45 @@ fun RestorePasswordScreen() {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Email Input
+            // Password Input
             Text(
-                text = "Email",
+                text = "New Password",
                 color = Color.White,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 16.dp),
+                    .padding(start = 16.dp, top = 16.dp),
 
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
 
-            UserInput(
-                value = email,
-                onValueChange = { email = it }
+            PasswordInput(
+                value = password,
+                onValueChange = { password = it },
+            )
+
+            // Password Input
+            Text(
+                text = "Repeat new password",
+                color = Color.White,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 16.dp, top = 16.dp),
+
+                style = TextStyle(
+                    fontFamily = interFontFamily
+                )
+            )
+
+            PasswordInput(
+                value = restorePassword,
+                onValueChange = { restorePassword = it },
             )
 
 
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
@@ -118,7 +134,7 @@ fun RestorePasswordScreen() {
 
             // Login Button
             CustomButton(
-                text = "SEND RESET EMAIL",
+                text = "CHANGE PASSWORD",
                 onClick = { /* coś tam */ }
             )
 

@@ -1,4 +1,4 @@
-package com.example.chore_buddy
+package com.example.chore_buddy.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,20 +24,20 @@ import androidx.compose.ui.text.font.FontFamily
 import com.example.chore_buddy.ui.theme.ChorebuddyTheme
 
 import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.components.PasswordInput
+import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.CustomButton
 
 import androidx.compose.ui.text.font.Font
+import com.example.chore_buddy.R
 
 
-
-class ChangePasswordActivity : ComponentActivity() {
+class RestorePasswordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                ChangePasswordScreen()
+                RestorePasswordScreen()
             }
         }
     }
@@ -46,9 +46,8 @@ class ChangePasswordActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun ChangePasswordScreen() {
-    var password by remember { mutableStateOf("") }
-    var restorePassword by remember { mutableStateOf("") }
+fun RestorePasswordScreen() {
+    var email by remember { mutableStateOf("") }
 
 
     val interFontFamily = FontFamily(
@@ -86,45 +85,30 @@ fun ChangePasswordScreen() {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Password Input
+            // Email Input
             Text(
-                text = "New Password",
+                text = "Email",
                 color = Color.White,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
+                    .padding(start = 16.dp),
 
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
 
-            PasswordInput(
-                value = password,
-                onValueChange = { password = it },
-            )
-
-            // Password Input
-            Text(
-                text = "Repeat new password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
-            PasswordInput(
-                value = restorePassword,
-                onValueChange = { restorePassword = it },
+            UserInput(
+                value = email,
+                onValueChange = { email = it }
             )
 
 
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
@@ -134,7 +118,7 @@ fun ChangePasswordScreen() {
 
             // Login Button
             CustomButton(
-                text = "CHANGE PASSWORD",
+                text = "SEND RESET EMAIL",
                 onClick = { /* coś tam */ }
             )
 

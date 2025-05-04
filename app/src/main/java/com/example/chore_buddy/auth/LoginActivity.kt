@@ -1,4 +1,4 @@
-package com.example.chore_buddy
+package com.example.chore_buddy.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -30,7 +30,7 @@ import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
 import androidx.compose.ui.text.font.Font
-
+import com.example.chore_buddy.R
 
 
 class LoginActivity : ComponentActivity() {
