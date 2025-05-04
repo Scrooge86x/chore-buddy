@@ -11,10 +11,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordInput(
     value: String,
@@ -29,8 +29,6 @@ fun PasswordInput(
         color = Color(0xffb79fff)
     )
 ) {
-    var passwordVisible by remember { mutableStateOf(false) }
-
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -53,7 +51,7 @@ fun PasswordInput(
             unfocusedBorderColor = unfocusedBorderColor
         ),
         textStyle = textStyle,
-        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        visualTransformation = PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password
         ),
