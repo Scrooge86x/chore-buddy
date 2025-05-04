@@ -65,8 +65,7 @@ fun LoginScreen() {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.height(0.dp))
-
-        //Logo
+        
         Logo()
 
         Text(
@@ -87,7 +86,6 @@ fun LoginScreen() {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Email Input
             Text(
                 text = "Email",
                 color = Color.White,
@@ -106,7 +104,6 @@ fun LoginScreen() {
                 onValueChange = { email = it }
             )
 
-            // Password Input
             Text(
                 text = "Password",
                 color = Color.White,
@@ -127,7 +124,6 @@ fun LoginScreen() {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Login Button
             CustomButton(
                 text = "LOGIN",
                 onClick = { /* coś tam */ }
@@ -138,7 +134,6 @@ fun LoginScreen() {
         }
 
 
-        // Reset Password and Register
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -154,8 +149,5 @@ fun LoginScreen() {
                 Text("REGISTER ACCOUNT", color = Color.White)
             }
         }
-
-
-        //Spacer(modifier = Modifier.height(32.dp))
     }
 }

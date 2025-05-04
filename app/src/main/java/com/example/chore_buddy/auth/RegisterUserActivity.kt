@@ -68,7 +68,6 @@ fun RegisterScreen() {
     ) {
         Spacer(modifier = Modifier.height(0.dp))
 
-        //Logo
         Logo()
 
         Text(
@@ -89,7 +88,6 @@ fun RegisterScreen() {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Username Input
             Text(
                 text = "Username",
                 color = Color.White,
@@ -108,7 +106,6 @@ fun RegisterScreen() {
                 onValueChange = { username = it }
             )
 
-            // Password Input
             Text(
                 text = "Email",
                 color = Color.White,
@@ -127,7 +124,6 @@ fun RegisterScreen() {
                 onValueChange = { email = it }
             )
 
-            // Password Input
             Text(
                 text = "Password",
                 color = Color.White,
@@ -147,7 +143,6 @@ fun RegisterScreen() {
             )
 
 
-            // Password Input
             Text(
                 text = "Repeat password",
                 color = Color.White,
@@ -168,7 +163,6 @@ fun RegisterScreen() {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Login Button
             CustomButton(
                 text = "REGISTER",
                 onClick = { /* coś tam */ }
@@ -177,6 +171,5 @@ fun RegisterScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-        //Spacer(modifier = Modifier.height(32.dp))
     }
 }
