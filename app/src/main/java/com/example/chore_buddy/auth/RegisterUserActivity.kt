@@ -169,7 +169,7 @@ fun RegisterUserScreen() {
             )
 
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(64.dp))
         }
     }
 }
