@@ -82,7 +82,10 @@ fun RestorePasswordScreen() {
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(64.dp))
+
             Spacer(modifier = Modifier.height(32.dp))
+
 
             Text(
                 text = "Email",
@@ -103,8 +106,7 @@ fun RestorePasswordScreen() {
             )
 
 
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
+
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
@@ -120,7 +122,7 @@ fun RestorePasswordScreen() {
             )
 
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(64.dp))
         }
     }
 }
