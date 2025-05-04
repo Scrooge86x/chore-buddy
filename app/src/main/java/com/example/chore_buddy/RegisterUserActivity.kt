@@ -32,13 +32,13 @@ import androidx.compose.ui.text.font.Font
 
 
 
-class RegisterActivity : ComponentActivity() {
+class RegisterUserActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                RegisterScreen()
+                RegisterUserScreen()
             }
         }
     }
@@ -47,7 +47,7 @@ class RegisterActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun RegisterScreen() {
+fun RegisterUserScreen() {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
