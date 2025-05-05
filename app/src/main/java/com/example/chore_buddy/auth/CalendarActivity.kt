@@ -22,14 +22,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
-import com.example.chore_buddy.ui.theme.ChorebuddyTheme
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 class CalendarActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChorebuddyTheme {
+            ChoreBuddyTheme {
                 CalendarScreen()
             }
         }

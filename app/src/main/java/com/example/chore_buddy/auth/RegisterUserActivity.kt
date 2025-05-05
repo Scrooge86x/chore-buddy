@@ -21,7 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import com.example.chore_buddy.ui.theme.ChorebuddyTheme
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
@@ -37,7 +37,7 @@ class RegisterUserActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChorebuddyTheme {
+            ChoreBuddyTheme {
                 RegisterUserScreen()
             }
         }
