@@ -90,7 +90,7 @@ fun DayInfoScreen() {
 
             Spacer(modifier = Modifier.weight(1f))
         }
-        
+
         FloatingActionButton(
             onClick = { /* TODO: action */ },
             containerColor = Color.LightGray,
