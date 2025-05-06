@@ -41,6 +41,7 @@ fun UserProfileScreen() {
     val date = "01/01/2000"
     val email = "user@lorem.ipsum"
     val role = "Admin"
+    val self = true
 
     Box(
         modifier = Modifier
@@ -93,18 +94,20 @@ fun UserProfileScreen() {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Column {
-                CustomButton(
-                    text = "CHANGE PASSWORD",
-                    onClick = { /* TODO: Change password */ }
-                )
+            if (self) {
+                Column {
+                    CustomButton(
+                        text = "CHANGE PASSWORD",
+                        onClick = { /* TODO: Change password */ }
+                    )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                CustomButton(
-                    text = "LOGOUT",
-                    onClick = { /* TODO: Logout */ }
-                )
+                    CustomButton(
+                        text = "LOGOUT",
+                        onClick = { /* TODO: Logout */ }
+                    )
+                }
             }
         }
     }
