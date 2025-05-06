@@ -41,7 +41,8 @@ fun UserProfileScreen() {
     val date = "01/01/2000"
     val email = "user@lorem.ipsum"
     val role = "Admin"
-    val self = true
+    val self = false
+    val admin = true
 
     Box(
         modifier = Modifier
@@ -105,6 +106,17 @@ fun UserProfileScreen() {
 
                     CustomButton(
                         text = "LOGOUT",
+                        onClick = { /* TODO: Logout */ }
+                    )
+                }
+            }
+
+            if (admin) {
+                Column {
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    CustomButton(
+                        text = "REMOVE FROM GROUP",
                         onClick = { /* TODO: Logout */ }
                     )
                 }
