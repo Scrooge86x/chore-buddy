@@ -1,5 +1,6 @@
 package com.example.chore_buddy.auth
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -20,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import com.example.chore_buddy.ui.theme.ChorebuddyTheme
@@ -29,6 +32,12 @@ import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
+
+import com.example.chore_buddy.auth.LoginViewModel
+
 import androidx.compose.ui.text.font.Font
 import com.example.chore_buddy.R
 
@@ -36,21 +45,50 @@ import com.example.chore_buddy.R
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val currentUser = AuthRepository.getCurrentUser()
+
+        if (currentUser != null) {
+            //val intent = Intent(this, CalendarActivity::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            //startActivity(intent)
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         setContent {
             ChorebuddyTheme {
-                    LoginScreen()
+                LoginScreen()
             }
         }
     }
 }
 
-
 @Preview(apiLevel = 34)
 @Composable
-fun LoginScreen() {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginScreen(loginViewModel: LoginViewModel = LoginViewModel()) {
+
+
+    var email by loginViewModel.email
+    val password by loginViewModel.password
+    val isLoading = loginViewModel.isLoading
+    val loginError = loginViewModel.loginError
+    val loginSuccess = loginViewModel.loginSuccess
+
+    val context = LocalContext.current
+
+    val activity = context as? ComponentActivity
+
+    LaunchedEffect(loginSuccess) {
+        if (loginSuccess) {
+            //val intent = Intent(context, MainActivity::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            //context.startActivity(intent)
+            //activity?.finish()
+            Log.d("LoginActivity", "Zalogowano")
+        }
+    }
 
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
@@ -65,7 +103,7 @@ fun LoginScreen() {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.height(0.dp))
-        
+
         Logo()
 
         Text(
@@ -100,8 +138,11 @@ fun LoginScreen() {
             )
 
             UserInput(
-                value = email,
-                onValueChange = { email = it }
+                value = loginViewModel.email,
+                onValueChange = {
+                    loginViewModel.email = it
+                    Log.d("dasd", "adsd")
+                }
             )
 
             Text(
@@ -119,7 +160,7 @@ fun LoginScreen() {
 
             PasswordInput(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = { loginViewModel.password = it },
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -132,7 +173,7 @@ fun LoginScreen() {
 
             CustomButton(
                 text = "LOGIN",
-                onClick = { /* coś tam */ }
+                onClick = { loginViewModel.signIn() }
             )
 
 
