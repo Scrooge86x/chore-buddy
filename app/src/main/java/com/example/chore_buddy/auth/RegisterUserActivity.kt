@@ -1,4 +1,4 @@
-package com.example.chore_buddy
+package com.example.chore_buddy.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -52,7 +52,6 @@ fun RegisterUserScreen() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var repeatPassword by remember { mutableStateOf("") }
-
 
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
