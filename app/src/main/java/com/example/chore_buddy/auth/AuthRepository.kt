@@ -1,7 +1,6 @@
 package com.example.chore_buddy.auth
 
 import android.util.Log
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -10,7 +9,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-class AuthRepository {
+object AuthRepository {
     private val firebaseAuth: FirebaseAuth = Firebase.auth
 
     suspend fun signInWithEmailAndPassword(email: String, password: String): Result<FirebaseUser> {
@@ -102,7 +101,7 @@ class AuthRepository {
         }
     }
 
-    fun getCurrentUserInstant(): FirebaseUser? {
+    fun getCurrentUser(): FirebaseUser? {
         return firebaseAuth.currentUser
     }
 
