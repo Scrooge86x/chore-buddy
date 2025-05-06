@@ -1,6 +1,5 @@
 package com.example.chore_buddy.auth
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -31,12 +30,6 @@ import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
-
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.*
-
-import com.example.chore_buddy.auth.LoginViewModel
 
 import androidx.compose.ui.text.font.Font
 import androidx.lifecycle.viewmodel.compose.viewModel
