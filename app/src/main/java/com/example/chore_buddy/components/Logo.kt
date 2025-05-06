@@ -14,7 +14,7 @@ fun Logo(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.chore_buddy_logo),
         contentDescription = "Chore Buddy Logo",
-        modifier = Modifier
+        modifier = modifier
             .height(80.dp)
             .size(300.dp)
     )

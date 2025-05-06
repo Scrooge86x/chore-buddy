@@ -41,7 +41,6 @@ class AssignUserActivity : ComponentActivity() {
 fun AssignUserScreen() {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val users = listOf("User 1", "User 2", "User 3", "User 4", "User 5")
-    val groupName = "12345"
 
     Column(
         modifier = Modifier
