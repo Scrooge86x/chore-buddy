@@ -1,7 +1,6 @@
 package com.example.chore_buddy.tasks
 
 import android.os.Bundle
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,7 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.test.services.storage.file.PropertyFile.Column
 import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.Logo
@@ -100,7 +98,7 @@ fun CreateTaskScreen() {
         }
 
         Spacer(modifier = Modifier.weight(1f))
-        
+
         Column{
             Spacer(modifier = Modifier.height(24.dp))
 
