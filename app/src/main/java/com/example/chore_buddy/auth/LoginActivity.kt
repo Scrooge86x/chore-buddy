@@ -39,6 +39,7 @@ import androidx.compose.runtime.*
 import com.example.chore_buddy.auth.LoginViewModel
 
 import androidx.compose.ui.text.font.Font
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
 
 
@@ -67,13 +68,8 @@ class LoginActivity : ComponentActivity() {
 
 @Preview(apiLevel = 34)
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = LoginViewModel()) {
-
-
-    var email by loginViewModel.email
-    val password by loginViewModel.password
-    val isLoading = loginViewModel.isLoading
-    val loginError = loginViewModel.loginError
+fun LoginScreen() {
+    val loginViewModel: LoginViewModel = viewModel()
     val loginSuccess = loginViewModel.loginSuccess
 
     val context = LocalContext.current
@@ -139,10 +135,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = LoginViewModel()) {
 
             UserInput(
                 value = loginViewModel.email,
-                onValueChange = {
-                    loginViewModel.email = it
-                    Log.d("dasd", "adsd")
-                }
+                onValueChange = { loginViewModel.email = it }
             )
 
             Text(
@@ -159,7 +152,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = LoginViewModel()) {
             )
 
             PasswordInput(
-                value = password,
+                value = loginViewModel.password,
                 onValueChange = { loginViewModel.password = it },
             )
 
