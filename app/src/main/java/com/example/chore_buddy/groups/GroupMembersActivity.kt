@@ -47,7 +47,6 @@ fun GroupMembersScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black),
-            //.padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(24.dp))

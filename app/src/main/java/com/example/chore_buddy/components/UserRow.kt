@@ -22,14 +22,13 @@ fun UserRow(userName: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp) // ZWIĘKSZONA wysokość wiersza
+            .height(80.dp)
             .background(Color.Black)
-            .padding(horizontal = 0.dp), // BRAK marginesu wewnętrznego — pełna szerokość
+            .padding(horizontal = 0.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.width(16.dp))
 
-        // Circle avatar
         Box(
             modifier = Modifier
                 .size(56.dp)
@@ -45,7 +44,6 @@ fun UserRow(userName: String) {
 
         Spacer(modifier = Modifier.width(24.dp))
 
-        // User text
         Text(
             text = userName,
             fontSize = 22.sp, // większy tekst
