@@ -53,7 +53,6 @@ fun UserProfileScreen() {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
             Logo(modifier = Modifier.align(Alignment.CenterHorizontally))
             Spacer(modifier = Modifier.height(32.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {

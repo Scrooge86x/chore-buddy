@@ -63,7 +63,6 @@ fun ChangePasswordScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
         Logo()
         Spacer(modifier = Modifier.height(16.dp))
         Text(

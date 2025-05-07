@@ -2,6 +2,7 @@ package com.example.chore_buddy.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +16,7 @@ fun Logo(modifier: Modifier = Modifier) {
         painter = painterResource(id = R.drawable.chore_buddy_logo),
         contentDescription = "Chore Buddy Logo",
         modifier = modifier
+            .padding(top = 48.dp)
             .height(80.dp)
             .size(300.dp)
     )

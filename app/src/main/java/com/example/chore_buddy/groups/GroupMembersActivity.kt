@@ -49,8 +49,6 @@ fun GroupMembersScreen() {
             .background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(24.dp))
-        Spacer(modifier = Modifier.height(16.dp))
         Logo()
         Spacer(modifier = Modifier.height(16.dp))
         Text(

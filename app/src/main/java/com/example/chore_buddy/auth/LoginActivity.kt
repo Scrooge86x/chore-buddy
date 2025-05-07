@@ -64,7 +64,6 @@ fun LoginScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(0.dp))
         Logo()
         Text(
             text = "Login",

@@ -61,7 +61,6 @@ fun TaskDetailsScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
         Logo()
         Spacer(modifier = Modifier.height(48.dp))
         Text(

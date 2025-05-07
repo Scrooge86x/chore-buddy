@@ -49,10 +49,10 @@ fun MainSettingsScreen() {
             .background(Color.Black)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
-            Logo(modifier = Modifier.align(Alignment.CenterHorizontally))
+            Logo()
             Spacer(modifier = Modifier.height(48.dp))
             Text(
                 text = "Settings",

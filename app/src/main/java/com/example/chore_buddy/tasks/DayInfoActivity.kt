@@ -60,9 +60,7 @@ fun DayInfoScreen() {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-                Spacer(modifier = Modifier.height(16.dp))
                 Logo()
                 Spacer(modifier = Modifier.height(48.dp))
                 Text(
