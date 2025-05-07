@@ -6,15 +6,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.chore_buddy.R
 
 @Composable
 fun ScreenHeading(
     text: String,
     modifier: Modifier = Modifier,
 ) {
+    val interFontFamily = FontFamily(
+        androidx.compose.ui.text.font.Font(R.font.inter_regular),
+    )
+
     Text(
         text = text,
         color = Color.White,

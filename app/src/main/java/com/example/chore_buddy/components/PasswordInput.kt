@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.chore_buddy.R
 
 @Composable
 fun PasswordInput(
@@ -32,6 +33,10 @@ fun PasswordInput(
         color = Color(0xffb79fff)
     )
 ) {
+    val interFontFamily = FontFamily(
+        androidx.compose.ui.text.font.Font(R.font.inter_regular),
+    )
+
     Text(
         text = label,
         color = Color.White,

@@ -18,10 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
 
-val interFontFamily = FontFamily(
-    androidx.compose.ui.text.font.Font(R.font.inter_regular),
-)
-
 @Composable
 fun UserInput(
     label: String = "",
@@ -37,6 +33,10 @@ fun UserInput(
         color = Color(0xffb79fff)
     )
 ) {
+    val interFontFamily = FontFamily(
+        androidx.compose.ui.text.font.Font(R.font.inter_regular),
+    )
+
     Text(
         text = label,
         color = Color.White,

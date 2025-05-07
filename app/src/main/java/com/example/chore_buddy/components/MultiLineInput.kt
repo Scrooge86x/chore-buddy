@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.chore_buddy.R
 
 @Composable
 fun MultiLineInput(
@@ -37,6 +38,9 @@ fun MultiLineInput(
     )
 ) {
     val scrollState = rememberScrollState()
+    val interFontFamily = FontFamily(
+        androidx.compose.ui.text.font.Font(R.font.inter_regular),
+    )
 
     Text(
         text = label,
