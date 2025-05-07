@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -29,7 +31,10 @@ import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
 import androidx.compose.ui.text.font.Font
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.flow.collectLatest
 
 
 class RegisterUserActivity : ComponentActivity() {
@@ -48,14 +53,25 @@ class RegisterUserActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun RegisterUserScreen() {
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var repeatPassword by remember { mutableStateOf("") }
+    val registerUserViewModel: RegisterUserViewModel = viewModel();
 
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
     )
+
+    val context = LocalContext.current
+    LaunchedEffect(registerUserViewModel.errorMessage) {
+        registerUserViewModel.errorMessage.collectLatest {message ->
+            if (message != null) {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                registerUserViewModel.resetError()
+            }
+        }
+    }
+
+    LaunchedEffect(registerUserViewModel.registrationSuccess) {
+        Log.d("Registration", "Registration success")
+    }
 
     Column(
         modifier = Modifier
@@ -101,8 +117,8 @@ fun RegisterUserScreen() {
             )
 
             UserInput(
-                value = username,
-                onValueChange = { username = it }
+                value = registerUserViewModel.username,
+                onValueChange = { registerUserViewModel.username = it }
             )
 
             Text(
@@ -119,8 +135,8 @@ fun RegisterUserScreen() {
             )
 
             UserInput(
-                value = email,
-                onValueChange = { email = it }
+                value = registerUserViewModel.email,
+                onValueChange = { registerUserViewModel.email = it }
             )
 
             Text(
@@ -137,8 +153,8 @@ fun RegisterUserScreen() {
             )
 
             PasswordInput(
-                value = password,
-                onValueChange = { password = it },
+                value = registerUserViewModel.password,
+                onValueChange = { registerUserViewModel.password = it },
             )
 
 
@@ -156,15 +172,15 @@ fun RegisterUserScreen() {
             )
 
             PasswordInput(
-                value = repeatPassword,
-                onValueChange = { repeatPassword = it },
+                value = registerUserViewModel.passwordRepeat,
+                onValueChange = { registerUserViewModel.passwordRepeat = it },
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             CustomButton(
                 text = "REGISTER",
-                onClick = { /* coś tam */ }
+                onClick = { registerUserViewModel.registerUser() }
             )
 
 
