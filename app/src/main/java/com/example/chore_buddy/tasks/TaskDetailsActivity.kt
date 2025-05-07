@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +26,7 @@ import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.MultiLineInput
+import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 class TaskDetailsActivity : ComponentActivity() {
@@ -133,14 +133,7 @@ fun TaskDetailsScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Logo()
-        Spacer(modifier = Modifier.height(48.dp))
-        Text(
-            text = "Task Title",
-            color = Color.LightGray,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.SemiBold,
-            style = TextStyle(fontFamily = interFontFamily)
-        )
+        ScreenHeading(text = "Task Title")
         Spacer(modifier = Modifier.height(72.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),

@@ -5,25 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.NotYourTaskRow
-import com.example.chore_buddy.components.ProfileField
-import com.example.chore_buddy.components.UserRow
+import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 class MainSettingsActivity : ComponentActivity() {
@@ -40,7 +32,6 @@ class MainSettingsActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun MainSettingsScreen() {
-    val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val userSettings = listOf("Setting 1", "Setting 2", "Setting 3", "Setting 4")
 
     Box(
@@ -53,15 +44,7 @@ fun MainSettingsScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Logo()
-            Spacer(modifier = Modifier.height(48.dp))
-            Text(
-                text = "Settings",
-                color = Color.White,
-                fontSize = 30.sp,
-                fontFamily = interFontFamily,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+            ScreenHeading(text = "Settings")
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider(thickness = 1.dp, color = Color.White)
             userSettings.forEach { userSet ->
