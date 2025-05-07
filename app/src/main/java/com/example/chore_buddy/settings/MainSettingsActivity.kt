@@ -41,10 +41,7 @@ class MainSettingsActivity : ComponentActivity() {
 @Composable
 fun MainSettingsScreen() {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
-
     val userSettings = listOf("Setting 1", "Setting 2", "Setting 3", "Setting 4")
-
-
 
     Box(
         modifier = Modifier
@@ -56,9 +53,7 @@ fun MainSettingsScreen() {
         ) {
             Spacer(modifier = Modifier.height(32.dp))
             Logo(modifier = Modifier.align(Alignment.CenterHorizontally))
-
             Spacer(modifier = Modifier.height(48.dp))
-
             Text(
                 text = "Settings",
                 color = Color.White,
@@ -67,44 +62,31 @@ fun MainSettingsScreen() {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
-
-
-
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider(thickness = 1.dp, color = Color.White)
-
             userSettings.forEach { userSet ->
                 NotYourTaskRow(taskName = userSet)
                 HorizontalDivider(thickness = 1.dp, color = Color.White)
             }
-
             Spacer(modifier = Modifier.weight(1f))
-
-
             Column (
-                modifier = Modifier
-                    .padding(24.dp)
+                modifier = Modifier.padding(24.dp)
             ) {
                 CustomButton(
                     text = "SAVE",
                     onClick = { /* TODO: Change password */ }
                 )
-
                 Spacer(modifier = Modifier.height(16.dp))
-
                 CustomButton(
                     text = "CANCEL",
                     onClick = { /* TODO: Logout */ }
                 )
-
                 Spacer(modifier = Modifier.height(16.dp))
-
                 CustomButton(
                     text = "RESTORE DEFAULT",
                     onClick = { /* TODO: Logout */ }
                 )
             }
-
         }
     }
 }

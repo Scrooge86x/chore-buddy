@@ -49,7 +49,6 @@ class RestorePasswordActivity : ComponentActivity() {
 fun RestorePasswordScreen() {
     var email by remember { mutableStateOf("") }
 
-
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
     )
@@ -63,30 +62,23 @@ fun RestorePasswordScreen() {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.height(0.dp))
-        
         Logo()
-
         Text(
             text = "Restore Password",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 24.dp),
-
             style = TextStyle(
                 fontFamily = interFontFamily
             )
         )
-
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(64.dp))
-
             Spacer(modifier = Modifier.height(32.dp))
-
-
             Text(
                 text = "Email",
                 color = Color.White,
@@ -94,19 +86,14 @@ fun RestorePasswordScreen() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp),
-
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
-
             UserInput(
                 value = email,
                 onValueChange = { email = it }
             )
-
-
-
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
@@ -114,14 +101,10 @@ fun RestorePasswordScreen() {
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
-
-
             CustomButton(
                 text = "SEND RESET EMAIL",
                 onClick = { /* coś tam */ }
             )
-
-
             Spacer(modifier = Modifier.height(64.dp))
         }
     }

@@ -53,7 +53,6 @@ fun RegisterUserScreen() {
     var password by remember { mutableStateOf("") }
     var repeatPassword by remember { mutableStateOf("") }
 
-
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
     )
@@ -67,27 +66,22 @@ fun RegisterUserScreen() {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.height(0.dp))
-
         Logo()
-
         Text(
             text = "Register",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 24.dp),
-
             style = TextStyle(
                 fontFamily = interFontFamily
             )
         )
-
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-
             Text(
                 text = "Username",
                 color = Color.White,
@@ -95,17 +89,14 @@ fun RegisterUserScreen() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp),
-
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
-
             UserInput(
                 value = username,
                 onValueChange = { username = it }
             )
-
             Text(
                 text = "Email",
                 color = Color.White,
@@ -113,17 +104,14 @@ fun RegisterUserScreen() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp, top = 16.dp),
-
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
-
             UserInput(
                 value = email,
                 onValueChange = { email = it }
             )
-
             Text(
                 text = "Password",
                 color = Color.White,
@@ -131,18 +119,14 @@ fun RegisterUserScreen() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp, top = 16.dp),
-
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
-
             PasswordInput(
                 value = password,
                 onValueChange = { password = it },
             )
-
-
             Text(
                 text = "Repeat password",
                 color = Color.White,
@@ -150,25 +134,19 @@ fun RegisterUserScreen() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp, top = 16.dp),
-
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
-
             PasswordInput(
                 value = repeatPassword,
                 onValueChange = { repeatPassword = it },
             )
-
             Spacer(modifier = Modifier.height(32.dp))
-
             CustomButton(
                 text = "REGISTER",
                 onClick = { /* coś tam */ }
             )
-
-
             Spacer(modifier = Modifier.height(64.dp))
         }
     }

@@ -51,7 +51,6 @@ fun ChangePasswordScreen() {
     var password by remember { mutableStateOf("") }
     var restorePassword by remember { mutableStateOf("") }
 
-
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
     )
@@ -65,32 +64,24 @@ fun ChangePasswordScreen() {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.height(32.dp))
-
         Logo()
-
         Spacer(modifier = Modifier.height(16.dp))
-
         Text(
             text = "Restore Password",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 24.dp),
-
             style = TextStyle(
                 fontFamily = interFontFamily
             )
         )
-
         Spacer(modifier = Modifier.height(32.dp))
-
-
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-
             Text(
                 text = "Old Password",
                 color = Color.White,
@@ -98,17 +89,14 @@ fun ChangePasswordScreen() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp, top = 16.dp),
-
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
-
             PasswordInput(
                 value = oldPassword,
                 onValueChange = { oldPassword = it },
             )
-            
             Text(
                 text = "New Password",
                 color = Color.White,
@@ -116,17 +104,14 @@ fun ChangePasswordScreen() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp, top = 16.dp),
-
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
-
             PasswordInput(
                 value = password,
                 onValueChange = { password = it },
             )
-
             Text(
                 text = "Repeat new password",
                 color = Color.White,
@@ -134,30 +119,21 @@ fun ChangePasswordScreen() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(start = 16.dp, top = 16.dp),
-
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )
             )
-
             PasswordInput(
                 value = restorePassword,
                 onValueChange = { restorePassword = it },
             )
-
-
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
             Spacer(modifier = Modifier.height(32.dp))
-
-
-
             CustomButton(
                 text = "CHANGE PASSWORD",
                 onClick = { /* coś tam */ }
             )
-
-
             Spacer(modifier = Modifier.height(64.dp))
         }
     }

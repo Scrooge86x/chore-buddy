@@ -61,8 +61,6 @@ fun DayInfoScreen() {
                 .fillMaxSize()
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-
-
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Logo()
@@ -75,9 +73,7 @@ fun DayInfoScreen() {
                     fontWeight = FontWeight.Bold
                 )
             }
-
             Spacer(modifier = Modifier.height(16.dp))
-
             HorizontalDivider(thickness = 1.dp, color = Color.White)
             tasks.forEach { (isUserTask, taskName) ->
                 if (isUserTask) {
@@ -87,10 +83,8 @@ fun DayInfoScreen() {
                 }
                 HorizontalDivider(thickness = 1.dp, color = Color.White)
             }
-
             Spacer(modifier = Modifier.weight(1f))
         }
-
         FloatingActionButton(
             onClick = { /* TODO: action */ },
             containerColor = Color.LightGray,

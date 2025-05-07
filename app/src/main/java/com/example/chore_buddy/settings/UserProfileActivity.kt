@@ -55,9 +55,7 @@ fun UserProfileScreen() {
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             Logo(modifier = Modifier.align(Alignment.CenterHorizontally))
-
             Spacer(modifier = Modifier.height(32.dp))
-
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     modifier = Modifier
@@ -71,9 +69,7 @@ fun UserProfileScreen() {
                             .background(color = Color(0xFF66FFE5), shape = CircleShape)
                     )
                 }
-
                 Spacer(modifier = Modifier.width(24.dp))
-
                 Text(
                     text = "Username",
                     color = Color.LightGray,
@@ -82,39 +78,29 @@ fun UserProfileScreen() {
                     fontWeight = FontWeight.Medium
                 )
             }
-
             Spacer(modifier = Modifier.height(64.dp))
-
             ProfileField("Creation date", date, interFontFamily)
             Spacer(modifier = Modifier.height(64.dp))
-
             ProfileField("User email", email, interFontFamily)
             Spacer(modifier = Modifier.height(64.dp))
-
             ProfileField("User role", role, interFontFamily)
-
             Spacer(modifier = Modifier.weight(1f))
-
             if (self) {
                 Column {
                     CustomButton(
                         text = "CHANGE PASSWORD",
                         onClick = { /* TODO: Change password */ }
                     )
-
                     Spacer(modifier = Modifier.height(16.dp))
-
                     CustomButton(
                         text = "LOGOUT",
                         onClick = { /* TODO: Logout */ }
                     )
                 }
             }
-
             if (admin) {
                 Column {
                     Spacer(modifier = Modifier.height(16.dp))
-
                     CustomButton(
                         text = "REMOVE FROM GROUP",
                         onClick = { /* TODO: Logout */ }

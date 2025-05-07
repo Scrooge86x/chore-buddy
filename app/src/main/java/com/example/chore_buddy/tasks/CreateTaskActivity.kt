@@ -53,11 +53,8 @@ fun CreateTaskScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-
         Logo()
-
         Spacer(modifier = Modifier.height(32.dp))
-
         Text(
             text = "New Task",
             color = Color.LightGray,
@@ -66,9 +63,7 @@ fun CreateTaskScreen() {
             modifier = Modifier.padding(top = 12.dp),
             style = TextStyle(fontFamily = interFontFamily)
         )
-
         Spacer(modifier = Modifier.height(32.dp))
-
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
                 text = "Task name",
@@ -77,12 +72,10 @@ fun CreateTaskScreen() {
                 modifier = Modifier.padding(start = 8.dp),
                 style = TextStyle(fontFamily = interFontFamily)
             )
-
             UserInput(
                 value = taskName,
                 onValueChange = { taskName = it }
             )
-
             Text(
                 text = "Description",
                 color = Color.White,
@@ -90,26 +83,18 @@ fun CreateTaskScreen() {
                 modifier = Modifier.padding(start = 8.dp, top = 8.dp),
                 style = TextStyle(fontFamily = interFontFamily)
             )
-
             MultiLineInput(
                 value = description,
                 onValueChange = { description = it }
             )
         }
-
         Spacer(modifier = Modifier.weight(1f))
-
         Column{
             Spacer(modifier = Modifier.height(24.dp))
-
             CustomButton(text = "ASSIGN MEMBER", onClick = { /* assign logic */ })
-
             Spacer(modifier = Modifier.height(12.dp))
-
             CustomButton(text = "CREATE", onClick = { /* create task logic */ })
-
             Spacer(modifier = Modifier.height(12.dp))
-
             CustomButton(text = "CANCEL", onClick = { /* cancel logic */ })
         }
     }

@@ -62,11 +62,8 @@ fun TaskDetailsScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-
         Logo()
-
         Spacer(modifier = Modifier.height(48.dp))
-
         Text(
             text = "Task Title",
             color = Color.LightGray,
@@ -75,9 +72,7 @@ fun TaskDetailsScreen(
             style = TextStyle(fontFamily = interFontFamily)
         )
         Spacer(modifier = Modifier.height(48.dp))
-
         Spacer(modifier = Modifier.height(24.dp))
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -96,9 +91,7 @@ fun TaskDetailsScreen(
                     fontSize = 18.sp,
                     style = TextStyle(fontFamily = interFontFamily)
                 )
-
                 Spacer(modifier = Modifier.height(16.dp))
-
                 Text(
                     text = "Due Date",
                     color = Color.White,
@@ -112,9 +105,6 @@ fun TaskDetailsScreen(
                     style = TextStyle(fontFamily = interFontFamily)
                 )
             }
-
-
-
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -124,9 +114,7 @@ fun TaskDetailsScreen(
                     fontSize = 16.sp,
                     style = TextStyle(fontFamily = interFontFamily)
                 )
-
                 Spacer(modifier = Modifier.height(4.dp))
-
                 Box(
                     modifier = Modifier
                         .size(64.dp)
@@ -167,16 +155,13 @@ fun TaskDetailsScreen(
                 }
             }
         }
-
         Spacer(modifier = Modifier.height(16.dp))
         Box(modifier = Modifier
             .fillMaxWidth()
             .height(1.dp)
             .background(Color.Gray)
         )
-
         Spacer(modifier = Modifier.height(16.dp))
-
         Text(
             text = "Task Description",
             color = Color.White,
@@ -185,14 +170,12 @@ fun TaskDetailsScreen(
             modifier = Modifier.align(Alignment.Start),
             style = TextStyle(fontFamily = interFontFamily)
         )
-
         MultiLineInput(
             value = description,
             onValueChange = { if (admin) description = it },
             placeholderText = "Task details...",
             modifier = Modifier.padding(horizontal = 4.dp)
         )
-
         if (admin) {
             Spacer(modifier = Modifier.height(48.dp))
             CustomButton(

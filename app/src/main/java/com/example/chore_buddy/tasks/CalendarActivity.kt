@@ -57,7 +57,6 @@ fun CalendarScreen() {
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 64.dp),
-
             style = TextStyle(
                 fontFamily = interFontFamily
             )
@@ -68,7 +67,6 @@ fun CalendarScreen() {
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 64.dp),
-
             style = TextStyle(
                 fontFamily = interFontFamily
             )

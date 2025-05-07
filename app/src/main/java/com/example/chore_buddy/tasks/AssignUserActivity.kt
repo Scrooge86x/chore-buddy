@@ -51,9 +51,7 @@ fun AssignUserScreen() {
         Spacer(modifier = Modifier.height(24.dp))
         Spacer(modifier = Modifier.height(16.dp))
         Logo()
-
         Spacer(modifier = Modifier.height(48.dp))
-
         Text(
             text = "Assign User",
             color = Color.White,
@@ -61,15 +59,12 @@ fun AssignUserScreen() {
             fontWeight = FontWeight.SemiBold,
             style = TextStyle(fontFamily = interFontFamily)
         )
-
         Spacer(modifier = Modifier.height(24.dp))
         HorizontalDivider(thickness = 1.dp, color = Color.White)
-
         users.forEach { user ->
             UserRow(userName = user)
             HorizontalDivider(thickness = 1.dp, color = Color.White)
         }
-
         Spacer(modifier = Modifier.height(24.dp))
     }
 }

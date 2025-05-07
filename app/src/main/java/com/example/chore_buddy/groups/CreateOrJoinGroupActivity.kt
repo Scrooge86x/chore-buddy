@@ -52,12 +52,8 @@ fun CreateOrJoinGroupScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-
         Logo()
-
-
         Spacer(modifier = Modifier.height(64.dp))
-
         Text(
             text = "Create Group",
             color = Color.LightGray,
@@ -65,9 +61,7 @@ fun CreateOrJoinGroupScreen() {
             fontWeight = FontWeight.SemiBold,
             style = TextStyle(fontFamily = interFontFamily)
         )
-
         Spacer(modifier = Modifier.height(16.dp))
-
         Text(
             text = "Group name",
             color = Color.White,
@@ -75,21 +69,16 @@ fun CreateOrJoinGroupScreen() {
             modifier = Modifier.align(Alignment.Start),
             style = TextStyle(fontFamily = interFontFamily)
         )
-
         UserInput(
             value = groupName,
             onValueChange = { groupName = it }
         )
-
         Spacer(modifier = Modifier.height(12.dp))
-
         CustomButton(text = "CREATE", onClick = {
             // create group logic
         })
-
         Spacer(modifier = Modifier.height(48.dp))
         Spacer(modifier = Modifier.weight(1f))
-
         Text(
             text = "Join Group",
             color = Color.LightGray,
@@ -97,9 +86,7 @@ fun CreateOrJoinGroupScreen() {
             fontWeight = FontWeight.SemiBold,
             style = TextStyle(fontFamily = interFontFamily)
         )
-
         Spacer(modifier = Modifier.height(16.dp))
-
         Text(
             text = "Group Id",
             color = Color.White,
@@ -107,18 +94,14 @@ fun CreateOrJoinGroupScreen() {
             modifier = Modifier.align(Alignment.Start),
             style = TextStyle(fontFamily = interFontFamily)
         )
-
         UserInput(
             value = groupId,
             onValueChange = { groupId = it }
         )
-
         Spacer(modifier = Modifier.height(12.dp))
-
         CustomButton(text = "JOIN", onClick = {
             // join group logic
         })
-
         Spacer(modifier = Modifier.height(128.dp))
     }
 }

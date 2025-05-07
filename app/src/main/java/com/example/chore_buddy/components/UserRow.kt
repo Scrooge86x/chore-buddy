@@ -28,7 +28,6 @@ fun UserRow(userName: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.width(16.dp))
-
         Box(
             modifier = Modifier
                 .size(56.dp)
@@ -41,9 +40,7 @@ fun UserRow(userName: String) {
                     .background(color = Color(0xFF66FFE5), shape = CircleShape)
             )
         }
-
         Spacer(modifier = Modifier.width(24.dp))
-
         Text(
             text = userName,
             fontSize = 22.sp, // większy tekst
