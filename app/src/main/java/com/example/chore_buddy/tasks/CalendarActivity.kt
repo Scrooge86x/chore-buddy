@@ -1,4 +1,4 @@
-package com.example.chore_buddy.auth
+package com.example.chore_buddy.tasks
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
