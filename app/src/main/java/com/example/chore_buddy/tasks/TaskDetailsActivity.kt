@@ -41,18 +41,89 @@ class TaskDetailsActivity : ComponentActivity() {
     }
 }
 
+
+val interFontFamily = FontFamily(Font(R.font.inter_regular))
+
+
+@Composable
+fun DateView(
+    label: String = "",
+    date: String = ""
+) {
+    Text(
+        text = label,
+        color = Color.White,
+        fontSize = 18.sp,
+        style = TextStyle(fontFamily = interFontFamily)
+    )
+    Text(
+        text = date,
+        color = Color.LightGray,
+        fontSize = 18.sp,
+        style = TextStyle(fontFamily = interFontFamily),
+        modifier = Modifier.padding(bottom = 16.dp)
+    )
+}
+
+
+@Composable
+fun StatusCheckbox(
+    isChecked: Boolean,
+    isAdmin: Boolean,
+    onClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Status",
+            color = Color.White,
+            fontSize = 16.sp,
+            style = TextStyle(fontFamily = interFontFamily),
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        Box(
+            modifier = Modifier
+                .size(64.dp)
+                .border(
+                    width = 2.dp,
+                    color = Color.LightGray,
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            val checkedIcon = @Composable {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Checked",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .background(Color.LightGray, shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
+                        .fillMaxSize()
+                        .padding(8.dp)
+                )
+            }
+
+            when {
+                isAdmin && isChecked -> IconButton(onClick = onClick) { checkedIcon() }
+                isAdmin -> IconButton(onClick = onClick) {}
+                isChecked -> checkedIcon()
+            }
+        }
+    }
+}
+
+
 @Preview(apiLevel = 34)
 @Composable
 fun TaskDetailsScreen(
-    admin: Boolean = true
+    isAdmin: Boolean = false
 ) {
     var isChecked by remember { mutableStateOf(false) }
     var description by remember { mutableStateOf("") }
 
-    val interFontFamily = FontFamily(Font(R.font.inter_regular))
-
     val creationDate = "01/01/2000"
-    val dueDate = "01/01/2000"
+    val dueDate = "01/01/2001"
 
     Column(
         modifier = Modifier
@@ -77,81 +148,20 @@ fun TaskDetailsScreen(
             verticalAlignment = Alignment.Top
         ) {
             Column {
-                Text(
-                    text = "Creation Date",
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    style = TextStyle(fontFamily = interFontFamily)
+                DateView(
+                    label = "Creation Date",
+                    date = creationDate,
                 )
-                Text(
-                    text = creationDate,
-                    color = Color.LightGray,
-                    fontSize = 18.sp,
-                    style = TextStyle(fontFamily = interFontFamily)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Due Date",
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    style = TextStyle(fontFamily = interFontFamily)
-                )
-                Text(
-                    text = dueDate,
-                    color = Color.LightGray,
-                    fontSize = 18.sp,
-                    style = TextStyle(fontFamily = interFontFamily)
+                DateView(
+                    label = "Due Date",
+                    date = dueDate,
                 )
             }
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Status",
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    style = TextStyle(fontFamily = interFontFamily)
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Box(
-                    modifier = Modifier
-                        .size(64.dp)
-                        .border(
-                            width = 2.dp,
-                            color = Color.LightGray,
-                            shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (admin) {
-                        IconButton(onClick = { isChecked = !isChecked }) {
-                            if (isChecked) {
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = "Checked",
-                                    tint = Color.Black,
-                                    modifier = Modifier
-                                        .background(Color.LightGray, shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
-                                        .fillMaxSize()
-                                        .padding(8.dp)
-                                )
-                            }
-                        }
-                    } else {
-                        if (isChecked) {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = "Checked",
-                                tint = Color.Black,
-                                modifier = Modifier
-                                    .background(Color.LightGray, shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
-                                    .fillMaxSize()
-                                    .padding(8.dp)
-                            )
-                        }
-                    }
-                }
-            }
+            StatusCheckbox(
+                isChecked = isChecked,
+                isAdmin = isAdmin,
+                onClick = { isChecked = !isChecked }
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
         Box(modifier = Modifier
@@ -163,11 +173,12 @@ fun TaskDetailsScreen(
         MultiLineInput(
             label = "Task Description",
             value = description,
-            onValueChange = { if (admin) description = it },
+            onValueChange = { if (isAdmin) description = it },
             placeholderText = "Task details...",
-            modifier = Modifier.padding(horizontal = 4.dp)
+            modifier = Modifier.padding(horizontal = 4.dp),
+            isEnabled = isAdmin,
         )
-        if (admin) {
+        if (isAdmin) {
             Spacer(modifier = Modifier.height(48.dp))
             CustomButton(
                 text = "SAVE",
