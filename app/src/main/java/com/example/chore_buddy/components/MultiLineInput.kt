@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 fun MultiLineInput(
     label: String = "",
     value: String,
+    isEnabled: Boolean = true,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "Input text",
@@ -69,6 +70,7 @@ fun MultiLineInput(
         ),
         textStyle = textStyle,
         singleLine = false,
-        maxLines = Int.MAX_VALUE
+        maxLines = Int.MAX_VALUE,
+        enabled = isEnabled
     )
 }
