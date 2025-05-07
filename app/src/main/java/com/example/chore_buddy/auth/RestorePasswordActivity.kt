@@ -78,18 +78,8 @@ fun RestorePasswordScreen() {
         ) {
             Spacer(modifier = Modifier.height(64.dp))
             Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = "Email",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp),
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
             UserInput(
+                label = "Email",
                 value = email,
                 onValueChange = { email = it }
             )

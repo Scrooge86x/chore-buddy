@@ -81,63 +81,22 @@ fun RegisterUserScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = "Username",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp),
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
             UserInput(
+                label = "Username",
                 value = username,
                 onValueChange = { username = it }
             )
-            Text(
-                text = "Email",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
             UserInput(
+                label = "Email",
                 value = email,
                 onValueChange = { email = it }
-            )
-            Text(
-                text = "Password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
             )
             PasswordInput(
                 value = password,
                 onValueChange = { password = it },
             )
-            Text(
-                text = "Repeat password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
             PasswordInput(
+                label = "Repeat password",
                 value = repeatPassword,
                 onValueChange = { repeatPassword = it },
             )

@@ -161,15 +161,8 @@ fun TaskDetailsScreen(
             .background(Color.Gray)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Task Description",
-            color = Color.White,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.Start),
-            style = TextStyle(fontFamily = interFontFamily)
-        )
         MultiLineInput(
+            label = "Task Description",
             value = description,
             onValueChange = { if (admin) description = it },
             placeholderText = "Task details...",

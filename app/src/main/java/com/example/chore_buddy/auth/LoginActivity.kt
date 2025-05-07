@@ -80,31 +80,10 @@ fun LoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = "Email",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp),
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
             UserInput(
+                label = "Email",
                 value = email,
                 onValueChange = { email = it }
-            )
-            Text(
-                text = "Password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
             )
             PasswordInput(
                 value = password,

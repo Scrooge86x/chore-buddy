@@ -6,17 +6,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordInput(
+    label: String = "Password",
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -29,6 +32,18 @@ fun PasswordInput(
         color = Color(0xffb79fff)
     )
 ) {
+    Text(
+        text = label,
+        color = Color.White,
+        fontSize = 18.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, top = 16.dp),
+        textAlign = TextAlign.Start,
+        style = TextStyle(
+            fontFamily = interFontFamily
+        )
+    )
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,

@@ -61,14 +61,8 @@ fun CreateOrJoinGroupScreen() {
             style = TextStyle(fontFamily = interFontFamily)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Group name",
-            color = Color.White,
-            fontSize = 18.sp,
-            modifier = Modifier.align(Alignment.Start),
-            style = TextStyle(fontFamily = interFontFamily)
-        )
         UserInput(
+            label = "Group Name",
             value = groupName,
             onValueChange = { groupName = it }
         )
@@ -86,14 +80,8 @@ fun CreateOrJoinGroupScreen() {
             style = TextStyle(fontFamily = interFontFamily)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Group Id",
-            color = Color.White,
-            fontSize = 18.sp,
-            modifier = Modifier.align(Alignment.Start),
-            style = TextStyle(fontFamily = interFontFamily)
-        )
         UserInput(
+            label = "Group Id",
             value = groupId,
             onValueChange = { groupId = it }
         )

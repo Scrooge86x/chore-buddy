@@ -64,25 +64,13 @@ fun CreateTaskScreen() {
         )
         Spacer(modifier = Modifier.height(32.dp))
         Column(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                text = "Task name",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(start = 8.dp),
-                style = TextStyle(fontFamily = interFontFamily)
-            )
             UserInput(
+                label = "Task name",
                 value = taskName,
                 onValueChange = { taskName = it }
             )
-            Text(
-                text = "Description",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(start = 8.dp, top = 8.dp),
-                style = TextStyle(fontFamily = interFontFamily)
-            )
             MultiLineInput(
+                label = "Description",
                 value = description,
                 onValueChange = { description = it }
             )

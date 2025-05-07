@@ -9,12 +9,15 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
 
 val interFontFamily = FontFamily(
@@ -24,6 +27,7 @@ val interFontFamily = FontFamily(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserInput(
+    label: String = "",
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -36,6 +40,18 @@ fun UserInput(
         color = Color(0xffb79fff)
     )
 ) {
+    Text(
+        text = label,
+        color = Color.White,
+        fontSize = 18.sp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, top = 16.dp),
+        textAlign = TextAlign.Start,
+        style = TextStyle(
+            fontFamily = interFontFamily
+        )
+    )
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
