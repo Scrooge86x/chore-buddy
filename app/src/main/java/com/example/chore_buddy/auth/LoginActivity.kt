@@ -1,5 +1,6 @@
 package com.example.chore_buddy.auth
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -46,8 +47,8 @@ class LoginActivity : ComponentActivity() {
             //val intent = Intent(this, CalendarActivity::class.java)
             //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             //startActivity(intent)
-            finish()
-            return
+            //finish()
+            //return
         }
 
         enableEdgeToEdge()
@@ -172,12 +173,15 @@ fun LoginScreen() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             TextButton(
-                onClick = { /* TODO: Handle reset password */ }
+                onClick = { loginViewModel.logOut() }
             ) {
                 Text("RESET PASSWORD", color = Color.White)
             }
             TextButton(
-                onClick = { /* TODO: Handle register account */ }
+                onClick = {
+                    val intent = Intent(context, RegisterUserActivity::class.java)
+                    context.startActivity(intent)
+                }
             ) {
                 Text("REGISTER ACCOUNT", color = Color.White)
             }
