@@ -37,8 +37,6 @@ class RegisterUserViewModel() : ViewModel() {
             isLoading = true;
             _errorMessage.value = null
 
-            Log.d("user", "$username $email $password $passwordRepeat")
-
             when (val result = AuthRepository.signUpWithEmailAndPassword(email, password)) {
                 is Result.Success -> {
                     _registrationSuccess.value = result.data
