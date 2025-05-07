@@ -96,9 +96,7 @@ fun ChangePasswordScreen() {
                 value = restorePassword,
                 onValueChange = { restorePassword = it },
             )
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(96.dp))
             CustomButton(
                 text = "CHANGE PASSWORD",
                 onClick = { /* coś tam */ }

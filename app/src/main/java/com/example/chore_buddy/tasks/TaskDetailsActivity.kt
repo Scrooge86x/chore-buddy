@@ -70,8 +70,7 @@ fun TaskDetailsScreen(
             fontWeight = FontWeight.SemiBold,
             style = TextStyle(fontFamily = interFontFamily)
         )
-        Spacer(modifier = Modifier.height(48.dp))
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(72.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,

@@ -75,11 +75,11 @@ fun LoginScreen() {
                 fontFamily = interFontFamily
             )
         )
+        Spacer(modifier = Modifier.height(32.dp))
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
             UserInput(
                 label = "Email",
                 value = email,
@@ -89,11 +89,7 @@ fun LoginScreen() {
                 value = password,
                 onValueChange = { password = it },
             )
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(160.dp))
             CustomButton(
                 text = "LOGIN",
                 onClick = { /* coś tam */ }

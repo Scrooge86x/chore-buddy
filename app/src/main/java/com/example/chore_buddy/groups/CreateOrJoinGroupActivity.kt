@@ -71,7 +71,6 @@ fun CreateOrJoinGroupScreen() {
             // create group logic
         })
         Spacer(modifier = Modifier.height(48.dp))
-        Spacer(modifier = Modifier.weight(1f))
         Text(
             text = "Join Group",
             color = Color.LightGray,
