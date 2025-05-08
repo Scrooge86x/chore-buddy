@@ -69,7 +69,7 @@ fun ChangePasswordScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Restore Password",
+            text = "Change Password",
             color = Color.White,
             fontSize = 34.sp,
             fontWeight = FontWeight.Bold,
