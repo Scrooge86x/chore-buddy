@@ -9,6 +9,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,7 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import com.example.chore_buddy.ui.theme.ChorebuddyTheme
+
+import androidx.compose.runtime.Composable
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.PasswordInput
@@ -29,6 +33,7 @@ import com.example.chore_buddy.components.CustomButton
 import androidx.compose.ui.text.font.Font
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
+import com.example.chore_buddy.components.ScreenHeading
 
 
 class ChangePasswordActivity : ComponentActivity() {
@@ -36,7 +41,7 @@ class ChangePasswordActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChorebuddyTheme {
+            ChoreBuddyTheme {
                 ChangePasswordScreen()
             }
         }
@@ -62,100 +67,35 @@ fun ChangePasswordScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
-
         Logo()
-
         Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Change Password",
-            color = Color.White,
-            fontSize = 34.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 24.dp),
-
-            style = TextStyle(
-                fontFamily = interFontFamily
-            )
-        )
-
+        ScreenHeading(text = "Restore Password")
         Spacer(modifier = Modifier.height(32.dp))
-
-
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "Old Password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             PasswordInput(
+                label = "Old Password",
                 value = changePasswordViewModel.oldPassword,
                 onValueChange = { changePasswordViewModel.oldPassword = it },
             )
-            
-            Text(
-                text = "New Password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             PasswordInput(
+                label = "New Password",
                 value = changePasswordViewModel.newPassword,
                 onValueChange = { changePasswordViewModel.newPassword = it },
             )
-
-            Text(
-                text = "Repeat new password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             PasswordInput(
+                label = "Repeat New Password",
                 value = changePasswordViewModel.newPasswordRepeat,
                 onValueChange = { changePasswordViewModel.newPasswordRepeat = it },
             )
-
-
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-
-
-
+            Spacer(modifier = Modifier.height(96.dp))
             CustomButton(
                 text = "CHANGE PASSWORD",
                 onClick = { changePasswordViewModel.changePassword() }
             )
-
-
             Spacer(modifier = Modifier.height(64.dp))
         }
     }

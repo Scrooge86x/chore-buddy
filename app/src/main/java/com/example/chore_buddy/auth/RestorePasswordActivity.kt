@@ -21,7 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import com.example.chore_buddy.ui.theme.ChorebuddyTheme
+import androidx.compose.runtime.Composable
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
@@ -30,6 +31,7 @@ import com.example.chore_buddy.components.CustomButton
 import androidx.compose.ui.text.font.Font
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
+import com.example.chore_buddy.components.ScreenHeading
 
 
 class RestorePasswordActivity : ComponentActivity() {
@@ -37,7 +39,7 @@ class RestorePasswordActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChorebuddyTheme {
+            ChoreBuddyTheme {
                 RestorePasswordScreen()
             }
         }
@@ -49,8 +51,6 @@ class RestorePasswordActivity : ComponentActivity() {
 @Composable
 fun RestorePasswordScreen() {
     val restorePasswordViewModel: RestorePasswordViewModel = viewModel()
-
-
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
     )
@@ -63,66 +63,23 @@ fun RestorePasswordScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(0.dp))
-        
         Logo()
-
-        Text(
-            text = "Restore Password",
-            color = Color.White,
-            fontSize = 34.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 24.dp),
-
-            style = TextStyle(
-                fontFamily = interFontFamily
-            )
-        )
-
+        ScreenHeading(text = "Restore Password")
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(64.dp))
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-
-            Text(
-                text = "Email",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
+            Spacer(modifier = Modifier.height(96.dp))
             UserInput(
+                label = "Email",
                 value = restorePasswordViewModel.email,
                 onValueChange = { restorePasswordViewModel.email = it }
             )
-
-
-
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-
-
+            Spacer(modifier = Modifier.height(224.dp))
             CustomButton(
                 text = "SEND RESET EMAIL",
                 onClick = { restorePasswordViewModel.sendRestoreEmail() }
             )
-
-
             Spacer(modifier = Modifier.height(64.dp))
         }
     }

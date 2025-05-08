@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,7 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import com.example.chore_buddy.ui.theme.ChorebuddyTheme
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
@@ -35,6 +36,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.flow.collectLatest
+import com.example.chore_buddy.components.ScreenHeading
 
 
 class RegisterUserActivity : ComponentActivity() {
@@ -42,7 +44,7 @@ class RegisterUserActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChorebuddyTheme {
+            ChoreBuddyTheme {
                 RegisterUserScreen()
             }
         }
@@ -54,7 +56,6 @@ class RegisterUserActivity : ComponentActivity() {
 @Composable
 fun RegisterUserScreen() {
     val registerUserViewModel: RegisterUserViewModel = viewModel();
-
     val interFontFamily = FontFamily(
         Font(R.font.inter_regular),
     )
@@ -81,109 +82,37 @@ fun RegisterUserScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(0.dp))
-
         Logo()
-
-        Text(
-            text = "Register",
-            color = Color.White,
-            fontSize = 34.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 24.dp),
-
-            style = TextStyle(
-                fontFamily = interFontFamily
-            )
-        )
-
+        ScreenHeading(text = "Register")
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "Username",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             UserInput(
+                label = "Username",
                 value = registerUserViewModel.username,
                 onValueChange = { registerUserViewModel.username = it }
             )
-
-            Text(
-                text = "Email",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             UserInput(
+                label = "Email",
                 value = registerUserViewModel.email,
                 onValueChange = { registerUserViewModel.email = it }
             )
-
-            Text(
-                text = "Password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             PasswordInput(
                 value = registerUserViewModel.password,
                 onValueChange = { registerUserViewModel.password = it },
             )
-
-
-            Text(
-                text = "Repeat password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             PasswordInput(
+                label = "Repeat password",
                 value = registerUserViewModel.passwordRepeat,
                 onValueChange = { registerUserViewModel.passwordRepeat = it },
             )
-
             Spacer(modifier = Modifier.height(32.dp))
-
             CustomButton(
                 text = "REGISTER",
                 onClick = { registerUserViewModel.registerUser() }
             )
-
-
             Spacer(modifier = Modifier.height(64.dp))
         }
     }

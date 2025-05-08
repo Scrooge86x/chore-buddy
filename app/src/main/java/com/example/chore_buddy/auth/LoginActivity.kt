@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.sp
 
 import android.os.Bundle
 import android.util.Log
+
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -25,7 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import com.example.chore_buddy.ui.theme.ChorebuddyTheme
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
@@ -35,6 +37,7 @@ import com.example.chore_buddy.components.CustomButton
 import androidx.compose.ui.text.font.Font
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
+import com.example.chore_buddy.components.ScreenHeading
 
 
 class LoginActivity : ComponentActivity() {
@@ -42,7 +45,6 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val currentUser = AuthRepository.getCurrentUser()
-
         if (currentUser != null) {
             //val intent = Intent(this, CalendarActivity::class.java)
             //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -53,7 +55,7 @@ class LoginActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            ChorebuddyTheme {
+            ChoreBuddyTheme {
                 LoginScreen()
             }
         }
@@ -67,7 +69,6 @@ fun LoginScreen() {
     val loginSuccess = loginViewModel.loginSuccess
 
     val context = LocalContext.current
-
     val activity = context as? ComponentActivity
 
     LaunchedEffect(loginSuccess) {
@@ -92,82 +93,29 @@ fun LoginScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(0.dp))
-
         Logo()
-
-        Text(
-            text = "Login",
-            color = Color.White,
-            fontSize = 34.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 24.dp),
-
-            style = TextStyle(
-                fontFamily = interFontFamily
-            )
-        )
-
+        ScreenHeading(text = "Login")
+        Spacer(modifier = Modifier.height(32.dp))
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = "Email",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             UserInput(
+                label = "Email",
                 value = loginViewModel.email,
                 onValueChange = { loginViewModel.email = it }
             )
-
-            Text(
-                text = "Password",
-                color = Color.White,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 16.dp, top = 16.dp),
-
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
-            )
-
             PasswordInput(
                 value = loginViewModel.password,
                 onValueChange = { loginViewModel.password = it },
             )
-
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-            Spacer(modifier = Modifier.height(32.dp))
-
-
-
+            Spacer(modifier = Modifier.height(160.dp))
             CustomButton(
                 text = "LOGIN",
                 onClick = { loginViewModel.signIn() }
             )
-
-
             Spacer(modifier = Modifier.height(16.dp))
         }
-
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween

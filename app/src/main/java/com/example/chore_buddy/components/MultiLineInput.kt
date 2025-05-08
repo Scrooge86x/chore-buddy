@@ -1,30 +1,34 @@
 package com.example.chore_buddy.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
 
 @Composable
-fun PasswordInput(
-    label: String = "Password",
+fun MultiLineInput(
+    label: String = "",
     value: String,
+    isEnabled: Boolean = true,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholderText: String = "Enter your password",
+    placeholderText: String = "Input text",
     placeholderColor: Color = Color(0xffcccccc),
     focusedBorderColor: Color = Color(0xff76ffdf),
     unfocusedBorderColor: Color = Color(0xffcccccc),
@@ -33,6 +37,7 @@ fun PasswordInput(
         color = Color(0xffb79fff)
     )
 ) {
+    val scrollState = rememberScrollState()
     val interFontFamily = FontFamily(
         androidx.compose.ui.text.font.Font(R.font.inter_regular),
     )
@@ -45,9 +50,7 @@ fun PasswordInput(
             .fillMaxWidth()
             .padding(start = 16.dp, top = 16.dp),
         textAlign = TextAlign.Start,
-        style = TextStyle(
-            fontFamily = interFontFamily
-        )
+        style = TextStyle(fontFamily = interFontFamily)
     )
     OutlinedTextField(
         value = value,
@@ -56,14 +59,13 @@ fun PasswordInput(
             Text(
                 text = placeholderText,
                 color = placeholderColor,
-                //fontFamily = FontFamily.Serif,
-                style = TextStyle(
-                    fontFamily = interFontFamily
-                )
+                style = TextStyle(fontFamily = interFontFamily)
             )
         },
         modifier = modifier
             .fillMaxWidth()
+            .height(200.dp)
+            .verticalScroll(scrollState)
             .padding(vertical = 8.dp),
         shape = RoundedCornerShape(16.dp),
         colors = OutlinedTextFieldDefaults.colors(
@@ -71,10 +73,8 @@ fun PasswordInput(
             unfocusedBorderColor = unfocusedBorderColor
         ),
         textStyle = textStyle,
-        visualTransformation = PasswordVisualTransformation(),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password
-        ),
-        singleLine = true
+        singleLine = false,
+        maxLines = Int.MAX_VALUE,
+        enabled = isEnabled
     )
 }
