@@ -173,7 +173,10 @@ fun LoginScreen() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             TextButton(
-                onClick = { loginViewModel.logOut() }
+                onClick = {
+                    val intent = Intent(context, RestorePasswordActivity::class.java)
+                    context.startActivity(intent)
+                }
             ) {
                 Text("RESET PASSWORD", color = Color.White)
             }
