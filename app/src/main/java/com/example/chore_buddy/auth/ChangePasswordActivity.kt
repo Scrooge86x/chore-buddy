@@ -2,7 +2,6 @@ package com.example.chore_buddy.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +27,7 @@ import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
 import androidx.compose.ui.text.font.Font
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
 
 
@@ -47,9 +47,7 @@ class ChangePasswordActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun ChangePasswordScreen() {
-    var oldPassword by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var restorePassword by remember { mutableStateOf("") }
+    var changePasswordViewModel: ChangePasswordViewModel = viewModel()
 
 
     val interFontFamily = FontFamily(
@@ -105,8 +103,8 @@ fun ChangePasswordScreen() {
             )
 
             PasswordInput(
-                value = oldPassword,
-                onValueChange = { oldPassword = it },
+                value = changePasswordViewModel.oldPassword,
+                onValueChange = { changePasswordViewModel.oldPassword = it },
             )
             
             Text(
@@ -123,8 +121,8 @@ fun ChangePasswordScreen() {
             )
 
             PasswordInput(
-                value = password,
-                onValueChange = { password = it },
+                value = changePasswordViewModel.newPassword,
+                onValueChange = { changePasswordViewModel.newPassword = it },
             )
 
             Text(
@@ -141,8 +139,8 @@ fun ChangePasswordScreen() {
             )
 
             PasswordInput(
-                value = restorePassword,
-                onValueChange = { restorePassword = it },
+                value = changePasswordViewModel.newPasswordRepeat,
+                onValueChange = { changePasswordViewModel.newPasswordRepeat = it },
             )
 
 
@@ -154,7 +152,7 @@ fun ChangePasswordScreen() {
 
             CustomButton(
                 text = "CHANGE PASSWORD",
-                onClick = { /* coś tam */ }
+                onClick = { changePasswordViewModel.changePassword() }
             )
 
 
