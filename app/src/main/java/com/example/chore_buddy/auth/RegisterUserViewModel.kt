@@ -1,7 +1,5 @@
 package com.example.chore_buddy.auth
 
-import android.util.Log
-import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
