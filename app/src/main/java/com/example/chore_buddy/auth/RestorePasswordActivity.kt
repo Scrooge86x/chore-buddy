@@ -28,6 +28,7 @@ import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.CustomButton
 
 import androidx.compose.ui.text.font.Font
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
 
 
@@ -47,7 +48,7 @@ class RestorePasswordActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun RestorePasswordScreen() {
-    var email by remember { mutableStateOf("") }
+    val restorePasswordViewModel: RestorePasswordViewModel = viewModel()
 
 
     val interFontFamily = FontFamily(
@@ -101,8 +102,8 @@ fun RestorePasswordScreen() {
             )
 
             UserInput(
-                value = email,
-                onValueChange = { email = it }
+                value = restorePasswordViewModel.email,
+                onValueChange = { restorePasswordViewModel.email = it }
             )
 
 
@@ -118,7 +119,7 @@ fun RestorePasswordScreen() {
 
             CustomButton(
                 text = "SEND RESET EMAIL",
-                onClick = { /* coś tam */ }
+                onClick = { restorePasswordViewModel.sendRestoreEmail() }
             )
 
 
