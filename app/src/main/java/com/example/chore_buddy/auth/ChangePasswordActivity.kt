@@ -5,34 +5,23 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 
-import androidx.compose.runtime.Composable
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
-
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
-import androidx.compose.ui.text.font.Font
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.chore_buddy.R
 import com.example.chore_buddy.components.ScreenHeading
 
 
@@ -54,11 +43,6 @@ class ChangePasswordActivity : ComponentActivity() {
 fun ChangePasswordScreen() {
     var changePasswordViewModel: ChangePasswordViewModel = viewModel()
 
-
-    val interFontFamily = FontFamily(
-        Font(R.font.inter_regular),
-    )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -69,7 +53,7 @@ fun ChangePasswordScreen() {
     ) {
         Logo()
         Spacer(modifier = Modifier.height(16.dp))
-        ScreenHeading(text = "Restore Password")
+        ScreenHeading(text = "Change Password")
         Spacer(modifier = Modifier.height(32.dp))
         Column(
             modifier = Modifier.fillMaxWidth(),
