@@ -32,6 +32,9 @@
         <activity android:name=".auth.RestorePasswordActivity"
             android:exported="false">
         </activity>
+        <activity android:name=".tasks.CalendarActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

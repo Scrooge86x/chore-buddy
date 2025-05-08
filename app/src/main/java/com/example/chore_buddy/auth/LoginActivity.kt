@@ -31,6 +31,7 @@ import com.example.chore_buddy.components.CustomButton
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.components.ScreenHeading
+import com.example.chore_buddy.tasks.CalendarActivity
 
 
 class LoginActivity : ComponentActivity() {
@@ -66,11 +67,10 @@ fun LoginScreen() {
 
     LaunchedEffect(loginSuccess) {
         if (loginSuccess) {
-            //val intent = Intent(context, MainActivity::class.java)
-            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            //context.startActivity(intent)
-            //activity?.finish()
-            Log.d("LoginActivity", "Zalogowano")
+            val intent = Intent(context, CalendarActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            context.startActivity(intent)
+            activity?.finish()
         }
     }
 
