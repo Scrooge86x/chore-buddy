@@ -2,7 +2,7 @@ package com.example.chore_buddy.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -60,17 +60,23 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun LoginScreen() {
     val loginViewModel: LoginViewModel = viewModel()
-    val loginSuccess = loginViewModel.loginSuccess
 
     val context = LocalContext.current
     val activity = context as? ComponentActivity
 
-    LaunchedEffect(loginSuccess) {
-        if (loginSuccess) {
+    LaunchedEffect(loginViewModel.loginSuccess) {
+        if (loginViewModel.loginSuccess) {
             val intent = Intent(context, CalendarActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             context.startActivity(intent)
             activity?.finish()
+        }
+    }
+
+    LaunchedEffect(loginViewModel.loginError) {
+        if (loginViewModel.loginError != null) {
+            Toast.makeText(context, loginViewModel.loginError, Toast.LENGTH_LONG).show()
+            loginViewModel.loginError = null
         }
     }
 

@@ -17,9 +17,18 @@ class LoginViewModel() : ViewModel() {
     fun signIn() {
         loginError = null
         loginSuccess = false
-        isLoading = true
 
         viewModelScope.launch {
+            if (email.isEmpty()) {
+                loginError = "Email is required"
+                return@launch
+            }
+            if (password.isEmpty()) {
+                loginError = "Password is required"
+                return@launch
+            }
+
+            isLoading = true
             when (val result = AuthRepository.signInWithEmailAndPassword(email, password)) {
                 is AuthRepository.Result.Success -> {
                     loginSuccess = true
