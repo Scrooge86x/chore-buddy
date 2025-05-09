@@ -17,7 +17,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.auth.ChangePasswordActivity
+import com.example.chore_buddy.auth.LoginActivity
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
@@ -39,6 +41,7 @@ class CalendarActivity : ComponentActivity() {
 fun CalendarScreen() {
     val context = LocalContext.current
     val activity = context as? ComponentActivity
+    val calendarViewModel: CalendarViewModel = viewModel()
 
     Column(
         modifier = Modifier
@@ -53,6 +56,14 @@ fun CalendarScreen() {
             text = "CHANGE PASSWORD",
             onClick = {
                 val intent = Intent(context, ChangePasswordActivity::class.java)
+                context.startActivity(intent)
+            }
+        )
+        CustomButton(
+            text = "Logout",
+            onClick = {
+                calendarViewModel.logout()
+                val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
                 activity?.finish()
             }
