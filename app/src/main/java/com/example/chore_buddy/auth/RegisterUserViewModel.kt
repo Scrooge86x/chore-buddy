@@ -22,12 +22,12 @@ class RegisterUserViewModel() : ViewModel() {
     var errorMessage by mutableStateOf<String?>(null)
 
     fun registerUser() {
-        if ( validate() ) {
+        if (!isDataValid()) {
             return
         }
 
         viewModelScope.launch {
-            isLoading = true;
+            isLoading = true
             errorMessage = null
 
             when (val result = AuthRepository.signUpWithEmailAndPassword(email, password)) {
@@ -43,25 +43,29 @@ class RegisterUserViewModel() : ViewModel() {
         }
     }
 
-    private fun validate(): Boolean {
+    private fun isDataValid(): Boolean {
         return when {
+            username.isEmpty() -> {
+                errorMessage = "Username is required"
+                false
+            }
             email.isEmpty() -> {
                 errorMessage = "Email is required"
-                true
+                false
             }
             password.isEmpty() -> {
                 errorMessage = "Password is required"
-                true
+                false
             }
             password.length < 6 -> {
                 errorMessage = "Password must be at least 6 characters"
-                true
+                false
             }
-            !password.equals(passwordRepeat) -> {
+            password != passwordRepeat -> {
                 errorMessage = "Passwords don't match"
-                true
+                false
             }
-            else -> false
+            else -> true
         }
     }
 
