@@ -10,6 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import android.os.Bundle
+import android.widget.Toast
+
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,6 +25,8 @@ import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
 import com.example.chore_buddy.components.ScreenHeading
 
 
@@ -42,10 +46,23 @@ class RegisterUserActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun RegisterUserScreen() {
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var repeatPassword by remember { mutableStateOf("") }
+    val registerUserViewModel: RegisterUserViewModel = viewModel()
+
+    val context = LocalContext.current
+    val activity = context as? ComponentActivity
+
+    LaunchedEffect(registerUserViewModel.errorMessage) {
+        if (registerUserViewModel.errorMessage != null) {
+            Toast.makeText(context, registerUserViewModel.errorMessage, Toast.LENGTH_LONG).show()
+            registerUserViewModel.resetError()
+        }
+    }
+    LaunchedEffect(registerUserViewModel.registrationSuccess) {
+        if (registerUserViewModel.registrationSuccess != null) {
+            Toast.makeText(context, "Account successfully created", Toast.LENGTH_LONG).show()
+            activity?.finish()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -64,27 +81,27 @@ fun RegisterUserScreen() {
             Spacer(modifier = Modifier.height(32.dp))
             UserInput(
                 label = "Username",
-                value = username,
-                onValueChange = { username = it }
+                value = registerUserViewModel.username,
+                onValueChange = { registerUserViewModel.username = it }
             )
             UserInput(
                 label = "Email",
-                value = email,
-                onValueChange = { email = it }
+                value = registerUserViewModel.email,
+                onValueChange = { registerUserViewModel.email = it }
             )
             PasswordInput(
-                value = password,
-                onValueChange = { password = it },
+                value = registerUserViewModel.password,
+                onValueChange = { registerUserViewModel.password = it },
             )
             PasswordInput(
                 label = "Repeat password",
-                value = repeatPassword,
-                onValueChange = { repeatPassword = it },
+                value = registerUserViewModel.passwordRepeat,
+                onValueChange = { registerUserViewModel.passwordRepeat = it },
             )
             Spacer(modifier = Modifier.height(32.dp))
             CustomButton(
                 text = "REGISTER",
-                onClick = { /* coś tam */ }
+                onClick = { registerUserViewModel.registerUser() }
             )
             Spacer(modifier = Modifier.height(64.dp))
         }

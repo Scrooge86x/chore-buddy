@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -54,10 +55,11 @@ dependencies {
 
     implementation(libs.androidx.material.icons.extended)
 
-    implementation (libs.androidx.ui.text.google.fonts)
-    implementation (libs.androidx.ui.text)
-
-
+    implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.ui.text)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

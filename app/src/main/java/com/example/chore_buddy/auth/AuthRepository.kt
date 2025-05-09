@@ -1,0 +1,116 @@
+package com.example.chore_buddy.auth
+
+import android.util.Log
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
+
+object AuthRepository {
+    private val firebaseAuth: FirebaseAuth = Firebase.auth
+
+    suspend fun signInWithEmailAndPassword(email: String, password: String): Result<FirebaseUser> {
+        return try {
+            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            result.user?.let {
+                Result.Success(it)
+            } ?: Result.Error(Exception("Login successful, but the user is null."))
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Login error: ${e.message}")
+            Result.Error(e)
+        }
+    }
+
+    suspend fun signUpWithEmailAndPassword(email: String, password: String): Result<FirebaseUser> {
+        return try {
+            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            result.user?.let {
+                Result.Success(it)
+            } ?: Result.Error(Exception("Registration successful, but the user is null."))
+        } catch (e: FirebaseAuthUserCollisionException) {
+            Log.w("Registration", "User with the provided email already exists.", e)
+            Result.Error(e)
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Registration error: ${e.message}")
+            Result.Error(e)
+        }
+    }
+
+    fun signOut() {
+        firebaseAuth.signOut()
+    }
+
+    suspend fun sendPasswordResetEmail(email: String): Result<Unit> {
+        return try {
+            firebaseAuth.sendPasswordResetEmail(email).await()
+            Log.d("AuthRepository", "Password reset link sent to email: $email")
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Error sending password reset link: ${e.message}")
+            Result.Error(e)
+        }
+    }
+
+    suspend fun changePassword(oldPassword: String, newPassword: String): Result<Unit> {
+        val user = firebaseAuth.currentUser // Pobieramy aktualnie zalogowanego użytkownika
+
+        return if (user != null) {
+            if (user.providerData.none { it.providerId == EmailAuthProvider.PROVIDER_ID }) {
+                val error = Exception("Changing password requires email/password login.")
+                Log.e("AuthRepository", error.message, error)
+                return Result.Error(error)
+            }
+
+            val email = user.email
+            if (email == null) {
+                // To nie powinno się zdarzyć dla użytkownika email/hasło, ale warto sprawdzić
+                val error = Exception("User's email address is unavailable.")
+                Log.e("AuthRepository", error.message, error)
+                return Result.Error(error)
+            }
+
+            // Krok 1: Utworzenie danych uwierzytelniających ze starego hasła
+            val credential = EmailAuthProvider.getCredential(email, oldPassword)
+
+            try {
+                // Krok 2: Ponowne uwierzytelnienie użytkownika przy użyciu starych danych
+                user.reauthenticate(credential).await()
+                Log.d("AuthRepository", "User re-authenticated successfully.")
+
+                // Krok 3: Jeśli re-autentykacja się powiodła, zmień hasło na nowe
+                user.updatePassword(newPassword).await()
+                Log.d("AuthRepository", "Password changed successfully.")
+
+                Result.Success(Unit)
+
+            } catch (e: FirebaseAuthInvalidCredentialsException) {
+                // Specyficzny błąd: podano nieprawidłowe stare hasło
+                val errorMessage = "The provided old password is incorrect."
+                Log.e("AuthRepository", errorMessage, e)
+                Result.Error(Exception(errorMessage, e)) // Zwracamy bardziej zrozumiały błąd
+            } catch (e: Exception) {
+                // Inne błędy podczas re-autentykacji lub zmiany hasła
+                Log.e("AuthRepository", "Error during re-authentication or password change: ${e.message}")
+                Result.Error(e)
+            }
+        } else {
+            // Nie ma zalogowanego użytkownika, nie można zmienić hasła
+            val error = Exception("No logged-in user to change password.")
+            Log.e("AuthRepository", error.message, error)
+            Result.Error(error)
+        }
+    }
+
+    fun getCurrentUser(): FirebaseUser? {
+        return firebaseAuth.currentUser
+    }
+
+    sealed class Result<out T> {
+        data class Success<out T>(val data: T) : Result<T>()
+        data class Error(val exception: Exception) : Result<Nothing>()
+    }
+}
