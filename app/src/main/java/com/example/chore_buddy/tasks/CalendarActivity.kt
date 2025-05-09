@@ -60,7 +60,7 @@ fun CalendarScreen() {
             }
         )
         CustomButton(
-            text = "Logout",
+            text = "LOGOUT",
             onClick = {
                 calendarViewModel.logout()
                 val intent = Intent(context, LoginActivity::class.java)
