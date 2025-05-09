@@ -20,8 +20,7 @@ class RegisterUserViewModel() : ViewModel() {
     var passwordRepeat by mutableStateOf("")
 
     var isLoading by mutableStateOf(false)
-    private var _registrationSuccess = MutableStateFlow<FirebaseUser?>(null)
-    var registrationSuccess: StateFlow<FirebaseUser?> = _registrationSuccess.asStateFlow()
+    var registrationSuccess by mutableStateOf<FirebaseUser?>(null)
 
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
@@ -37,7 +36,7 @@ class RegisterUserViewModel() : ViewModel() {
 
             when (val result = AuthRepository.signUpWithEmailAndPassword(email, password)) {
                 is Result.Success -> {
-                    _registrationSuccess.value = result.data
+                    registrationSuccess = result.data
                 }
                 is Result.Error -> {
                     _errorMessage.value = result.exception.message ?: "Registration error"

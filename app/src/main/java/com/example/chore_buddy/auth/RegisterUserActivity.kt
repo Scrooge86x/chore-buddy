@@ -60,8 +60,12 @@ fun RegisterUserScreen() {
         }
     }
 
+    val activity = context as? ComponentActivity
+
     LaunchedEffect(registerUserViewModel.registrationSuccess) {
-        Log.d("Registration", "Registration success")
+        if (registerUserViewModel.registrationSuccess != null) {
+            activity?.finish()
+        }
     }
 
     Column(
