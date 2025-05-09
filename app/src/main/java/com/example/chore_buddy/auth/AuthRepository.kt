@@ -56,7 +56,7 @@ object AuthRepository {
     }
 
     suspend fun changePassword(oldPassword: String, newPassword: String): Result<Unit> {
-        val user = firebaseAuth.currentUser // Pobieramy aktualnie zalogowanego użytkownika
+        val user = firebaseAuth.currentUser
 
         return if (user != null) {
             if (user.providerData.none { it.providerId == EmailAuthProvider.PROVIDER_ID }) {
@@ -67,38 +67,30 @@ object AuthRepository {
 
             val email = user.email
             if (email == null) {
-                // To nie powinno się zdarzyć dla użytkownika email/hasło, ale warto sprawdzić
                 val error = Exception("User's email address is unavailable.")
                 Log.e("AuthRepository", error.message, error)
                 return Result.Error(error)
             }
 
-            // Krok 1: Utworzenie danych uwierzytelniających ze starego hasła
             val credential = EmailAuthProvider.getCredential(email, oldPassword)
-
             try {
-                // Krok 2: Ponowne uwierzytelnienie użytkownika przy użyciu starych danych
                 user.reauthenticate(credential).await()
                 Log.d("AuthRepository", "User re-authenticated successfully.")
 
-                // Krok 3: Jeśli re-autentykacja się powiodła, zmień hasło na nowe
                 user.updatePassword(newPassword).await()
                 Log.d("AuthRepository", "Password changed successfully.")
 
                 Result.Success(Unit)
 
             } catch (e: FirebaseAuthInvalidCredentialsException) {
-                // Specyficzny błąd: podano nieprawidłowe stare hasło
                 val errorMessage = "The provided old password is incorrect."
                 Log.e("AuthRepository", errorMessage, e)
-                Result.Error(Exception(errorMessage, e)) // Zwracamy bardziej zrozumiały błąd
+                Result.Error(Exception(errorMessage, e))
             } catch (e: Exception) {
-                // Inne błędy podczas re-autentykacji lub zmiany hasła
                 Log.e("AuthRepository", "Error during re-authentication or password change: ${e.message}")
                 Result.Error(e)
             }
         } else {
-            // Nie ma zalogowanego użytkownika, nie można zmienić hasła
             val error = Exception("No logged-in user to change password.")
             Log.e("AuthRepository", error.message, error)
             Result.Error(error)
