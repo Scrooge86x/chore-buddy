@@ -59,6 +59,7 @@ fun RegisterUserScreen() {
     }
     LaunchedEffect(registerUserViewModel.registrationSuccess) {
         if (registerUserViewModel.registrationSuccess != null) {
+            Toast.makeText(context, "Account successfully created", Toast.LENGTH_LONG).show()
             activity?.finish()
         }
     }
