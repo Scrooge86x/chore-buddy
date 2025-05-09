@@ -12,9 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.components.Logo
@@ -42,6 +45,29 @@ class ChangePasswordActivity : ComponentActivity() {
 @Composable
 fun ChangePasswordScreen() {
     var changePasswordViewModel: ChangePasswordViewModel = viewModel()
+    val context = LocalContext.current
+
+    LaunchedEffect(changePasswordViewModel.passwordChangingSuccess) {
+        if (changePasswordViewModel.passwordChangingSuccess != null) {
+            Toast.makeText(
+                context,
+                changePasswordViewModel.passwordChangingSuccess,
+                Toast.LENGTH_LONG
+            ).show()
+            changePasswordViewModel.newPassword = ""
+            changePasswordViewModel.newPasswordRepeat = ""
+            changePasswordViewModel.oldPassword = ""
+            changePasswordViewModel.errorMessage = null
+            changePasswordViewModel.passwordChangingSuccess = null
+        }
+    }
+
+    LaunchedEffect(changePasswordViewModel.errorMessage) {
+        if (changePasswordViewModel.errorMessage != null) {
+        Toast.makeText(context, changePasswordViewModel.errorMessage, Toast.LENGTH_LONG).show()
+        changePasswordViewModel.errorMessage = null
+            }
+    }
 
     Column(
         modifier = Modifier

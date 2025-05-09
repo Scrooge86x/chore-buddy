@@ -15,7 +15,7 @@ class ChangePasswordViewModel(): ViewModel() {
     var newPasswordRepeat by mutableStateOf("")
 
     var isLoading by mutableStateOf(false)
-    var passwordChangingSuccess by mutableStateOf(false)
+    var passwordChangingSuccess by mutableStateOf<String?>(null)
 
     var errorMessage by mutableStateOf<String?>(null)
 
@@ -30,7 +30,7 @@ class ChangePasswordViewModel(): ViewModel() {
 
             when (val result = AuthRepository.changePassword(oldPassword, newPassword)) {
                 is Result.Success -> {
-                    passwordChangingSuccess = true
+                    passwordChangingSuccess = "Password changed successfully."
                 }
                 is Result.Error -> {
                     errorMessage = result.exception.message ?: "Changing password error."
@@ -59,9 +59,5 @@ class ChangePasswordViewModel(): ViewModel() {
             }
             else -> false
         }
-    }
-
-    fun resetError() {
-        errorMessage = null
     }
 }
