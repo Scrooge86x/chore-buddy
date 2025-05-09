@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 
 import androidx.activity.ComponentActivity
@@ -28,7 +27,6 @@ import com.example.chore_buddy.components.CustomButton
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.platform.LocalContext
-import kotlinx.coroutines.flow.collectLatest
 import com.example.chore_buddy.components.ScreenHeading
 
 
@@ -48,20 +46,17 @@ class RegisterUserActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun RegisterUserScreen() {
-    val registerUserViewModel: RegisterUserViewModel = viewModel();
+    val registerUserViewModel: RegisterUserViewModel = viewModel()
 
     val context = LocalContext.current
-    LaunchedEffect(registerUserViewModel.errorMessage) {
-        registerUserViewModel.errorMessage.collectLatest {message ->
-            if (message != null) {
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                registerUserViewModel.resetError()
-            }
-        }
-    }
-
     val activity = context as? ComponentActivity
 
+    LaunchedEffect(registerUserViewModel.errorMessage) {
+        if (registerUserViewModel.errorMessage != null) {
+            Toast.makeText(context, registerUserViewModel.errorMessage, Toast.LENGTH_LONG).show()
+            registerUserViewModel.resetError()
+        }
+    }
     LaunchedEffect(registerUserViewModel.registrationSuccess) {
         if (registerUserViewModel.registrationSuccess != null) {
             activity?.finish()

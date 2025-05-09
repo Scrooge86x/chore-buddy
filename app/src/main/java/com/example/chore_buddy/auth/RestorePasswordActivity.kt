@@ -26,7 +26,6 @@ import com.example.chore_buddy.components.CustomButton
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.components.ScreenHeading
-import kotlinx.coroutines.flow.collectLatest
 
 
 class RestorePasswordActivity : ComponentActivity() {

@@ -5,13 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 import com.example.chore_buddy.auth.AuthRepository.Result
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class RegisterUserViewModel() : ViewModel() {
     var email by mutableStateOf("")
@@ -22,8 +19,7 @@ class RegisterUserViewModel() : ViewModel() {
     var isLoading by mutableStateOf(false)
     var registrationSuccess by mutableStateOf<FirebaseUser?>(null)
 
-    private val _errorMessage = MutableStateFlow<String?>(null)
-    val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
+    var errorMessage by mutableStateOf<String?>(null)
 
     fun registerUser() {
         if ( validate() ) {
@@ -32,14 +28,14 @@ class RegisterUserViewModel() : ViewModel() {
 
         viewModelScope.launch {
             isLoading = true;
-            _errorMessage.value = null
+            errorMessage = null
 
             when (val result = AuthRepository.signUpWithEmailAndPassword(email, password)) {
                 is Result.Success -> {
                     registrationSuccess = result.data
                 }
                 is Result.Error -> {
-                    _errorMessage.value = result.exception.message ?: "Registration error"
+                    errorMessage = result.exception.message ?: "Registration error"
                 }
             }
 
@@ -50,19 +46,19 @@ class RegisterUserViewModel() : ViewModel() {
     private fun validate(): Boolean {
         return when {
             email.isEmpty() -> {
-                _errorMessage.value = "Email is required"
+                errorMessage = "Email is required"
                 true
             }
             password.isEmpty() -> {
-                _errorMessage.value = "Password is required"
+                errorMessage = "Password is required"
                 true
             }
             password.length < 6 -> {
-                _errorMessage.value = "Password must be at least 6 characters"
+                errorMessage = "Password must be at least 6 characters"
                 true
             }
             !password.equals(passwordRepeat) -> {
-                _errorMessage.value = "Passwords don't match"
+                errorMessage = "Passwords don't match"
                 true
             }
             else -> false
@@ -70,6 +66,6 @@ class RegisterUserViewModel() : ViewModel() {
     }
 
     fun resetError() {
-        _errorMessage.value = null
+        errorMessage = null
     }
 }
