@@ -38,21 +38,24 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val currentUser = AuthRepository.getCurrentUser()
-        if (currentUser != null) {
-            //val intent = Intent(this, CalendarActivity::class.java)
-            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            //startActivity(intent)
-            //finish()
-            //return
-        }
-
         enableEdgeToEdge()
         setContent {
             ChoreBuddyTheme {
                 LoginScreen()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (AuthRepository.getCurrentUser() == null)
+            return
+
+        val intent = Intent(this, CalendarActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }
 
