@@ -1,4 +1,4 @@
-package com.example.chore_buddy.settings
+package com.example.chore_buddy.users
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
