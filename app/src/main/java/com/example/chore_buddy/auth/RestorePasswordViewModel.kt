@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.chore_buddy.auth.AuthRepository.Result
+import com.example.chore_buddy.auth.AuthRepository.AuthResult
 import kotlinx.coroutines.launch
 
 class RestorePasswordViewModel(): ViewModel() {
@@ -27,10 +27,10 @@ class RestorePasswordViewModel(): ViewModel() {
 
         viewModelScope.launch {
             when (val result = AuthRepository.sendPasswordResetEmail(email)) {
-                is Result.Success -> {
+                is AuthResult.Success -> {
                     isSuccess = "Message was send to $email"
                 }
-                is Result.Error -> {
+                is AuthResult.Error -> {
                     errorMessage = result.exception.message ?: "An error occurred while sending the email. Please try again."
                 }
             }

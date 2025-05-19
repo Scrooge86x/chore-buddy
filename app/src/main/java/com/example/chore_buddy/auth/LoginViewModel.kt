@@ -30,10 +30,10 @@ class LoginViewModel() : ViewModel() {
 
             isLoading = true
             when (val result = AuthRepository.signInWithEmailAndPassword(email, password)) {
-                is AuthRepository.Result.Success -> {
+                is AuthRepository.AuthResult.Success -> {
                     loginSuccess = true
                 }
-                is AuthRepository.Result.Error -> {
+                is AuthRepository.AuthResult.Error -> {
                     loginError = when (result.exception) {
                         is com.google.firebase.auth.FirebaseAuthInvalidUserException -> "Użytkownik nie istnieje lub jest zablokowany."
                         is com.google.firebase.auth.FirebaseAuthInvalidCredentialsException -> "Nieprawidłowy email lub hasło."

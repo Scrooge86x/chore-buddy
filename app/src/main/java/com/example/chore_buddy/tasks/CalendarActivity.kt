@@ -17,12 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.chore_buddy.auth.ChangePasswordActivity
-import com.example.chore_buddy.auth.LoginActivity
+import com.example.chore_buddy.auth.AuthRepository
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.users.UserProfileActivity
 
 class CalendarActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +39,6 @@ class CalendarActivity : ComponentActivity() {
 @Composable
 fun CalendarScreen() {
     val context = LocalContext.current
-    val activity = context as? ComponentActivity
-    val calendarViewModel: CalendarViewModel = viewModel()
 
     Column(
         modifier = Modifier
@@ -53,19 +50,11 @@ fun CalendarScreen() {
     ) {
         ScreenHeading(text = "under construction")
         CustomButton(
-            text = "CHANGE PASSWORD",
+            text = "CHECK YOUR PROFILE",
             onClick = {
-                val intent = Intent(context, ChangePasswordActivity::class.java)
+                val intent = Intent(context, UserProfileActivity::class.java)
+                intent.putExtra("USER_ID", AuthRepository.getCurrentUser()?.uid)
                 context.startActivity(intent)
-            }
-        )
-        CustomButton(
-            text = "LOGOUT",
-            onClick = {
-                calendarViewModel.logout()
-                val intent = Intent(context, LoginActivity::class.java)
-                context.startActivity(intent)
-                activity?.finish()
             }
         )
         ScreenHeading(text = "under construction")
