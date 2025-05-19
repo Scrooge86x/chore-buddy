@@ -10,5 +10,4 @@ data class User (
     val email: String = "",
     val role: String = "",
     val avatarIcon: Int = 0
-) {
-}
+)

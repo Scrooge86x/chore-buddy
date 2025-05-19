@@ -1,6 +1,5 @@
 package com.example.chore_buddy.users
 
-import com.example.chore_buddy.users.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
