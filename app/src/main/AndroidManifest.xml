@@ -35,6 +35,9 @@
         <activity android:name=".tasks.CalendarActivity"
             android:exported="false">
         </activity>
+        <activity android:name=".users.UserProfileActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
