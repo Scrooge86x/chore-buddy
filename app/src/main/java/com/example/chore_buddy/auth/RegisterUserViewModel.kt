@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-import com.example.chore_buddy.auth.AuthRepository.Result
+import com.example.chore_buddy.auth.AuthRepository.AuthResult
+import com.example.chore_buddy.users.User
+import com.example.chore_buddy.users.UserRepository
+
 import com.google.firebase.auth.FirebaseUser
 
 class RegisterUserViewModel() : ViewModel() {
@@ -31,10 +34,26 @@ class RegisterUserViewModel() : ViewModel() {
             errorMessage = null
 
             when (val result = AuthRepository.signUpWithEmailAndPassword(email, password)) {
-                is Result.Success -> {
-                    registrationSuccess = result.data
+                is AuthResult.Success -> {
+                    val user = User(
+                        result.data.uid,
+                        username,
+                        null,
+                        email,
+                        "User",
+                        0
+                    )
+
+                    when (val creationResult = UserRepository.createUser(user)) {
+                        is UserRepository.UserResult.Success -> {
+                            registrationSuccess = result.data
+                        }
+                        is UserRepository.UserResult.Error -> {
+                            errorMessage = creationResult.exception.message ?: "User creation error."
+                        }
+                    }
                 }
-                is Result.Error -> {
+                is AuthResult.Error -> {
                     errorMessage = result.exception.message ?: "Registration error"
                 }
             }
