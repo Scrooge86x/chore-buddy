@@ -1,3 +1,5 @@
+package com.example.chore_buddy.users
+
 import com.example.chore_buddy.users.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -9,45 +11,45 @@ object UserRepository {
     private val firestore: FirebaseFirestore by lazy { Firebase.firestore }
     private const val USERS_COLLECTION = "users"
 
-    suspend fun createUser(user: User): Result<Unit> {
+    suspend fun createUser(user: User): UserResult<Unit> {
         return try {
             firestore.collection(USERS_COLLECTION)
                 .document(user.id)
                 .set(user)
                 .await()
-            Result.Success(Unit)
+            UserResult.Success(Unit)
         } catch (e: Exception) {
-            Result.Error(e)
+            UserResult.Error(e)
         }
     }
 
-    suspend fun getUserByUid(uid: String): Result<User?> {
+    suspend fun getUserByUid(uid: String): UserResult<User?> {
         return try {
             val document = firestore.collection(USERS_COLLECTION)
                 .document(uid)
                 .get()
                 .await()
-            Result.Success(document.toObject<User>())
+            UserResult.Success(document.toObject<User>())
         } catch (e: Exception) {
-            Result.Error(e)
+            UserResult.Error(e)
         }
     }
 
-    suspend fun getUsersWithSameGroupId(currentUserGroupId: String): Result<List<User>> {
+    suspend fun getUsersWithSameGroupId(currentUserGroupId: String): UserResult<List<User>> {
         return try {
             val querySnapshot = firestore.collection(USERS_COLLECTION)
                 .whereEqualTo("groupId", currentUserGroupId)
                 .get()
                 .await()
             val users = querySnapshot.documents.mapNotNull { it.toObject<User>() }
-            Result.Success(users)
+            UserResult.Success(users)
         } catch (e: Exception) {
-            Result.Error(e)
+            UserResult.Error(e)
         }
     }
 
-    sealed class Result<out T> {
-        data class Success<out T>(val data: T) : Result<T>()
-        data class Error(val exception: Exception) : Result<Nothing>()
+    sealed class UserResult<out T> {
+        data class Success<out T>(val data: T) : UserResult<T>()
+        data class Error(val exception: Exception) : UserResult<Nothing>()
     }
 }
