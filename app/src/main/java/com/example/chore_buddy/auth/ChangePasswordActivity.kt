@@ -49,24 +49,25 @@ fun ChangePasswordScreen() {
 
     LaunchedEffect(changePasswordViewModel.passwordChangingSuccess) {
         if (changePasswordViewModel.passwordChangingSuccess != null) {
-            Toast.makeText(
-                context,
-                changePasswordViewModel.passwordChangingSuccess,
-                Toast.LENGTH_LONG
-            ).show()
             changePasswordViewModel.newPassword = ""
             changePasswordViewModel.newPasswordRepeat = ""
             changePasswordViewModel.oldPassword = ""
             changePasswordViewModel.errorMessage = null
             changePasswordViewModel.passwordChangingSuccess = null
+
+            Toast.makeText(
+                context,
+                changePasswordViewModel.passwordChangingSuccess,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
     LaunchedEffect(changePasswordViewModel.errorMessage) {
         if (changePasswordViewModel.errorMessage != null) {
-        Toast.makeText(context, changePasswordViewModel.errorMessage, Toast.LENGTH_LONG).show()
-        changePasswordViewModel.errorMessage = null
-            }
+            Toast.makeText(context, changePasswordViewModel.errorMessage, Toast.LENGTH_LONG).show()
+            changePasswordViewModel.errorMessage = null
+        }
     }
 
     Column(
