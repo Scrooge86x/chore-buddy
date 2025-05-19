@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-import com.example.chore_buddy.auth.AuthRepository.Result
+import com.example.chore_buddy.auth.AuthRepository.AuthResult
 
 class ChangePasswordViewModel(): ViewModel() {
     var oldPassword by mutableStateOf("")
@@ -29,10 +29,10 @@ class ChangePasswordViewModel(): ViewModel() {
             errorMessage = null
 
             when (val result = AuthRepository.changePassword(oldPassword, newPassword)) {
-                is Result.Success -> {
+                is AuthResult.Success -> {
                     passwordChangingSuccess = "Password changed successfully."
                 }
-                is Result.Error -> {
+                is AuthResult.Error -> {
                     errorMessage = result.exception.message ?: "Changing password error."
                 }
             }
