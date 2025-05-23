@@ -8,6 +8,8 @@ import kotlinx.coroutines.tasks.await
 
 object UserRepository {
     private val firestore: FirebaseFirestore by lazy { Firebase.firestore }
+
+    /* TODO: change this Scrooge. */
     private const val USERS_COLLECTION = "users"
 
     suspend fun createUser(user: User): UserResult<Unit> {
@@ -29,19 +31,6 @@ object UserRepository {
                 .get()
                 .await()
             UserResult.Success(document.toObject<User>())
-        } catch (e: Exception) {
-            UserResult.Error(e)
-        }
-    }
-
-    suspend fun getUsersWithSameGroupId(currentUserGroupId: String): UserResult<List<User>> {
-        return try {
-            val querySnapshot = firestore.collection(USERS_COLLECTION)
-                .whereEqualTo("groupId", currentUserGroupId)
-                .get()
-                .await()
-            val users = querySnapshot.documents.mapNotNull { it.toObject<User>() }
-            UserResult.Success(users)
         } catch (e: Exception) {
             UserResult.Error(e)
         }
