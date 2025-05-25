@@ -17,9 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.auth.AuthRepository
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.ScreenHeading
+import com.example.chore_buddy.groups.CreateOrJoinGroupActivity
+import com.example.chore_buddy.groups.GroupMembersActivity
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.users.UserProfileActivity
 
@@ -40,6 +43,10 @@ class CalendarActivity : ComponentActivity() {
 fun CalendarScreen() {
     val context = LocalContext.current
 
+    val calendarViewModel : CalendarViewModel = viewModel()
+
+    val groupText = if (calendarViewModel.isInGroup) "View group members" else "Create or Join group"
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,6 +62,19 @@ fun CalendarScreen() {
                 val intent = Intent(context, UserProfileActivity::class.java)
                 intent.putExtra("USER_ID", AuthRepository.getCurrentUser()?.uid)
                 context.startActivity(intent)
+            }
+        )
+        CustomButton(
+            text = groupText,
+            onClick = {
+                if (calendarViewModel.isInGroup) {
+                    val intent = Intent(context, GroupMembersActivity::class.java)
+                    intent.putExtra("GROUP_ID", calendarViewModel.groupId)
+                    context.startActivity(intent)
+                } else {
+                    val intent = Intent(context, CreateOrJoinGroupActivity::class.java)
+                    context.startActivity(intent)
+                }
             }
         )
         ScreenHeading(text = "under construction")
