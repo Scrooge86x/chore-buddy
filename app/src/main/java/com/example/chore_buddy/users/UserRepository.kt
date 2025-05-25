@@ -36,6 +36,18 @@ object UserRepository {
         }
     }
 
+    suspend fun changeRole(role: String, userId: String): UserResult<Unit> {
+        return try {
+            val userRef = firestore.collection(USERS_COLLECTION).document(userId)
+            firestore.runTransaction{ transaction ->
+                transaction.update(userRef, "role", role)
+            }.await()
+            UserResult.Success(Unit)
+        } catch (e: Exception) {
+            UserResult.Error(e)
+        }
+    }
+
     sealed class UserResult<out T> {
         data class Success<out T>(val data: T) : UserResult<T>()
         data class Error(val exception: Exception) : UserResult<Nothing>()
