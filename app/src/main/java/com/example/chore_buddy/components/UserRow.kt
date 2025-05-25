@@ -1,6 +1,7 @@
 package com.example.chore_buddy.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -16,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
 
 @Composable
-fun UserRow(userName: String) {
+fun UserRow(userName: String, onClick: () -> Unit = {}) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
 
     Row(
@@ -24,6 +25,7 @@ fun UserRow(userName: String) {
             .fillMaxWidth()
             .height(80.dp)
             .background(Color.Black)
+            .clickable(onClick = onClick)
             .padding(horizontal = 0.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
