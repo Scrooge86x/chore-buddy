@@ -1,6 +1,8 @@
 package com.example.chore_buddy.groups
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -18,11 +21,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
+import com.example.chore_buddy.auth.AuthRepository
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 import com.example.chore_buddy.components.UserRow
+import com.example.chore_buddy.users.User
+import com.example.chore_buddy.users.UserProfileActivity
 
 class GroupMembersActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,18 +37,101 @@ class GroupMembersActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ChoreBuddyTheme {
-                GroupMembersScreen()
+                GroupMembersScreen(intent.getStringExtra("GROUP_ID"))
             }
         }
     }
 }
 
-@Preview(apiLevel = 34)
 @Composable
-fun GroupMembersScreen() {
+fun GroupMembersScreen(groupId: String?) {
+    val context = LocalContext.current
+    val activity = context as? ComponentActivity
+
+    if (groupId.isNullOrBlank())
+        activity?.finish()
+
+    val groupMembersViewModel: GroupMembersViewModel = viewModel()
+    groupMembersViewModel.getGroup(groupId!!)
+    groupMembersViewModel.getMembers(groupId)
+
+    val group = groupMembersViewModel.group
+    val members = groupMembersViewModel.members
+
+    LaunchedEffect(groupMembersViewModel.errorMessage) {
+        if (groupMembersViewModel.errorMessage != null) {
+            Toast.makeText(
+                context,
+                groupMembersViewModel.errorMessage,
+                Toast.LENGTH_LONG
+            ).show()
+            groupMembersViewModel.resetError()
+        }
+    }
+
+    if (group != null) {
+        GroupMembersContent(
+            group = group,
+            users = members
+        )
+    } else {
+        GroupMembersContent(
+            group = Group("There is no group"),
+            emptyList()
+        )
+    }
+}
+
+@Preview
+@Composable
+fun GroupMembersPreview() {
+    ChoreBuddyTheme {
+        GroupMembersContent(
+        Group("1234"),
+        listOf(
+            User(
+                id = "1",
+                name = "User 1",
+                groupId = "group2",
+                email = "admin@example.com",
+                role = "Admin",
+            ),
+            User(
+                id = "2",
+                name = "User 2",
+                groupId = "group2",
+                email = "jan@example.com",
+                role = "User",
+            ),
+            User(
+                id = "3",
+                name = "User 3",
+                groupId = "group2",
+                email = "anna@example.com",
+                role = "User",
+            ),
+            User(
+                id = "4",
+                name = "User 4",
+                groupId = "group2",
+                email = "piotr@example.com",
+                role = "User",
+            ),
+            User(
+                id = "5",
+                name = "User 5",
+                groupId = "group2",
+                email = "maria@example.com",
+                role = "User",
+            )
+        ))
+    }
+}
+
+@Composable
+fun GroupMembersContent(group: Group, users: List<User>?) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
-    val users = listOf("User 1", "User 2", "User 3", "User 4", "User 5")
-    val groupName = "12345"
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -59,7 +149,7 @@ fun GroupMembersScreen() {
             style = TextStyle(fontFamily = interFontFamily)
         )
         Text(
-            text = groupName,
+            text = group.name,
             color = Color.Gray,
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
@@ -67,11 +157,16 @@ fun GroupMembersScreen() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(thickness = 1.dp, color = Color.White)
-        users.forEach { user ->
-            UserRow(userName = user)
+        users?.forEach { user ->
+            UserRow(userName = user.name,
+                onClick = {
+                    val intent = Intent(context, UserProfileActivity::class.java)
+                    intent.putExtra("USER_ID", user.id)
+                    context.startActivity(intent)
+                }
+            )
             HorizontalDivider(thickness = 1.dp, color = Color.White)
         }
         Spacer(modifier = Modifier.height(24.dp))
     }
 }
-
