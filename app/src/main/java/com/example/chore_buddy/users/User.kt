@@ -9,5 +9,6 @@ data class User (
     val groupId: String? = null,
     val email: String = "",
     val role: String = "",
-    val avatarIcon: Int = 0
+    val avatarIcon: Int = 0,
+    val avatarResId: Int
 )

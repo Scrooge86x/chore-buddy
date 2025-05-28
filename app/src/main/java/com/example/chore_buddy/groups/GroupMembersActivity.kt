@@ -95,6 +95,7 @@ fun GroupMembersPreview() {
                 groupId = "group2",
                 email = "admin@example.com",
                 role = "Admin",
+                avatarResId = 1
             ),
             User(
                 id = "2",
@@ -102,6 +103,7 @@ fun GroupMembersPreview() {
                 groupId = "group2",
                 email = "jan@example.com",
                 role = "User",
+                avatarResId = 2
             ),
             User(
                 id = "3",
@@ -109,6 +111,7 @@ fun GroupMembersPreview() {
                 groupId = "group2",
                 email = "anna@example.com",
                 role = "User",
+                avatarResId = 3
             ),
             User(
                 id = "4",
@@ -116,6 +119,7 @@ fun GroupMembersPreview() {
                 groupId = "group2",
                 email = "piotr@example.com",
                 role = "User",
+                avatarResId = 4
             ),
             User(
                 id = "5",
@@ -123,6 +127,7 @@ fun GroupMembersPreview() {
                 groupId = "group2",
                 email = "maria@example.com",
                 role = "User",
+                avatarResId = 5
             )
         ))
     }
@@ -157,8 +162,11 @@ fun GroupMembersContent(group: Group, users: List<User>?) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(thickness = 1.dp, color = Color.White)
+
         users?.forEach { user ->
-            UserRow(userName = user.name,
+            UserRow(
+                userName = user.name,
+                avatarResId = user.avatarResId,
                 onClick = {
                     val intent = Intent(context, UserProfileActivity::class.java)
                     intent.putExtra("USER_ID", user.id)
@@ -167,6 +175,7 @@ fun GroupMembersContent(group: Group, users: List<User>?) {
             )
             HorizontalDivider(thickness = 1.dp, color = Color.White)
         }
+
         Spacer(modifier = Modifier.height(24.dp))
     }
 }
