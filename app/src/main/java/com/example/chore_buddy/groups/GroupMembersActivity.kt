@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
-import com.example.chore_buddy.auth.AuthRepository
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
@@ -37,23 +36,18 @@ class GroupMembersActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ChoreBuddyTheme {
-                GroupMembersScreen(intent.getStringExtra("GROUP_ID"))
+                GroupMembersScreen()
             }
         }
     }
 }
 
 @Composable
-fun GroupMembersScreen(groupId: String?) {
+fun GroupMembersScreen() {
     val context = LocalContext.current
-    val activity = context as? ComponentActivity
-
-    if (groupId.isNullOrBlank())
-        activity?.finish()
 
     val groupMembersViewModel: GroupMembersViewModel = viewModel()
-    groupMembersViewModel.getGroup(groupId!!)
-    groupMembersViewModel.getMembers(groupId)
+    groupMembersViewModel.getCurrentGroupData()
 
     val group = groupMembersViewModel.group
     val members = groupMembersViewModel.members
@@ -149,7 +143,7 @@ fun GroupMembersContent(group: Group, users: List<User>?) {
             style = TextStyle(fontFamily = interFontFamily)
         )
         Text(
-            text = group.name,
+            text = group.groupId,
             color = Color.Gray,
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,

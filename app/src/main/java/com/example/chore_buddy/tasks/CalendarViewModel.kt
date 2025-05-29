@@ -14,9 +14,6 @@ class CalendarViewModel(): ViewModel() {
     var isInGroup by mutableStateOf<Boolean>(false)
         private set
 
-    var groupId by mutableStateOf<String?>(null)
-        private set
-
     var isLoading by mutableStateOf(false)
         private set
 
@@ -38,7 +35,6 @@ class CalendarViewModel(): ViewModel() {
                     is UserRepository.UserResult.Success -> {
                         if (!result.data?.groupId.isNullOrBlank()) {
                             isInGroup = true
-                            groupId = result.data?.groupId
                         }
                     }
                     is UserRepository.UserResult.Error -> {

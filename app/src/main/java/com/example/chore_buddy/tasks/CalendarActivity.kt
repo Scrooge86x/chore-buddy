@@ -69,7 +69,6 @@ fun CalendarScreen() {
             onClick = {
                 if (calendarViewModel.isInGroup) {
                     val intent = Intent(context, GroupMembersActivity::class.java)
-                    intent.putExtra("GROUP_ID", calendarViewModel.groupId)
                     context.startActivity(intent)
                 } else {
                     val intent = Intent(context, CreateOrJoinGroupActivity::class.java)
