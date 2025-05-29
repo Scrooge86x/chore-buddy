@@ -1,5 +1,6 @@
 package com.example.chore_buddy.users
 
+import com.example.chore_buddy.auth.AuthRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
@@ -19,6 +20,23 @@ object UserRepository {
                 .set(user)
                 .await()
             UserResult.Success(Unit)
+        } catch (e: Exception) {
+            UserResult.Error(e)
+        }
+    }
+
+    suspend fun getCurrentUser(): UserResult<User?> {
+        return try {
+            val uid = AuthRepository.getCurrentUser()?.uid
+            if (uid == null) {
+                throw Exception("Current user uid was null.")
+            }
+
+            val document = firestore.collection(USERS_COLLECTION)
+                .document(uid)
+                .get()
+                .await()
+            UserResult.Success(document.toObject<User>())
         } catch (e: Exception) {
             UserResult.Error(e)
         }

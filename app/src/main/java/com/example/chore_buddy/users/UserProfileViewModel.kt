@@ -32,14 +32,7 @@ class UserProfileViewModel : ViewModel() {
             isLoading = true
             errorMessage = null
             try {
-                val currentUserUid = AuthRepository.getCurrentUser()?.uid
-                if (currentUserUid == null) {
-                    errorMessage = "Current user uid was null."
-                    isLoading = false
-                    return@launch
-                }
-
-                when (val result = UserRepository.getUserByUid(currentUserUid)) {
+                when (val result = UserRepository.getCurrentUser()) {
                     is UserResult.Success -> isAdminView = result.data?.role == "Admin"
                     is UserResult.Error -> {
                         errorMessage = result.exception.message ?: "Failed to load user"
