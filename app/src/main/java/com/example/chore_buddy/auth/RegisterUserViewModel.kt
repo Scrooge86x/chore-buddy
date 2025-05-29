@@ -41,8 +41,7 @@ class RegisterUserViewModel() : ViewModel() {
                         null,
                         email,
                         "User",
-                        0,
-                        3
+                        0
                     )
 
                     when (val creationResult = UserRepository.createUser(user)) {
