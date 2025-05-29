@@ -70,18 +70,18 @@ fun GroupMembersScreen() {
         )
     } else {
         GroupMembersContent(
-            group = Group("There is no group"),
+            group = Group(groupId = "There is no group"),
             emptyList()
         )
     }
 }
 
-@Preview
+@Preview(apiLevel = 34)
 @Composable
 fun GroupMembersPreview() {
     ChoreBuddyTheme {
         GroupMembersContent(
-        Group("1234"),
+        Group(groupId = "123456"),
         listOf(
             User(
                 id = "1",
