@@ -13,6 +13,9 @@ class UserProfileViewModel : ViewModel() {
     var user by mutableStateOf<User?>(null)
         private set
 
+    var isAdminView by mutableStateOf<Boolean>(false)
+        private set
+
     var isLoading by mutableStateOf(false)
         private set
 
@@ -29,6 +32,19 @@ class UserProfileViewModel : ViewModel() {
             isLoading = true
             errorMessage = null
             try {
+                val currentUserUid = AuthRepository.getCurrentUser()?.uid
+                if (currentUserUid == null) {
+                    errorMessage = "Current user uid was null."
+                    isLoading = false
+                    return@launch
+                }
+
+                when (val result = UserRepository.getUserByUid(currentUserUid)) {
+                    is UserResult.Success -> isAdminView = result.data?.role == "Admin"
+                    is UserResult.Error -> {
+                        errorMessage = result.exception.message ?: "Failed to load user"
+                    }
+                }
                 when (val result = UserRepository.getUserByUid(uid)) {
                     is UserResult.Success -> user = result.data
                     is UserResult.Error -> {

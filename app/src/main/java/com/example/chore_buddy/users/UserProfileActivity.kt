@@ -99,7 +99,7 @@ fun UserProfileContent(
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val context = LocalContext.current
     val activity = context as? ComponentActivity
-
+    
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -162,7 +162,7 @@ fun UserProfileContent(
                     )
                 }
             }
-            if (user.role == "Admin") {
+            if (userProfileViewModel?.isAdminView == true) {
                 Column {
                     Spacer(modifier = Modifier.height(16.dp))
                     CustomButton(
