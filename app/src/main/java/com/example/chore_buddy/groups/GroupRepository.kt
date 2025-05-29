@@ -17,15 +17,15 @@ object GroupRepository {
     private const val USERS_COLLECTION = "users"
     private const val GROUP_COLLECTION = "groups"
 
-    suspend fun createGroup(group: Group): GroupResult<Unit> {
+    suspend fun createGroup(groupName: String): GroupResult<Unit> {
         return try {
-            val id = generateId()
+            val groupId = generateId()
             firestore.collection(GROUP_COLLECTION)
-                .document(id)
-                .set(group)
+                .document()
+                .set(Group(groupName, groupId))
                 .await()
             GroupResult.Success(Unit)
-            joinGroup(AuthRepository.getCurrentUser()!!.uid, id)
+            joinGroup(AuthRepository.getCurrentUser()!!.uid, groupId)
         } catch (e: Exception) {
             GroupResult.Error(e);
         }
@@ -33,11 +33,15 @@ object GroupRepository {
 
     suspend fun getGroup(id: String): GroupResult<Group?> {
         return try {
-            val document = firestore.collection(GROUP_COLLECTION)
-                .document(id)
+            val querySnapshot = firestore.collection(GROUP_COLLECTION)
+                .whereEqualTo("groupId", id)
+                .limit(1)
                 .get()
                 .await()
-            GroupResult.Success(document.toObject<Group>())
+
+            val document = querySnapshot.documents.firstOrNull()
+
+            GroupResult.Success(document?.toObject<Group>())
         } catch (e: Exception) {
             GroupResult.Error(e)
         }
