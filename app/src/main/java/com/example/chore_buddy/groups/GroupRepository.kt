@@ -73,7 +73,7 @@ object GroupRepository {
     }
 
     private suspend fun generateId(): String {
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9') - 'l' - 'O'
+        val allowedChars = ('a'..'z') + ('0'..'9') - 'l'
         val random = Random(System.currentTimeMillis())
 
         while (true) {
