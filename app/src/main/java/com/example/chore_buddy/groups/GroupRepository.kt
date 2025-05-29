@@ -1,6 +1,7 @@
 package com.example.chore_buddy.groups
 
 import com.example.chore_buddy.auth.AuthRepository
+import com.example.chore_buddy.firestore.FirestoreCollections
 import com.example.chore_buddy.users.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -13,14 +14,10 @@ import kotlin.random.Random
 object GroupRepository {
     private val firestore: FirebaseFirestore by lazy {Firebase.firestore}
 
-    /* TODO: change this Scrooge. */
-    private const val USERS_COLLECTION = "users"
-    private const val GROUP_COLLECTION = "groups"
-
     suspend fun createGroup(groupName: String): GroupResult<Unit> {
         return try {
             val groupId = generateId()
-            firestore.collection(GROUP_COLLECTION)
+            firestore.collection(FirestoreCollections.GROUPS)
                 .document()
                 .set(Group(groupName, groupId))
                 .await()
@@ -33,7 +30,7 @@ object GroupRepository {
 
     suspend fun getGroup(id: String): GroupResult<Group?> {
         return try {
-            val querySnapshot = firestore.collection(GROUP_COLLECTION)
+            val querySnapshot = firestore.collection(FirestoreCollections.GROUPS)
                 .whereEqualTo("groupId", id)
                 .limit(1)
                 .get()
@@ -49,7 +46,7 @@ object GroupRepository {
 
     suspend fun getUsersWithSameGroupId(currentUserGroupId: String): GroupResult<List<User>> {
         return try {
-            val querySnapshot = firestore.collection(USERS_COLLECTION)
+            val querySnapshot = firestore.collection(FirestoreCollections.USERS)
                 .whereEqualTo("groupId", currentUserGroupId)
                 .get()
                 .await()
@@ -62,7 +59,7 @@ object GroupRepository {
 
     suspend fun joinGroup(userId: String, groupId: String):  GroupResult<Unit>{
         return try {
-            val userRef = firestore.collection(USERS_COLLECTION).document(userId)
+            val userRef = firestore.collection(FirestoreCollections.USERS).document(userId)
             firestore.runTransaction { transaction ->
                 transaction.update(userRef, "groupId", groupId)
             }.await()
