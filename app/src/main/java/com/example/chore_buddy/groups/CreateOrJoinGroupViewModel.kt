@@ -37,7 +37,7 @@ class CreateOrJoinGroupViewModel : ViewModel() {
             errorMessage = null
 
             try {
-                when (val result = GroupRepository.createGroup(Group(groupName))) {
+                when (val result = GroupRepository.createGroup(groupName)) {
                     is GroupRepository.GroupResult.Success -> {
                         isSuccess = Success.Created
                         UserRepository.changeRole("Admin", AuthRepository.getCurrentUser()!!.uid)
