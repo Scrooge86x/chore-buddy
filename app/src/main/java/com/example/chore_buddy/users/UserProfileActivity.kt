@@ -167,7 +167,7 @@ fun UserProfileContent(
                     Spacer(modifier = Modifier.height(16.dp))
                     CustomButton(
                         text = "REMOVE FROM GROUP",
-                        onClick = { /* TODO: Remove from group */ }
+                        onClick = { userProfileViewModel.leaveGroup(user.id) }
                     )
                 }
             }
