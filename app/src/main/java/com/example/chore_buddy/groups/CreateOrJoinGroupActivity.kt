@@ -1,6 +1,5 @@
 package com.example.chore_buddy.groups
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -26,7 +25,6 @@ import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
-import com.example.chore_buddy.tasks.CalendarActivity
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 class CreateOrJoinGroupActivity : ComponentActivity() {
@@ -59,18 +57,12 @@ fun CreateOrJoinGroupScreen() {
     }
 
     LaunchedEffect(createOrJoinGroupViewModel.isSuccess) {
-        if (createOrJoinGroupViewModel.isSuccess == CreateOrJoinGroupViewModel.Success.Created) {
-            Toast.makeText(context, "Group successfully created", Toast.LENGTH_LONG).show()
+        when (createOrJoinGroupViewModel.isSuccess) {
+            CreateOrJoinGroupViewModel.Success.Created -> Toast.makeText(context, "Group successfully created", Toast.LENGTH_LONG).show()
+            CreateOrJoinGroupViewModel.Success.Joined -> Toast.makeText(context, "Successfully joined group", Toast.LENGTH_LONG).show()
+            CreateOrJoinGroupViewModel.Success.No -> return@LaunchedEffect
         }
-        if (createOrJoinGroupViewModel.isSuccess == CreateOrJoinGroupViewModel.Success.Joined) {
-            Toast.makeText(context, "Successfully joined group", Toast.LENGTH_LONG).show()
-        }
-        if (createOrJoinGroupViewModel.isSuccess != CreateOrJoinGroupViewModel.Success.No) {
-            val intent = Intent(context, CalendarActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            context.startActivity(intent)
-            activity?.finish()
-        }
+        activity?.finish()
     }
 
     Column(
