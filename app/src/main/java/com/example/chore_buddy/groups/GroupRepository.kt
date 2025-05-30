@@ -24,14 +24,14 @@ object GroupRepository {
             GroupResult.Success(Unit)
             joinGroup(AuthRepository.getCurrentUser()!!.uid, groupId)
         } catch (e: Exception) {
-            GroupResult.Error(e);
+            GroupResult.Error(e)
         }
     }
 
-    suspend fun getGroup(id: String): GroupResult<Group?> {
+    suspend fun getGroup(groupId: String): GroupResult<Group?> {
         return try {
             val querySnapshot = firestore.collection(FirestoreCollections.GROUPS)
-                .whereEqualTo("groupId", id)
+                .whereEqualTo("groupId", groupId)
                 .limit(1)
                 .get()
                 .await()
@@ -44,10 +44,10 @@ object GroupRepository {
         }
     }
 
-    suspend fun getUsersWithSameGroupId(currentUserGroupId: String): GroupResult<List<User>> {
+    suspend fun getGroupMembers(groupId: String): GroupResult<List<User>> {
         return try {
             val querySnapshot = firestore.collection(FirestoreCollections.USERS)
-                .whereEqualTo("groupId", currentUserGroupId)
+                .whereEqualTo("groupId", groupId)
                 .get()
                 .await()
             val users = querySnapshot.documents.mapNotNull { it.toObject<User>() }

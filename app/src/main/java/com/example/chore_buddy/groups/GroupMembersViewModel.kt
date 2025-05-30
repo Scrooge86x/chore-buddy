@@ -65,7 +65,7 @@ class GroupMembersViewModel : ViewModel() {
     }
 
     private suspend fun getMembers(groupId: String) {
-        when (val result = GroupRepository.getUsersWithSameGroupId(groupId)) {
+        when (val result = GroupRepository.getGroupMembers(groupId)) {
             is GroupRepository.GroupResult.Success -> {
                 members = result.data
             }
