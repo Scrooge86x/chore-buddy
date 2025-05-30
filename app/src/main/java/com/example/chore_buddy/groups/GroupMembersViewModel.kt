@@ -39,12 +39,14 @@ class GroupMembersViewModel : ViewModel() {
                         throw Exception(result.exception.message ?: "Failed to load user")
                     }
                 }
-                if (currentUser?.groupId == null) {
-                    throw Exception("User is not in a group.")
+                if (currentUser == null) {
+                    throw Exception("For unknown reason there is no user.")
                 }
 
-                getGroup(currentUser.groupId)
-                getMembers(currentUser.groupId)
+                val groupId = currentUser.groupId ?: throw Exception("User is not in a group.")
+
+                getGroup(groupId)
+                getMembers(groupId)
             } catch (e: Exception) {
                 errorMessage = e.message ?: "Unknown error occurred"
             } finally {
