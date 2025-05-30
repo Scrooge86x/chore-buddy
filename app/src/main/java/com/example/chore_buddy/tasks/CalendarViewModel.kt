@@ -35,6 +35,8 @@ class CalendarViewModel(): ViewModel() {
                     is UserRepository.UserResult.Success -> {
                         if (!result.data?.groupId.isNullOrBlank()) {
                             isInGroup = true
+                        } else {
+                            isInGroup = false
                         }
                     }
                     is UserRepository.UserResult.Error -> {
