@@ -57,11 +57,26 @@ object GroupRepository {
         }
     }
 
-    suspend fun joinGroup(userId: String, groupId: String):  GroupResult<Unit>{
+    suspend fun joinGroup(userId: String, groupId: String): GroupResult<Unit> {
         return try {
             val userRef = firestore.collection(FirestoreCollections.USERS).document(userId)
             firestore.runTransaction { transaction ->
                 transaction.update(userRef, "groupId", groupId)
+            }.await()
+            GroupResult.Success(Unit)
+        } catch (e: Exception) {
+            GroupResult.Error(e)
+        }
+    }
+
+    suspend fun leaveGroup(userId: String): GroupResult<Unit> {
+        return try {
+            val userRef = firestore.collection(FirestoreCollections.USERS).document(userId)
+            firestore.runTransaction {transaction ->
+                transaction.update(userRef,
+                    "groupId", null,
+                    "role", "User"
+                )
             }.await()
             GroupResult.Success(Unit)
         } catch (e: Exception) {
