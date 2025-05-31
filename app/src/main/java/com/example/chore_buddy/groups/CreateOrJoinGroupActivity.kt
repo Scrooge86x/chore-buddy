@@ -1,6 +1,7 @@
 package com.example.chore_buddy.groups
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -18,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.Logo
@@ -39,10 +42,28 @@ class CreateOrJoinGroupActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun CreateOrJoinGroupScreen() {
-    var groupName by remember { mutableStateOf("") }
-    var groupId by remember { mutableStateOf("") }
+    val createOrJoinGroupViewModel: CreateOrJoinGroupViewModel = viewModel()
 
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
+
+    val context = LocalContext.current
+    val activity = context as? ComponentActivity
+
+    LaunchedEffect(createOrJoinGroupViewModel.errorMessage) {
+        if (createOrJoinGroupViewModel.errorMessage != null) {
+            Toast.makeText(context, createOrJoinGroupViewModel.errorMessage, Toast.LENGTH_LONG).show()
+            createOrJoinGroupViewModel.resetError()
+        }
+    }
+
+    LaunchedEffect(createOrJoinGroupViewModel.isSuccess) {
+        when (createOrJoinGroupViewModel.isSuccess) {
+            CreateOrJoinGroupViewModel.Success.Created -> Toast.makeText(context, "Group successfully created", Toast.LENGTH_LONG).show()
+            CreateOrJoinGroupViewModel.Success.Joined -> Toast.makeText(context, "Successfully joined group", Toast.LENGTH_LONG).show()
+            CreateOrJoinGroupViewModel.Success.No -> return@LaunchedEffect
+        }
+        activity?.finish()
+    }
 
     Column(
         modifier = Modifier
@@ -63,12 +84,12 @@ fun CreateOrJoinGroupScreen() {
         Spacer(modifier = Modifier.height(16.dp))
         UserInput(
             label = "Group Name",
-            value = groupName,
-            onValueChange = { groupName = it }
+            value = createOrJoinGroupViewModel.groupName,
+            onValueChange = { createOrJoinGroupViewModel.groupName = it }
         )
         Spacer(modifier = Modifier.height(12.dp))
         CustomButton(text = "CREATE", onClick = {
-            // create group logic
+            createOrJoinGroupViewModel.createGroup()
         })
         Spacer(modifier = Modifier.height(48.dp))
         Text(
@@ -81,12 +102,12 @@ fun CreateOrJoinGroupScreen() {
         Spacer(modifier = Modifier.height(16.dp))
         UserInput(
             label = "Group Id",
-            value = groupId,
-            onValueChange = { groupId = it }
+            value = createOrJoinGroupViewModel.groupId,
+            onValueChange = { createOrJoinGroupViewModel.groupId = it }
         )
         Spacer(modifier = Modifier.height(12.dp))
         CustomButton(text = "JOIN", onClick = {
-            // join group logic
+            createOrJoinGroupViewModel.joinGroup()
         })
         Spacer(modifier = Modifier.height(128.dp))
     }

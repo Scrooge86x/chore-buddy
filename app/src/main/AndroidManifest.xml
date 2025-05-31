@@ -38,6 +38,12 @@
         <activity android:name=".users.UserProfileActivity"
             android:exported="false">
         </activity>
+        <activity android:name=".groups.CreateOrJoinGroupActivity"
+            android:exported="false">
+        </activity>
+        <activity android:name=".groups.GroupMembersActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
