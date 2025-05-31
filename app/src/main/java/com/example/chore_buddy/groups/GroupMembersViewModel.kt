@@ -82,7 +82,7 @@ class GroupMembersViewModel : ViewModel() {
         return try {
             when (val result = UserRepository.getCurrentUser()) {
                 is UserResult.Success -> {
-                    result.data?.groupId?.isNotEmpty() ?: false
+                    result.data?.groupId?.isNotEmpty() == true
                 }
                 is UserResult.Error -> {
                     errorMessage = result.exception.message ?: "Unknown error occurred"
