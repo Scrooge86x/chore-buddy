@@ -76,4 +76,24 @@ class GroupMembersViewModel : ViewModel() {
             }
         }
     }
+
+    suspend fun checkIfIsInGroup(): Boolean {
+        isLoading = true
+        return try {
+            when (val result = UserRepository.getCurrentUser()) {
+                is UserResult.Success -> {
+                    result.data?.groupId?.isNotEmpty() ?: false
+                }
+                is UserResult.Error -> {
+                    errorMessage = result.exception.message ?: "Unknown error occurred"
+                    false
+                }
+            }
+        } catch (e: Exception) {
+            errorMessage = e.message ?: "Unknown error occurred"
+            false
+        } finally {
+            isLoading = false
+        }
+    }
 }

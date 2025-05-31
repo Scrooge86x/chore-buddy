@@ -21,6 +21,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
 import com.example.chore_buddy.components.Logo
@@ -29,6 +33,7 @@ import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.components.UserRow
 import com.example.chore_buddy.users.User
 import com.example.chore_buddy.users.UserProfileActivity
+import kotlinx.coroutines.launch
 
 class GroupMembersActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +65,25 @@ fun GroupMembersScreen() {
                 Toast.LENGTH_LONG
             ).show()
             groupMembersViewModel.resetError()
+        }
+    }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                lifecycleOwner.lifecycleScope.launch {
+                    if (!groupMembersViewModel.checkIfIsInGroup()) {
+                        val activity = context as? ComponentActivity
+                        activity?.finish()
+                    }
+                }
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
