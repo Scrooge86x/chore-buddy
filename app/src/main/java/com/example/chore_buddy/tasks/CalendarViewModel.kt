@@ -33,11 +33,7 @@ class CalendarViewModel(): ViewModel() {
                 when (val result =
                           UserRepository.getUserByUid(AuthRepository.getCurrentUser()!!.uid)) {
                     is UserRepository.UserResult.Success -> {
-                        if (!result.data?.groupId.isNullOrBlank()) {
-                            isInGroup = true
-                        } else {
-                            isInGroup = false
-                        }
+                        isInGroup = !result.data?.groupId.isNullOrBlank()
                     }
                     is UserRepository.UserResult.Error -> {
                         errorMessage = result.exception.message ?: "Unknown error occurred."
