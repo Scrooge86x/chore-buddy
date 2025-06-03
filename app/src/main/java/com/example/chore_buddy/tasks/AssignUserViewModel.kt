@@ -12,7 +12,7 @@ import com.example.chore_buddy.users.UserRepository
 import com.example.chore_buddy.users.UserRepository.UserResult
 import kotlinx.coroutines.launch
 
-class AssignUserViewModel : ViewModel()  {
+class AssignUserViewModel : ViewModel() {
     var users by mutableStateOf<List<User>?>(null)
 
     var isLoading by mutableStateOf(false)
