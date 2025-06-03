@@ -3,12 +3,12 @@ package com.example.chore_buddy.tasks
 import java.time.LocalDateTime
 
 data class Task(
-    val title: String = "",
-    val description: String = "",
-    val assignedTo: String = "",
-    val createdBy: String = "",
-    val groupId: String = "",
-    val status: Boolean = true,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
-    val dueDate: LocalDateTime = LocalDateTime.now()
+    var title: String = "",
+    var description: String = "",
+    var assignedTo: String = "",
+    var createdBy: String = "",
+    var groupId: String = "",
+    var status: Boolean = true,
+    var createdAt: LocalDateTime = LocalDateTime.now(),
+    var dueDate: LocalDateTime = LocalDateTime.now()
 )
