@@ -122,6 +122,13 @@ fun CalendarScreen() {
                 }
             }
         )
+        CustomButton(
+            text = "CREATE NEW TASK",
+            onClick = {
+                val intent = Intent(context, CreateTaskActivity::class.java)
+                context.startActivity(intent)
+            }
+        )
         ScreenHeading(text = "under construction")
     }
 }

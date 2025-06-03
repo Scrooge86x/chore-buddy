@@ -2,6 +2,7 @@ package com.example.chore_buddy.tasks
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
@@ -34,6 +35,7 @@ class CreateTaskActivity : ComponentActivity() {
 @Preview(apiLevel = 34)
 @Composable
 fun CreateTaskScreen() {
+    val activity = LocalActivity.current
     var taskName by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
@@ -67,7 +69,9 @@ fun CreateTaskScreen() {
             Spacer(modifier = Modifier.height(12.dp))
             CustomButton(text = "CREATE", onClick = { /* create task logic */ })
             Spacer(modifier = Modifier.height(12.dp))
-            CustomButton(text = "CANCEL", onClick = { /* cancel logic */ })
+            CustomButton(text = "CANCEL", onClick = {
+                activity?.finish()
+            })
         }
     }
 }
