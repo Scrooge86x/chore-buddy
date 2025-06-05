@@ -26,6 +26,7 @@ import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.MultiLineInput
 import com.example.chore_buddy.components.ScreenHeading
+import com.example.chore_buddy.components.TimePickerInput
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
 class CreateTaskActivity : ComponentActivity() {
@@ -84,7 +85,7 @@ fun CreateTaskContent(
         Logo(
             modifier = Modifier.offset(y = (-8).dp)
         )
-        Spacer(modifier = Modifier.height(0.dp))
+//        Spacer(modifier = Modifier.height(0.dp))
         ScreenHeading(text = "New Task")
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -113,9 +114,23 @@ fun CreateTaskContent(
             MultiLineInput(
                 label = "Description",
                 value = task.description,
-                onValueChange = { task.description = it }
+                onValueChange = { task.description = it },
+                modifier = Modifier.height(90.dp)
             )
         }
+
+
+        //test
+//        TimePickerInput(
+//            time = task.dueDate,
+//            onTimeChange = { newDateTime -> task.dueDate = newDateTime }
+//        )
+
+        TimePickerInput(
+            label = "Due Time",
+            time = task.dueDate,
+            onTimeChange = { newDateTime -> task.dueDate = newDateTime }
+        )
 //        // This is a TEMPORARY placeholder, integrate it in the UI so it looks nice
 //        Text(
 //            text = "Assigned user id: $assignedUser",
