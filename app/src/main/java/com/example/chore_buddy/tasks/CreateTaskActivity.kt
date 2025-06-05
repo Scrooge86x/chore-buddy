@@ -81,10 +81,29 @@ fun CreateTaskContent(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Logo()
-        Spacer(modifier = Modifier.height(16.dp))
+        Logo(
+            modifier = Modifier.offset(y = (-8).dp)
+        )
+        Spacer(modifier = Modifier.height(0.dp))
         ScreenHeading(text = "New Task")
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
+
+
+
+        // This is a TEMPORARY placeholder, integrate it in the UI so it looks nice
+        Text(
+            text = "Assigned user id",
+            color = Color.White,
+            fontSize = 22.sp
+        )
+        Text(
+            text = "$assignedUser",
+            color = Color(0xFFCCCCCC),
+            fontSize = 20.sp
+        )
+
+
+
         Column(modifier = Modifier.fillMaxWidth()) {
             UserInput(
                 label = "Task title",
@@ -97,14 +116,14 @@ fun CreateTaskContent(
                 onValueChange = { task.description = it }
             )
         }
-        // This is a TEMPORARY placeholder, integrate it in the UI so it looks nice
-        Text(
-            text = "Assigned user id: $assignedUser",
-            color = Color.White,
-            fontSize = 24.sp
-        )
+//        // This is a TEMPORARY placeholder, integrate it in the UI so it looks nice
+//        Text(
+//            text = "Assigned user id: $assignedUser",
+//            color = Color.White,
+//            fontSize = 24.sp
+//        )
         Column {
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             CustomButton(text = "ASSIGN MEMBER", onClick = assignMemberCallback)
             Spacer(modifier = Modifier.height(12.dp))
             CustomButton(text = "CREATE", onClick = createTaskCallback)
