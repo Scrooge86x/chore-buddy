@@ -1,6 +1,6 @@
 package com.example.chore_buddy.tasks
 
-import java.time.LocalDateTime
+import com.google.firebase.Timestamp
 
 data class Task(
     var title: String = "",
@@ -9,6 +9,6 @@ data class Task(
     var createdBy: String = "",
     var groupId: String = "",
     var status: Boolean = true,
-    var createdAt: LocalDateTime = LocalDateTime.now(),
-    var dueDate: LocalDateTime = LocalDateTime.now()
+    var createdAt: Timestamp = Timestamp.now(),
+    var dueDate: Timestamp = Timestamp.now()
 )
