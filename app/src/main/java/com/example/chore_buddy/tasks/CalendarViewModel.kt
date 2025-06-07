@@ -14,9 +14,6 @@ class CalendarViewModel(): ViewModel() {
     var isInGroup by mutableStateOf<Boolean>(false)
         private set
 
-    var chosenUserId by mutableStateOf<String>("")
-        private set
-
     var isLoading by mutableStateOf(false)
         private set
 
@@ -25,10 +22,6 @@ class CalendarViewModel(): ViewModel() {
 
     init {
         checkIfInGroup()
-    }
-
-    fun setChosenUser(userId: String) {
-        chosenUserId = userId
     }
 
     fun checkIfInGroup() {
