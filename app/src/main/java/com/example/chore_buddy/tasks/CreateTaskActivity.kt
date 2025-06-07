@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,7 +31,9 @@ import com.example.chore_buddy.components.MultiLineInput
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.components.TimeInputCustomDialog
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class CreateTaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -124,6 +127,17 @@ fun CreateTaskContent(
         }
         Column {
             Spacer(modifier = Modifier.height(12.dp))
+            selectedTime?.let {
+                Text(
+                    text = "Due time: ${SimpleDateFormat("HH:mm", Locale.getDefault()).format(it)}",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .padding(bottom = 16.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                )
+            }
             CustomButton(text = "CHOOSE DUE TIME", onClick = { showDialog = true })
             if (showDialog) {
                 TimeInputCustomDialog(
