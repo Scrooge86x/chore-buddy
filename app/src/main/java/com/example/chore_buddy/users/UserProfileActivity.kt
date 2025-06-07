@@ -155,6 +155,13 @@ fun UserProfileContent(
                         }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
+                    if (user.groupId != null) {
+                        CustomButton(
+                            text = "LEAVE GROUP",
+                            onClick = { userProfileViewModel?.leaveGroup(user.id) }
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                     CustomButton(
                         text = "LOGOUT",
                         onClick = {
