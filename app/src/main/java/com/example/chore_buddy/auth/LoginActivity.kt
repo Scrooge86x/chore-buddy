@@ -31,6 +31,7 @@ import com.example.chore_buddy.components.CustomButton
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.components.ScreenHeading
+import com.example.chore_buddy.groups.CreateOrJoinGroupActivity
 import com.example.chore_buddy.tasks.CalendarActivity
 
 
@@ -133,6 +134,28 @@ fun LoginScreen() {
                 }
             ) {
                 Text("REGISTER ACCOUNT", color = Color.White)
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            TextButton(
+                onClick = {
+                    val intent = Intent(context, ChangePasswordActivity::class.java)
+                    context.startActivity(intent)
+                }
+            ) {
+                Text("CHANGE PASSWORD", color = Color.White)
+            }
+            TextButton(
+                onClick = {
+                    val intent = Intent(context, CreateOrJoinGroupActivity::class.java)
+                    context.startActivity(intent)
+                }
+            ) {
+                Text("CREATE OR JOIN GROUP", color = Color.White)
             }
         }
     }

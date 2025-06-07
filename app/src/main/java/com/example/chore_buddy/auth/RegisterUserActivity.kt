@@ -17,6 +17,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
@@ -28,6 +29,26 @@ import com.example.chore_buddy.components.CustomButton
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.platform.LocalContext
 import com.example.chore_buddy.components.ScreenHeading
+
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.components.Logo
+import com.example.chore_buddy.components.UserInput
+import com.example.chore_buddy.components.PasswordInput
+import com.example.chore_buddy.components.CustomButton
+import com.example.chore_buddy.components.ScreenHeading
+
 
 
 class RegisterUserActivity : ComponentActivity() {
@@ -68,7 +89,10 @@ fun RegisterUserScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
+            .verticalScroll(rememberScrollState())
+            .imePadding()
             .padding(16.dp),
+
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
