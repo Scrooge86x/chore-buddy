@@ -11,10 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TimeInput
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,13 +27,8 @@ import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.MultiLineInput
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.components.TimeInputCustomDialog
-import com.example.chore_buddy.components.TimePickerInput
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
-import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
-import java.util.Locale
-
 
 class CreateTaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +41,10 @@ class CreateTaskActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
 fun CreateTaskScreen() {
     val context = LocalContext.current
     val createTaskViewModel : CreateTaskViewModel = viewModel()
-
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -64,7 +54,6 @@ fun CreateTaskScreen() {
             }
         }
     }
-
     CreateTaskContent(
         task = createTaskViewModel.currentTask,
         assignedUser = createTaskViewModel.assignedUserId,
@@ -74,8 +63,6 @@ fun CreateTaskScreen() {
         }
     )
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateTaskContent(
     task: Task,
@@ -84,10 +71,8 @@ fun CreateTaskContent(
     createTaskCallback: () -> Unit = {}
 ) {
     val activity = LocalActivity.current
-
     var showDialog by remember { mutableStateOf(false) }
     var selectedTime by remember { mutableStateOf<Date?>(null) }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -100,7 +85,6 @@ fun CreateTaskContent(
         )
         ScreenHeading(text = "New Task")
         Spacer(modifier = Modifier.height(10.dp))
-
         Text(
             text = "Assigned user id",
             color = Color.White,
@@ -111,9 +95,6 @@ fun CreateTaskContent(
             color = Color(0xFFCCCCCC),
             fontSize = 20.sp
         )
-
-
-
         Column(modifier = Modifier.fillMaxWidth()) {
             UserInput(
                 label = "Task title",
@@ -127,17 +108,9 @@ fun CreateTaskContent(
                 modifier = Modifier.height(90.dp)
             )
         }
-
         Column {
             Spacer(modifier = Modifier.height(12.dp))
-
-
             CustomButton(text = "CHOOSE DUE TIME", onClick = { showDialog = true })
-
-            selectedTime?.let {
-                Text("Selected time: ${SimpleDateFormat("HH:mm", Locale.getDefault()).format(it)}")
-            }
-
             if (showDialog) {
                 TimeInputCustomDialog(
                     onDismiss = { showDialog = false },
@@ -151,7 +124,6 @@ fun CreateTaskContent(
                     dismissText = "Cancel"
                 )
             }
-            
             Spacer(modifier = Modifier.height(12.dp))
             CustomButton(text = "ASSIGN MEMBER", onClick = assignMemberCallback)
             Spacer(modifier = Modifier.height(12.dp))
@@ -163,7 +135,6 @@ fun CreateTaskContent(
         }
     }
 }
-
 @Preview(apiLevel = 34)
 @Composable
 fun CreateTaskPreview() {
