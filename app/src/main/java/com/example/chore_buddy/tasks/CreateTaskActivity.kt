@@ -11,7 +11,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TimeInput
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,8 +29,14 @@ import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.MultiLineInput
 import com.example.chore_buddy.components.ScreenHeading
+import com.example.chore_buddy.components.TimeInputCustomDialog
 import com.example.chore_buddy.components.TimePickerInput
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+
 
 class CreateTaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +75,7 @@ fun CreateTaskScreen() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateTaskContent(
     task: Task,
@@ -74,6 +84,9 @@ fun CreateTaskContent(
     createTaskCallback: () -> Unit = {}
 ) {
     val activity = LocalActivity.current
+
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedTime by remember { mutableStateOf<Date?>(null) }
 
     Column(
         modifier = Modifier
@@ -85,13 +98,9 @@ fun CreateTaskContent(
         Logo(
             modifier = Modifier.offset(y = (-8).dp)
         )
-//        Spacer(modifier = Modifier.height(0.dp))
         ScreenHeading(text = "New Task")
         Spacer(modifier = Modifier.height(10.dp))
 
-
-
-        // This is a TEMPORARY placeholder, integrate it in the UI so it looks nice
         Text(
             text = "Assigned user id",
             color = Color.White,
@@ -119,25 +128,30 @@ fun CreateTaskContent(
             )
         }
 
-
-        //test
-//        TimePickerInput(
-//            time = task.dueDate,
-//            onTimeChange = { newDateTime -> task.dueDate = newDateTime }
-//        )
-
-//        TimePickerInput(
-//            label = "Due Time",
-//            time = task.dueDate,
-//            onTimeChange = { newDateTime -> task.dueDate = newDateTime }
-//        )
-//        // This is a TEMPORARY placeholder, integrate it in the UI so it looks nice
-//        Text(
-//            text = "Assigned user id: $assignedUser",
-//            color = Color.White,
-//            fontSize = 24.sp
-//        )
         Column {
+            Spacer(modifier = Modifier.height(12.dp))
+
+
+            CustomButton(text = "CHOOSE DUE TIME", onClick = { showDialog = true })
+
+            selectedTime?.let {
+                Text("Selected time: ${SimpleDateFormat("HH:mm", Locale.getDefault()).format(it)}")
+            }
+
+            if (showDialog) {
+                TimeInputCustomDialog(
+                    onDismiss = { showDialog = false },
+                    onConfirm = {
+                        selectedTime = it
+                        showDialog = false
+                    },
+                    backgroundColor = Color(0xFF121212),
+                    contentColor = Color(0xFFFAFAFA),
+                    confirmText = "OK",
+                    dismissText = "Cancel"
+                )
+            }
+            
             Spacer(modifier = Modifier.height(12.dp))
             CustomButton(text = "ASSIGN MEMBER", onClick = assignMemberCallback)
             Spacer(modifier = Modifier.height(12.dp))
