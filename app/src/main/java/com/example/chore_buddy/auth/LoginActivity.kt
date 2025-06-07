@@ -28,9 +28,7 @@ import com.example.chore_buddy.ui.theme.ThemeState
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
-
         setContent {
             ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 LoginScreen()
@@ -57,10 +55,6 @@ fun LoginScreen() {
     val context = LocalContext.current
     val activity = context as? ComponentActivity
     val colorScheme = MaterialTheme.colorScheme
-
-    //val darkTheme = ThemeState.isDarkTheme
-    val darkTheme by remember { derivedStateOf { ThemeState.isDarkTheme } } // obserwuj zmianę
-    val toggleTheme = { ThemeState.isDarkTheme = !ThemeState.isDarkTheme }
 
     LaunchedEffect(loginViewModel.loginSuccess) {
         if (loginViewModel.loginSuccess) {
@@ -91,7 +85,6 @@ fun LoginScreen() {
         Logo()
         ScreenHeading(text = "Login")
         Spacer(modifier = Modifier.height(32.dp))
-
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -105,28 +98,24 @@ fun LoginScreen() {
                 value = loginViewModel.password,
                 onValueChange = { loginViewModel.password = it },
             )
-
             Spacer(modifier = Modifier.height(160.dp))
-
             CustomButton(
                 text = "LOGIN",
                 onClick = { loginViewModel.signIn() }
             )
             Spacer(modifier = Modifier.height(16.dp))
-
             Button(
-                onClick = toggleTheme,
+                onClick = { ThemeState.isDarkTheme = !ThemeState.isDarkTheme },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorScheme.secondary
                 )
             ) {
                 Text(
-                    text = if (darkTheme) "Switch to Light Theme" else "Switch to Dark Theme",
+                    text = if (ThemeState.isDarkTheme) "Switch to Light Theme" else "Switch to Dark Theme",
                     color = colorScheme.onSecondary
                 )
             }
         }
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -148,7 +137,6 @@ fun LoginScreen() {
                 Text("REGISTER ACCOUNT", color = colorScheme.onBackground)
             }
         }
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
