@@ -87,6 +87,7 @@ fun AssignUserContent(users: List<User>) {
                 onClick = {
                     val returnedValue = Intent().apply {
                         putExtra("USER_ID", user.id)
+                        putExtra("USER_NAME", user.name)
                     }
                     activity?.setResult(Activity.RESULT_OK, returnedValue)
                     activity?.finish()

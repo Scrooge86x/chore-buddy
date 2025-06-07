@@ -56,12 +56,15 @@ fun CreateTaskScreen() {
             result.data?.getStringExtra("USER_ID")?.let { value ->
                 createTaskViewModel.assignedUserId = value
             }
+            result.data?.getStringExtra("USER_NAME")?.let { value ->
+                createTaskViewModel.assignedUserName = value
+            }
         }
     }
 
     CreateTaskContent(
         task = createTaskViewModel.currentTask,
-        assignedUser = createTaskViewModel.assignedUserId,
+        assignedUser = createTaskViewModel.assignedUserName,
         assignMemberCallback = {
             val intent = Intent(context, AssignUserActivity::class.java)
             launcher.launch(intent)
@@ -156,7 +159,7 @@ fun CreateTaskPreview() {
                 title = "Clean the dishes",
                 description = "Remember to use the new sponge"
             ),
-            assignedUser = "123456"
+            assignedUser = "John Doe"
         )
     }
 }
