@@ -8,7 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +27,6 @@ import com.example.chore_buddy.R
 import com.example.chore_buddy.auth.ChangePasswordActivity
 import com.example.chore_buddy.auth.LoginActivity
 import com.example.chore_buddy.components.CustomButton
-import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.ProfileField
 import com.example.chore_buddy.components.UserAvatar
@@ -130,7 +128,6 @@ fun UserProfileContent(
                     fontWeight = FontWeight.Medium
                 )
             }
-
             Spacer(modifier = Modifier.height(64.dp))
             ProfileField("User email", user.email, interFontFamily)
             if (user.groupId != null) {
