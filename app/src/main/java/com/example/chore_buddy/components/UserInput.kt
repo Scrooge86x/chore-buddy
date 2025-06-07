@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
@@ -37,10 +36,8 @@ fun UserInput(
     val interFontFamily = FontFamily(
         androidx.compose.ui.text.font.Font(R.font.inter_regular),
     )
-
     Text(
         text = label,
-        //color = Color.White,
         color = MaterialTheme.colorScheme.onBackground,
         fontSize = 18.sp,
         modifier = Modifier

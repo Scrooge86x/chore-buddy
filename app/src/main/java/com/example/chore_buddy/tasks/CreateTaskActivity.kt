@@ -146,8 +146,6 @@ fun CreateTaskContent(
                         selectedTime = it
                         showDialog = false
                     },
-                    backgroundColor = Color(0xFF121212),
-                    contentColor = Color(0xFFFAFAFA),
                     confirmText = "OK",
                     dismissText = "Cancel"
                 )

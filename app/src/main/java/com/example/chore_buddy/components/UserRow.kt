@@ -19,7 +19,6 @@ import com.example.chore_buddy.R
 @Composable
 fun UserRow(userName: String, onClick: () -> Unit = {}) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,7 +44,7 @@ fun UserRow(userName: String, onClick: () -> Unit = {}) {
         Spacer(modifier = Modifier.width(24.dp))
         Text(
             text = userName,
-            fontSize = 22.sp, // większy tekst
+            fontSize = 22.sp,
             color = Color.LightGray,
             fontFamily = interFontFamily,
             fontWeight = FontWeight.Medium

@@ -9,7 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -61,9 +60,7 @@ fun SettingRow(
                 }
             }
         }
-
         Spacer(modifier = Modifier.width(16.dp))
-
         Text(
             text = taskName,
             fontSize = 22.sp,
@@ -73,7 +70,6 @@ fun SettingRow(
         )
     }
 }
-
 @Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun SettingRowPreviewLight() {
@@ -88,7 +84,6 @@ fun SettingRowPreviewLight() {
         )
     }
 }
-
 @Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun SettingRowPreviewDark() {

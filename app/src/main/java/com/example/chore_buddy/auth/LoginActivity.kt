@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,27 +36,21 @@ class LoginActivity : ComponentActivity() {
             }
         }
     }
-
     override fun onResume() {
         super.onResume()
-
         if (AuthRepository.getCurrentUser() == null)
             return
-
         val intent = Intent(this, CalendarActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }
 }
-
 @Composable
 fun LoginScreen() {
     val loginViewModel: LoginViewModel = viewModel()
     val context = LocalContext.current
     val activity = context as? ComponentActivity
-    val colorScheme = MaterialTheme.colorScheme
-
     LaunchedEffect(loginViewModel.loginSuccess) {
         if (loginViewModel.loginSuccess) {
             val intent = Intent(context, CalendarActivity::class.java)
@@ -64,14 +59,12 @@ fun LoginScreen() {
             activity?.finish()
         }
     }
-
     LaunchedEffect(loginViewModel.loginError) {
         if (loginViewModel.loginError != null) {
             Toast.makeText(context, loginViewModel.loginError, Toast.LENGTH_LONG).show()
             loginViewModel.loginError = null
         }
     }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -104,17 +97,6 @@ fun LoginScreen() {
                 onClick = { loginViewModel.signIn() }
             )
             Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = { ThemeState.isDarkTheme = !ThemeState.isDarkTheme },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorScheme.secondary
-                )
-            ) {
-                Text(
-                    text = if (ThemeState.isDarkTheme) "Switch to Light Theme" else "Switch to Dark Theme",
-                    color = colorScheme.onSecondary
-                )
-            }
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -160,7 +142,6 @@ fun LoginScreen() {
         }
     }
 }
-
 @Preview(apiLevel = 34, showBackground = true)
 @Composable
 fun PreviewLoginScreenDark() {
@@ -169,7 +150,6 @@ fun PreviewLoginScreenDark() {
         LoginScreen()
     }
 }
-
 @Preview(apiLevel = 34, showBackground = true)
 @Composable
 fun PreviewLoginScreenLight() {

@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
@@ -44,6 +45,7 @@ class AssignUserActivity : ComponentActivity() {
 fun AssignUserScreen() {
     val context = LocalContext.current
     val assignUserViewModel: AssignUserViewModel = viewModel()
+    val AvatarIndex = 1
 
     LaunchedEffect(assignUserViewModel.errorMessage) {
         if (assignUserViewModel.errorMessage != null) {
@@ -82,8 +84,9 @@ fun AssignUserContent(users: List<User>) {
         Spacer(modifier = Modifier.height(24.dp))
         HorizontalDivider(thickness = 1.dp, color = Color.White)
         users.forEach { user ->
-            UserRow(
+            CustomUserRow(
                 userName = user.name,
+                avatarIndex = 1,
                 onClick = {
                     val returnedValue = Intent().apply {
                         putExtra("USER_ID", user.id)

@@ -26,7 +26,6 @@ fun CustomButton(
     cornerRadius: Dp = 16.dp
 ) {
     var isPressed by remember { mutableStateOf(false) }
-
     Button(
         onClick = {
             isPressed = true
@@ -47,11 +46,9 @@ fun CustomButton(
             fontWeight = FontWeight.Bold
         )
     }
-
-    // Reset koloru po kliknięciu (jeśli chcesz żeby szybko wracał)
     LaunchedEffect(isPressed) {
         if (isPressed) {
-            kotlinx.coroutines.delay(150) // <- czas w ms jak długo kolor po kliknięciu
+            kotlinx.coroutines.delay(150)
             isPressed = false
         }
     }
