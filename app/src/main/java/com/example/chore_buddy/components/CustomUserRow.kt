@@ -16,8 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
 
+
 @Composable
-fun CustomUserRow(userName: String, avatarResId: Int, onClick: () -> Unit = {}) {
+fun CustomUserRow(userName: String, avatarIndex: Int, onClick: () -> Unit = {}) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
 
     Row(
@@ -31,7 +32,7 @@ fun CustomUserRow(userName: String, avatarResId: Int, onClick: () -> Unit = {}) 
     ) {
         Spacer(modifier = Modifier.width(16.dp))
 
-        UserAvatar(imageResId = avatarResId)
+        UserAvatar(avatarIndex = avatarIndex)
 
         Spacer(modifier = Modifier.width(24.dp))
         Text(
@@ -48,8 +49,8 @@ fun CustomUserRow(userName: String, avatarResId: Int, onClick: () -> Unit = {}) 
 @Composable
 fun CustomUserRowPreview() {
     Column(modifier = Modifier.background(Color.DarkGray)) {
-        CustomUserRow(userName = "User 1", avatarResId = R.drawable.avatar1)
-        CustomUserRow(userName = "User 2", avatarResId = R.drawable.avatar2)
-        CustomUserRow(userName = "User 3", avatarResId = R.drawable.avatar3)
+        CustomUserRow(userName = "User 1", avatarIndex = 0)
+        CustomUserRow(userName = "User 2", avatarIndex = 1)
+        CustomUserRow(userName = "User 3", avatarIndex = 2)
     }
 }

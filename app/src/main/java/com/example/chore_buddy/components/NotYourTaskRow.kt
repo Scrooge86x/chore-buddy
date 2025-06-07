@@ -23,7 +23,8 @@ fun NotYourTaskRow(taskName: String) {
             .fillMaxWidth()
             .height(80.dp)
             .background(Color.Black)
-            .padding(start = 24.dp),
+            //.padding(start = 24.dp),
+            .padding(start = 96.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(

@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
+import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.UserRow
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
@@ -52,6 +53,7 @@ fun DayInfoScreen() {
         true to "Your task 2"
     )
     val date = "01/01/2000"
+    val avatarIndex = 1
 
     Box(
         modifier = Modifier
@@ -79,7 +81,7 @@ fun DayInfoScreen() {
             HorizontalDivider(thickness = 1.dp, color = Color.White)
             tasks.forEach { (isUserTask, taskName) ->
                 if (isUserTask) {
-                    UserRow(userName = taskName)
+                    CustomUserRow(userName = taskName, avatarIndex)
                 } else {
                     NotYourTaskRow(taskName = taskName)
                 }

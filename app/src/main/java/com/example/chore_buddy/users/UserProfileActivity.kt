@@ -28,6 +28,7 @@ import com.example.chore_buddy.R
 import com.example.chore_buddy.auth.ChangePasswordActivity
 import com.example.chore_buddy.auth.LoginActivity
 import com.example.chore_buddy.components.CustomButton
+import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.ProfileField
 import com.example.chore_buddy.components.UserAvatar
@@ -102,6 +103,7 @@ fun UserProfileContent(
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val context = LocalContext.current
     val activity = context as? ComponentActivity
+    val avatarIndex = 1
     
     Box(
         modifier = Modifier
@@ -118,19 +120,7 @@ fun UserProfileContent(
             Logo(modifier = Modifier.align(Alignment.CenterHorizontally))
             Spacer(modifier = Modifier.height(32.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-//                Box(
-//                    modifier = Modifier
-//                        .size(64.dp)
-//                        .background(color = Color(0xFFAA88FF), shape = CircleShape)
-//                        .padding(6.dp)
-//                ) {
-//                    Box(
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                            .background(color = Color(0xFF66FFE5), shape = CircleShape)
-//                    )
-//                }
-                UserAvatar(imageResId = R.drawable.avatar1)
+                UserAvatar(avatarIndex)
                 Spacer(modifier = Modifier.width(24.dp))
                 Text(
                     text = user.name,
@@ -140,10 +130,6 @@ fun UserProfileContent(
                     fontWeight = FontWeight.Medium
                 )
             }
-//            CustomUserRow(
-//                userName = user.name,
-//                avatarResId = R.drawable.avatar1,
-//            )
 
             Spacer(modifier = Modifier.height(64.dp))
             ProfileField("User email", user.email, interFontFamily)
