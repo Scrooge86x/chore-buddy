@@ -43,10 +43,12 @@ class CreateTaskActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun CreateTaskScreen() {
     val context = LocalContext.current
     val createTaskViewModel : CreateTaskViewModel = viewModel()
+
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -56,6 +58,7 @@ fun CreateTaskScreen() {
             }
         }
     }
+
     CreateTaskContent(
         task = createTaskViewModel.currentTask,
         assignedUser = createTaskViewModel.assignedUserId,
@@ -65,6 +68,7 @@ fun CreateTaskScreen() {
         }
     )
 }
+
 @Composable
 fun CreateTaskContent(
     task: Task,
@@ -75,6 +79,7 @@ fun CreateTaskContent(
     val activity = LocalActivity.current
     var showDialog by remember { mutableStateOf(false) }
     var selectedTime by remember { mutableStateOf<Date?>(null) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -89,16 +94,18 @@ fun CreateTaskContent(
         )
         ScreenHeading(text = "New Task")
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Assigned user id",
-            color = Color.White,
-            fontSize = 22.sp
-        )
-        Text(
-            text = "$assignedUser",
-            color = Color(0xFFCCCCCC),
-            fontSize = 20.sp
-        )
+        if (assignedUser != null) {
+            Text(
+                text = "Assigned user id",
+                color = Color.White,
+                fontSize = 22.sp
+            )
+            Text(
+                text = assignedUser,
+                color = Color(0xFFCCCCCC),
+                fontSize = 20.sp
+            )
+        }
         Column(modifier = Modifier.fillMaxWidth()) {
             UserInput(
                 label = "Task title",
@@ -109,7 +116,7 @@ fun CreateTaskContent(
                 label = "Description",
                 value = task.description,
                 onValueChange = { task.description = it },
-                modifier = Modifier.height(90.dp)
+                modifier = Modifier.height(120.dp)
             )
         }
         Column {
@@ -139,6 +146,7 @@ fun CreateTaskContent(
         }
     }
 }
+
 @Preview(apiLevel = 34)
 @Composable
 fun CreateTaskPreview() {
