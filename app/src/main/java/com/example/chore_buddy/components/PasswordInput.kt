@@ -25,9 +25,9 @@ fun PasswordInput(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "Enter your password",
-    placeholderColor: Color = Color(0xffcccccc),
-    focusedBorderColor: Color = Color(0xff76ffdf),
-    unfocusedBorderColor: Color = Color(0xffcccccc),
+    placeholderColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    focusedBorderColor: Color = MaterialTheme.colorScheme.primary,
+    unfocusedBorderColor: Color = MaterialTheme.colorScheme.outline,
     textStyle: TextStyle = LocalTextStyle.current.copy(
         fontFamily = FontFamily.SansSerif,
         color = Color(0xffb79fff)
@@ -39,7 +39,8 @@ fun PasswordInput(
 
     Text(
         text = label,
-        color = Color.White,
+        //color = Color.White,
+        color = MaterialTheme.colorScheme.onBackground,
         fontSize = 18.sp,
         modifier = Modifier
             .fillMaxWidth()

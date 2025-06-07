@@ -7,6 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -29,9 +30,9 @@ fun MultiLineInput(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "Input text",
-    placeholderColor: Color = Color(0xffcccccc),
-    focusedBorderColor: Color = Color(0xff76ffdf),
-    unfocusedBorderColor: Color = Color(0xffcccccc),
+    placeholderColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    focusedBorderColor: Color = MaterialTheme.colorScheme.primary,
+    unfocusedBorderColor: Color = MaterialTheme.colorScheme.outline,
     textStyle: TextStyle = LocalTextStyle.current.copy(
         fontFamily = FontFamily.SansSerif,
         color = Color(0xffb79fff)
@@ -44,7 +45,8 @@ fun MultiLineInput(
 
     Text(
         text = label,
-        color = Color.White,
+        //color = Color.White,
+        color = MaterialTheme.colorScheme.onBackground,
         fontSize = 18.sp,
         modifier = Modifier
             .fillMaxWidth()

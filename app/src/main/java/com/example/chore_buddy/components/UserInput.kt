@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -25,12 +26,12 @@ fun UserInput(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "Type here",
-    placeholderColor: Color = Color(0xffcccccc),
-    focusedBorderColor: Color = Color(0xff76ffdf),
-    unfocusedBorderColor: Color = Color(0xffcccccc),
+    placeholderColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    focusedBorderColor: Color = MaterialTheme.colorScheme.primary,
+    unfocusedBorderColor: Color = MaterialTheme.colorScheme.outline,
     textStyle: TextStyle = LocalTextStyle.current.copy(
         fontFamily = FontFamily.SansSerif,
-        color = Color(0xffb79fff)
+        color = MaterialTheme.colorScheme.onSurface
     )
 ) {
     val interFontFamily = FontFamily(
@@ -39,7 +40,8 @@ fun UserInput(
 
     Text(
         text = label,
-        color = Color.White,
+        //color = Color.White,
+        color = MaterialTheme.colorScheme.onBackground,
         fontSize = 18.sp,
         modifier = Modifier
             .fillMaxWidth()

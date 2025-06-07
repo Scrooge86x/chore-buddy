@@ -8,38 +8,57 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.components.NotYourTaskRow
 import com.example.chore_buddy.components.ScreenHeading
+import com.example.chore_buddy.components.SettingRow
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.ui.theme.ThemeState
 
 class MainSettingsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
-            ChoreBuddyTheme {
-                MainSettingsScreen()
+            val darkTheme by remember { derivedStateOf { ThemeState.isDarkTheme } }
+
+            ChoreBuddyTheme(darkTheme = darkTheme) {
+                MainSettingsScreen(
+                    isDarkTheme = ThemeState.isDarkTheme,
+                    onThemeChange = { ThemeState.isDarkTheme = it }
+                )
             }
         }
     }
 }
 
-@Preview(apiLevel = 34)
 @Composable
-fun MainSettingsScreen() {
-    val userSettings = listOf("Setting 1", "Setting 2", "Setting 3", "Setting 4")
+fun MainSettingsScreen(
+    isDarkTheme: Boolean,
+    onThemeChange: (Boolean) -> Unit
+) {
+    val userSettings = listOf("Dark Theme", "Setting 2", "Setting 3", "Setting 4")
+    val checkedStates = remember {
+        mutableStateListOf(
+            isDarkTheme,
+            false,
+            false,
+            false
+        )
+    }
+
+    val colorScheme = MaterialTheme.colorScheme
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(colorScheme.background)
             .verticalScroll(rememberScrollState())
             .imePadding()
     ) {
@@ -50,30 +69,72 @@ fun MainSettingsScreen() {
             Logo()
             ScreenHeading(text = "Settings")
             Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(thickness = 1.dp, color = Color.White)
-            userSettings.forEach { userSet ->
-                NotYourTaskRow(taskName = userSet)
-                HorizontalDivider(thickness = 1.dp, color = Color.White)
+            HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
+
+            userSettings.forEachIndexed { index, settingName ->
+                SettingRow(
+                    taskName = settingName,
+                    isChecked = checkedStates[index],
+                    onCheckedChange = { isChecked ->
+                        checkedStates[index] = isChecked
+                        if (index == 0) {
+                            onThemeChange(isChecked)
+                        }
+                    }
+                )
+                HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             }
+
             Spacer(modifier = Modifier.weight(1f))
-            Column (
+            Column(
                 modifier = Modifier.padding(24.dp)
             ) {
                 CustomButton(
                     text = "SAVE",
-                    onClick = { /* TODO: Change password */ }
+                    onClick = {
+                        // Save logic (e.g., DataStore)
+                    }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 CustomButton(
                     text = "CANCEL",
-                    onClick = { /* TODO: Logout */ }
+                    onClick = {
+                        // Cancel logic
+                    }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 CustomButton(
                     text = "RESTORE DEFAULT",
-                    onClick = { /* TODO: Logout */ }
+                    onClick = {
+                        checkedStates.replaceAll { false }
+                        onThemeChange(false)
+                    }
                 )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewMainSettingsScreenLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        MainSettingsScreen(
+            isDarkTheme = ThemeState.isDarkTheme,
+            onThemeChange = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewMainSettingsScreenDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        MainSettingsScreen(
+            isDarkTheme = ThemeState.isDarkTheme,
+            onThemeChange = {}
+        )
     }
 }

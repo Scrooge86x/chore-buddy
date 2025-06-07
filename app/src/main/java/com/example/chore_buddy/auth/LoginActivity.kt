@@ -3,47 +3,36 @@ package com.example.chore_buddy.auth
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-
-import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
-import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.components.UserInput
-import com.example.chore_buddy.components.PasswordInput
-import com.example.chore_buddy.components.CustomButton
-
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.chore_buddy.components.ScreenHeading
+import com.example.chore_buddy.components.*
 import com.example.chore_buddy.groups.CreateOrJoinGroupActivity
+import com.example.chore_buddy.settings.MainSettingsActivity
 import com.example.chore_buddy.tasks.CalendarActivity
-
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.ui.theme.ThemeState
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
+
         setContent {
-            ChoreBuddyTheme {
+            ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 LoginScreen()
             }
         }
@@ -62,13 +51,16 @@ class LoginActivity : ComponentActivity() {
     }
 }
 
-@Preview(apiLevel = 34)
 @Composable
 fun LoginScreen() {
     val loginViewModel: LoginViewModel = viewModel()
-
     val context = LocalContext.current
     val activity = context as? ComponentActivity
+    val colorScheme = MaterialTheme.colorScheme
+
+    //val darkTheme = ThemeState.isDarkTheme
+    val darkTheme by remember { derivedStateOf { ThemeState.isDarkTheme } } // obserwuj zmianę
+    val toggleTheme = { ThemeState.isDarkTheme = !ThemeState.isDarkTheme }
 
     LaunchedEffect(loginViewModel.loginSuccess) {
         if (loginViewModel.loginSuccess) {
@@ -89,7 +81,7 @@ fun LoginScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(colorScheme.background)
             .verticalScroll(rememberScrollState())
             .imePadding()
             .padding(16.dp),
@@ -99,6 +91,7 @@ fun LoginScreen() {
         Logo()
         ScreenHeading(text = "Login")
         Spacer(modifier = Modifier.height(32.dp))
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -112,13 +105,28 @@ fun LoginScreen() {
                 value = loginViewModel.password,
                 onValueChange = { loginViewModel.password = it },
             )
+
             Spacer(modifier = Modifier.height(160.dp))
+
             CustomButton(
                 text = "LOGIN",
                 onClick = { loginViewModel.signIn() }
             )
             Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = toggleTheme,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorScheme.secondary
+                )
+            ) {
+                Text(
+                    text = if (darkTheme) "Switch to Light Theme" else "Switch to Dark Theme",
+                    color = colorScheme.onSecondary
+                )
+            }
         }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -129,7 +137,7 @@ fun LoginScreen() {
                     context.startActivity(intent)
                 }
             ) {
-                Text("RESET PASSWORD", color = Color.White)
+                Text("RESET PASSWORD", color = colorScheme.onBackground)
             }
             TextButton(
                 onClick = {
@@ -137,7 +145,7 @@ fun LoginScreen() {
                     context.startActivity(intent)
                 }
             ) {
-                Text("REGISTER ACCOUNT", color = Color.White)
+                Text("REGISTER ACCOUNT", color = colorScheme.onBackground)
             }
         }
 
@@ -147,11 +155,11 @@ fun LoginScreen() {
         ) {
             TextButton(
                 onClick = {
-                    val intent = Intent(context, ChangePasswordActivity::class.java)
+                    val intent = Intent(context, MainSettingsActivity::class.java)
                     context.startActivity(intent)
                 }
             ) {
-                Text("CHANGE PASSWORD", color = Color.White)
+                Text("SETTINGS", color = colorScheme.onBackground)
             }
             TextButton(
                 onClick = {
@@ -159,8 +167,26 @@ fun LoginScreen() {
                     context.startActivity(intent)
                 }
             ) {
-                Text("CREATE OR JOIN GROUP", color = Color.White)
+                Text("WORK IN PROGRESS", color = colorScheme.onBackground)
             }
         }
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun PreviewLoginScreenDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        LoginScreen()
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun PreviewLoginScreenLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        LoginScreen()
     }
 }
