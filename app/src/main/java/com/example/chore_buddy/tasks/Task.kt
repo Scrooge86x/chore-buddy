@@ -10,7 +10,7 @@ data class Task(
     var assignedToId: String = "",
     var assignedToName: String = "",
     var createdBy: String = "",
-    var groupId: String = "",
+    var groupId: String? = "",
     var status: Boolean = true,
     var createdAt: Timestamp = Timestamp.now(),
     var dueDate: Timestamp = Timestamp.now()
