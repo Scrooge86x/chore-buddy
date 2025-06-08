@@ -41,7 +41,7 @@ object TaskRepository {
         }
     }
 
-    suspend fun getTaskForDay(userId: String, year: Int, month: Int, day: Int): TaskResult<List<Map<String, Any>>> {
+    suspend fun getTasksForDay(userId: String, year: Int, month: Int, day: Int): TaskResult<List<Map<String, Any>>> {
         return try {
             val calendar = Calendar.getInstance().apply {
                 set(year, month, day, 0, 0, 0)
