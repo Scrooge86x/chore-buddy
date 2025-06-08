@@ -4,8 +4,10 @@ import com.example.chore_buddy.firestore.FirestoreCollections
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.toObject
 
 import kotlinx.coroutines.tasks.await
 import java.util.Calendar
@@ -21,6 +23,44 @@ object TaskRepository {
                 .await()
 
             TaskResult.Success(Unit)
+        } catch (e: Exception) {
+            TaskResult.Error(e)
+        }
+    }
+
+    suspend fun getTaskById(taskId: String): TaskResult<Task?> {
+        return try {
+            val document = firestore.collection(FirestoreCollections.TASKS)
+                .document(taskId)
+                .get()
+                .await()
+
+            TaskResult.Success(document.toObject<Task>())
+        } catch (e: Exception) {
+            TaskResult.Error(e)
+        }
+    }
+
+    suspend fun getTaskForDay(userId: String, year: Int, month: Int, day: Int): TaskResult<List<Map<String, Any>>> {
+        return try {
+            val calendar = Calendar.getInstance().apply {
+                set(year, month, day, 0, 0, 0)
+            }
+            val startDate = Timestamp(calendar.time)
+
+            calendar.set(year, month, day, 23, 59, 59)
+            val endDate = Timestamp(calendar.time)
+
+            val documents = firestore.collection(FirestoreCollections.TASKS)
+                .whereEqualTo("assignedTo", userId)
+                .whereGreaterThanOrEqualTo("dueDate", startDate)
+                .whereLessThanOrEqualTo("dueDate", endDate)
+                .get()
+                .await()
+
+            val result = documents.documents.map { it.data ?: emptyMap() }
+
+            TaskResult.Success(result)
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
@@ -45,6 +85,19 @@ object TaskRepository {
 
             val result = documents.documents.map { it.data ?: emptyMap() }
             TaskResult.Success(result)
+        } catch (e: Exception) {
+            TaskResult.Error(e)
+        }
+    }
+
+    suspend fun updateTask(taskId: String, updates: Map<String, Any>): TaskResult<Unit> {
+        return try {
+            firestore.collection(FirestoreCollections.TASKS)
+                .document(taskId)
+                .set(updates, SetOptions.merge())
+                .await()
+
+            TaskResult.Success(Unit)
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
