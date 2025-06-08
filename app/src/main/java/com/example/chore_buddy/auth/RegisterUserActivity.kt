@@ -115,7 +115,8 @@ fun RegisterUserScreen() {
 )
 @Composable
 fun RegisterUserScreenPreviewLight() {
-    ChoreBuddyTheme(darkTheme = false) {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         RegisterUserScreen()
     }
 }
@@ -127,7 +128,8 @@ fun RegisterUserScreenPreviewLight() {
 )
 @Composable
 fun RegisterUserScreenPreviewDark() {
-    ChoreBuddyTheme(darkTheme = true) {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         RegisterUserScreen()
     }
 }

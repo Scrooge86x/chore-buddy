@@ -98,7 +98,8 @@ fun RestorePasswordScreen() {
 )
 @Composable
 fun RestorePasswordScreenPreviewLight() {
-    ChoreBuddyTheme(darkTheme = false) {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         RestorePasswordScreen()
     }
 }
@@ -110,7 +111,8 @@ fun RestorePasswordScreenPreviewLight() {
 )
 @Composable
 fun RestorePasswordScreenPreviewDark() {
-    ChoreBuddyTheme(darkTheme = true) {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         RestorePasswordScreen()
     }
 }

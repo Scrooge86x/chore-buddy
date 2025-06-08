@@ -34,7 +34,7 @@ class AssignUserActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChoreBuddyTheme {
+            ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 AssignUserScreen()
             }
         }
@@ -111,7 +111,7 @@ fun sampleUsers() = listOf(
 
 @Preview(apiLevel = 34, showBackground = true)
 @Composable
-fun PreviewMainSettingsScreenLight() {
+fun AssignUserActivityPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         AssignUserContent(
@@ -122,7 +122,7 @@ fun PreviewMainSettingsScreenLight() {
 
 @Preview(apiLevel = 34, showBackground = true)
 @Composable
-fun PreviewMainSettingsScreenDark() {
+fun AssignUserActivityPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         AssignUserContent(

@@ -145,10 +145,20 @@ fun GroupMembersContent(group: Group, users: List<User>?) {
     }
 }
 
+@Composable
+fun sampleUsers() = listOf(
+    User(id = "1", name = "User 1", groupId = "group2", email = "admin@example.com", role = "Admin"),
+    User(id = "2", name = "User 2", groupId = "group2", email = "jan@example.com", role = "User"),
+    User(id = "3", name = "User 3", groupId = "group2", email = "anna@example.com", role = "User"),
+    User(id = "4", name = "User 4", groupId = "group2", email = "piotr@example.com", role = "User"),
+    User(id = "5", name = "User 5", groupId = "group2", email = "maria@example.com", role = "User")
+)
+
 @Preview(name = "Light Theme", showBackground = true, apiLevel = 34)
 @Composable
 fun GroupMembersPreviewLight() {
-    ChoreBuddyTheme(darkTheme = false) {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         GroupMembersContent(
             Group(groupId = "123456"),
             sampleUsers()
@@ -159,19 +169,11 @@ fun GroupMembersPreviewLight() {
 @Preview(name = "Dark Theme", showBackground = true, apiLevel = 34)
 @Composable
 fun GroupMembersPreviewDark() {
-    ChoreBuddyTheme(darkTheme = true) {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         GroupMembersContent(
             Group(groupId = "123456"),
             sampleUsers()
         )
     }
 }
-
-@Composable
-fun sampleUsers() = listOf(
-    User(id = "1", name = "User 1", groupId = "group2", email = "admin@example.com", role = "Admin"),
-    User(id = "2", name = "User 2", groupId = "group2", email = "jan@example.com", role = "User"),
-    User(id = "3", name = "User 3", groupId = "group2", email = "anna@example.com", role = "User"),
-    User(id = "4", name = "User 4", groupId = "group2", email = "piotr@example.com", role = "User"),
-    User(id = "5", name = "User 5", groupId = "group2", email = "maria@example.com", role = "User")
-)

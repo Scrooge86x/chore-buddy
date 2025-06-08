@@ -124,7 +124,8 @@ fun CreateOrJoinGroupScreen() {
 )
 @Composable
 fun CreateOrJoinGroupScreenPreviewLight() {
-    ChoreBuddyTheme(darkTheme = false) {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         CreateOrJoinGroupScreen()
     }
 }
@@ -136,7 +137,8 @@ fun CreateOrJoinGroupScreenPreviewLight() {
 )
 @Composable
 fun CreateOrJoinGroupScreenPreviewDark() {
-    ChoreBuddyTheme(darkTheme = true) {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         CreateOrJoinGroupScreen()
     }
 }
