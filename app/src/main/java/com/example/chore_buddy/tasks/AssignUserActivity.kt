@@ -13,10 +13,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,6 +25,7 @@ import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.ui.theme.ThemeState
 
 import com.example.chore_buddy.users.User
 
@@ -74,13 +75,13 @@ fun AssignUserContent(users: List<User>) {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .imePadding()
-            .background(Color.Black),
+            .background(colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Logo()
         ScreenHeading(text = "Assign User")
         Spacer(modifier = Modifier.height(24.dp))
-        HorizontalDivider(thickness = 1.dp, color = Color.White)
+        HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
         users.forEach { user ->
             CustomUserRow(
                 userName = user.name,
@@ -94,54 +95,38 @@ fun AssignUserContent(users: List<User>) {
                     activity?.finish()
                 }
             )
-            HorizontalDivider(thickness = 1.dp, color = Color.White)
+            HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
         }
         Spacer(modifier = Modifier.height(24.dp))
     }
 }
 
-@Preview(apiLevel = 34)
+fun sampleUsers() = listOf(
+    User(id = "1", name = "User 1", groupId = "group2", email = "admin@example.com", role = "Admin"),
+    User(id = "2", name = "User 2", groupId = "group2", email = "jan@example.com", role = "User"),
+    User(id = "3", name = "User 3", groupId = "group2", email = "anna@example.com", role = "User"),
+    User(id = "4", name = "User 4", groupId = "group2", email = "piotr@example.com", role = "User"),
+    User(id = "5", name = "User 5", groupId = "group2", email = "maria@example.com", role = "User")
+)
+
+@Preview(apiLevel = 34, showBackground = true)
 @Composable
-fun AssignUserPreview() {
-    ChoreBuddyTheme {
+fun PreviewMainSettingsScreenLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         AssignUserContent(
-            listOf(
-                User(
-                    id = "1",
-                    name = "User 1",
-                    groupId = "group2",
-                    email = "admin@example.com",
-                    role = "Admin",
-                ),
-                User(
-                    id = "2",
-                    name = "User 2",
-                    groupId = "group2",
-                    email = "jan@example.com",
-                    role = "User",
-                ),
-                User(
-                    id = "3",
-                    name = "User 3",
-                    groupId = "group2",
-                    email = "anna@example.com",
-                    role = "User",
-                ),
-                User(
-                    id = "4",
-                    name = "User 4",
-                    groupId = "group2",
-                    email = "piotr@example.com",
-                    role = "User",
-                ),
-                User(
-                    id = "5",
-                    name = "User 5",
-                    groupId = "group2",
-                    email = "maria@example.com",
-                    role = "User",
-                )
-            )
+            sampleUsers()
+        )
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun PreviewMainSettingsScreenDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        AssignUserContent(
+            sampleUsers()
         )
     }
 }
