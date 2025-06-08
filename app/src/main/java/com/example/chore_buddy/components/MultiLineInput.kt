@@ -34,7 +34,7 @@ fun MultiLineInput(
     unfocusedBorderColor: Color = MaterialTheme.colorScheme.outline,
     textStyle: TextStyle = LocalTextStyle.current.copy(
         fontFamily = FontFamily.SansSerif,
-        color = Color(0xffb79fff)
+        color = MaterialTheme.colorScheme.onSurface
     )
 ) {
     val scrollState = rememberScrollState()
