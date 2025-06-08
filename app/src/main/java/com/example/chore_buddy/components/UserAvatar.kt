@@ -34,6 +34,7 @@ fun avatarIndexToDrawable(index: Int): Int {
         else -> R.drawable.avatar1
     }
 }
+
 @Composable
 fun UserAvatar(avatarIndex: Int) {
     val imageResId = avatarIndexToDrawable(avatarIndex)
@@ -48,12 +49,14 @@ fun UserAvatar(avatarIndex: Int) {
             .padding(4.dp)
     )
 }
+
 @Preview(
     name = "UserAvatar Light Mode",
     showBackground = true,
     backgroundColor = 0xFFFFFFFF,
     apiLevel = 34
 )
+
 @Composable
 fun UserAvatarLightPreview() {
     MaterialTheme(colorScheme = lightColorScheme()) {
@@ -62,12 +65,14 @@ fun UserAvatarLightPreview() {
         }
     }
 }
+
 @Preview(
     name = "UserAvatar Dark Mode",
     showBackground = true,
     backgroundColor = 0xFF000000,
     apiLevel = 34
 )
+
 @Composable
 fun UserAvatarDarkPreview() {
     MaterialTheme(colorScheme = darkColorScheme()) {

@@ -40,11 +40,14 @@ class RegisterUserActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun RegisterUserScreen() {
     val registerUserViewModel: RegisterUserViewModel = viewModel()
+
     val context = LocalContext.current
     val activity = context as? ComponentActivity
+
     LaunchedEffect(registerUserViewModel.errorMessage) {
         if (registerUserViewModel.errorMessage != null) {
             Toast.makeText(context, registerUserViewModel.errorMessage, Toast.LENGTH_LONG).show()
@@ -57,6 +60,7 @@ fun RegisterUserScreen() {
             activity?.finish()
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,6 +68,7 @@ fun RegisterUserScreen() {
             .verticalScroll(rememberScrollState())
             .imePadding()
             .padding(16.dp),
+
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -102,6 +107,7 @@ fun RegisterUserScreen() {
         }
     }
 }
+
 @Preview(
     name = "Light Theme",
     showBackground = true,
@@ -113,6 +119,7 @@ fun RegisterUserScreenPreviewLight() {
         RegisterUserScreen()
     }
 }
+
 @Preview(
     name = "Dark Theme",
     showBackground = true,

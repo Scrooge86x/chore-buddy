@@ -24,8 +24,10 @@ import com.example.chore_buddy.ui.theme.ThemeState
 class MainSettingsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             val darkTheme by remember { derivedStateOf { ThemeState.isDarkTheme } }
+
             ChoreBuddyTheme(darkTheme = darkTheme) {
                 MainSettingsScreen(
                     isDarkTheme = ThemeState.isDarkTheme,
@@ -35,6 +37,7 @@ class MainSettingsActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun MainSettingsScreen(
     isDarkTheme: Boolean,
@@ -49,7 +52,9 @@ fun MainSettingsScreen(
             false
         )
     }
+
     val colorScheme = MaterialTheme.colorScheme
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -79,6 +84,7 @@ fun MainSettingsScreen(
                 )
                 HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             }
+
             Spacer(modifier = Modifier.weight(1f))
             Column(
                 modifier = Modifier.padding(24.dp)
@@ -86,12 +92,14 @@ fun MainSettingsScreen(
                 CustomButton(
                     text = "SAVE",
                     onClick = {
+                        // Save logic (e.g., DataStore)
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 CustomButton(
                     text = "CANCEL",
                     onClick = {
+                        // Cancel logic
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))

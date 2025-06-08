@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -45,18 +46,22 @@ class UserProfileActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun UserProfileScreen(userId: String?) {
     userId ?: return
+
     val context = LocalContext.current
     var userProfileViewModel: UserProfileViewModel = viewModel()
     userProfileViewModel.loadUser(userId)
+
     LaunchedEffect(userProfileViewModel.errorMessage) {
         userProfileViewModel.errorMessage?.let {
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
             userProfileViewModel.resetError()
         }
     }
+
     val user = userProfileViewModel.user
     UserProfileContent(
         user = user ?: User(
@@ -68,6 +73,7 @@ fun UserProfileScreen(userId: String?) {
         userProfileViewModel = userProfileViewModel
     )
 }
+
 @Composable
 fun UserProfileContent(
     user: User,
@@ -78,6 +84,7 @@ fun UserProfileContent(
     val context = LocalContext.current
     val activity = context as? ComponentActivity
     val avatarIndex = 1
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -148,6 +155,7 @@ fun UserProfileContent(
         }
     }
 }
+
 @Preview(name = "User Profile - Light", showBackground = true, apiLevel = 34)
 @Composable
 fun UserProfileLightPreview() {
@@ -167,6 +175,7 @@ fun UserProfileLightPreview() {
         }
     }
 }
+
 @Preview(name = "User Profile - Dark", showBackground = true, apiLevel = 34)
 @Composable
 fun UserProfileDarkPreview() {

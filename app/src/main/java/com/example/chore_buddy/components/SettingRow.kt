@@ -70,6 +70,7 @@ fun SettingRow(
         )
     }
 }
+
 @Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun SettingRowPreviewLight() {
@@ -84,6 +85,7 @@ fun SettingRowPreviewLight() {
         )
     }
 }
+
 @Preview(showBackground = true, apiLevel = 34)
 @Composable
 fun SettingRowPreviewDark() {

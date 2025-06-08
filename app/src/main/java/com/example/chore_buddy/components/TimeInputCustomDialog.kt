@@ -79,6 +79,7 @@ fun TimeInputCustomDialog(
         }
     }
 }
+
 @Preview(showBackground = true, name = "Light Theme", apiLevel = 34)
 @Composable
 fun TimeInputDialogPreviewLight() {
@@ -90,6 +91,7 @@ fun TimeInputDialogPreviewLight() {
         )
     }
 }
+
 @Preview(showBackground = true, name = "Dark Theme", apiLevel = 34)
 @Composable
 fun TimeInputDialogPreviewDark() {

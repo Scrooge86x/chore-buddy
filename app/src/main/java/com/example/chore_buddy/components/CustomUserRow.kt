@@ -22,6 +22,7 @@ import com.example.chore_buddy.ui.theme.ThemeState
 fun CustomUserRow(userName: String, avatarIndex: Int, onClick: () -> Unit = {}) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val colorScheme = MaterialTheme.colorScheme
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,6 +44,7 @@ fun CustomUserRow(userName: String, avatarIndex: Int, onClick: () -> Unit = {}) 
         )
     }
 }
+
 @Preview(showBackground = true, name = "User Row Light", apiLevel = 34)
 @Composable
 fun CustomUserRowPreviewLight() {
@@ -55,6 +57,7 @@ fun CustomUserRowPreviewLight() {
         }
     }
 }
+
 @Preview(showBackground = true, name = "User Row Dark", apiLevel = 34)
 @Composable
 fun CustomUserRowPreviewDark() {

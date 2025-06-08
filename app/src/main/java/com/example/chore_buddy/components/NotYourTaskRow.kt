@@ -38,6 +38,7 @@ fun NotYourTaskRow(taskName: String) {
         )
     }
 }
+
 @Preview(showBackground = true, name = "NotYourTask Light", apiLevel = 34)
 @Composable
 fun NotYourTaskRowPreviewLight() {
@@ -46,6 +47,7 @@ fun NotYourTaskRowPreviewLight() {
         NotYourTaskRow(taskName = "Task for someone else")
     }
 }
+
 @Preview(showBackground = true, name = "NotYourTask Dark", apiLevel = 34)
 @Composable
 fun NotYourTaskRowPreviewDark() {

@@ -36,6 +36,7 @@ class ChangePasswordActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun ChangePasswordScreen() {
     val changePasswordViewModel: ChangePasswordViewModel = viewModel()
@@ -55,12 +56,14 @@ fun ChangePasswordScreen() {
             ).show()
         }
     }
+
     LaunchedEffect(changePasswordViewModel.errorMessage) {
         if (changePasswordViewModel.errorMessage != null) {
             Toast.makeText(context, changePasswordViewModel.errorMessage, Toast.LENGTH_LONG).show()
             changePasswordViewModel.errorMessage = null
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -102,6 +105,7 @@ fun ChangePasswordScreen() {
         }
     }
 }
+
 @Preview(apiLevel = 34, showBackground = true)
 @Composable
 fun PreviewChangePasswordScreenLight() {
@@ -110,6 +114,7 @@ fun PreviewChangePasswordScreenLight() {
         ChangePasswordScreen()
     }
 }
+
 @Preview(apiLevel = 34, showBackground = true)
 @Composable
 fun PreviewChangePasswordScreenDark() {

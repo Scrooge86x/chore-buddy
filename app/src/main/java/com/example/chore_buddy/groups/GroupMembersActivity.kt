@@ -48,13 +48,17 @@ class GroupMembersActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun GroupMembersScreen() {
     val context = LocalContext.current
+
     val groupMembersViewModel: GroupMembersViewModel = viewModel()
     groupMembersViewModel.getCurrentGroupData()
+
     val group = groupMembersViewModel.group
     val members = groupMembersViewModel.members
+
     LaunchedEffect(groupMembersViewModel.errorMessage) {
         if (groupMembersViewModel.errorMessage != null) {
             Toast.makeText(
@@ -65,6 +69,7 @@ fun GroupMembersScreen() {
             groupMembersViewModel.resetError()
         }
     }
+
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -77,11 +82,13 @@ fun GroupMembersScreen() {
                 }
             }
         }
+
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
+
     if (group != null) {
         GroupMembersContent(
             group = group,
@@ -94,10 +101,12 @@ fun GroupMembersScreen() {
         )
     }
 }
+
 @Composable
 fun GroupMembersContent(group: Group, users: List<User>?) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -137,6 +146,7 @@ fun GroupMembersContent(group: Group, users: List<User>?) {
         Spacer(modifier = Modifier.height(24.dp))
     }
 }
+
 @Preview(name = "Light Theme", showBackground = true, apiLevel = 34)
 @Composable
 fun GroupMembersPreviewLight() {
@@ -147,6 +157,7 @@ fun GroupMembersPreviewLight() {
         )
     }
 }
+
 @Preview(name = "Dark Theme", showBackground = true, apiLevel = 34)
 @Composable
 fun GroupMembersPreviewDark() {
@@ -157,6 +168,7 @@ fun GroupMembersPreviewDark() {
         )
     }
 }
+
 @Composable
 fun sampleUsers() = listOf(
     User(id = "1", name = "User 1", groupId = "group2", email = "admin@example.com", role = "Admin"),

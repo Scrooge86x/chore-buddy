@@ -46,15 +46,19 @@ class CreateOrJoinGroupActivity : ComponentActivity() {
 @Composable
 fun CreateOrJoinGroupScreen() {
     val createOrJoinGroupViewModel: CreateOrJoinGroupViewModel = viewModel()
+
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
+
     val context = LocalContext.current
     val activity = context as? ComponentActivity
+
     LaunchedEffect(createOrJoinGroupViewModel.errorMessage) {
         if (createOrJoinGroupViewModel.errorMessage != null) {
             Toast.makeText(context, createOrJoinGroupViewModel.errorMessage, Toast.LENGTH_LONG).show()
             createOrJoinGroupViewModel.resetError()
         }
     }
+
     LaunchedEffect(createOrJoinGroupViewModel.isSuccess) {
         when (createOrJoinGroupViewModel.isSuccess) {
             CreateOrJoinGroupViewModel.Success.Created -> Toast.makeText(context, "Group successfully created", Toast.LENGTH_LONG).show()
@@ -63,6 +67,7 @@ fun CreateOrJoinGroupScreen() {
         }
         activity?.finish()
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -112,6 +117,7 @@ fun CreateOrJoinGroupScreen() {
         Spacer(modifier = Modifier.height(128.dp))
     }
 }
+
 @Preview(
     name = "Light Theme",
     showBackground = true,
@@ -123,6 +129,7 @@ fun CreateOrJoinGroupScreenPreviewLight() {
         CreateOrJoinGroupScreen()
     }
 }
+
 @Preview(
     name = "Dark Theme",
     showBackground = true,

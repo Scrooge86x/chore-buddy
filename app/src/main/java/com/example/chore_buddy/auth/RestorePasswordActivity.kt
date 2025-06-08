@@ -38,9 +38,12 @@ class RestorePasswordActivity : ComponentActivity() {
         }
     }
 }
+
+
 @Composable
 fun RestorePasswordScreen() {
     val restorePasswordViewModel: RestorePasswordViewModel = viewModel()
+
     val context = LocalContext.current
     LaunchedEffect(restorePasswordViewModel.errorMessage) {
         if (restorePasswordViewModel.errorMessage != null) {
@@ -48,12 +51,14 @@ fun RestorePasswordScreen() {
             restorePasswordViewModel.clearMessage()
         }
     }
+
     LaunchedEffect(restorePasswordViewModel.isSuccess) {
         if (restorePasswordViewModel.isSuccess != null) {
             Toast.makeText(context, restorePasswordViewModel.isSuccess, Toast.LENGTH_LONG).show()
             restorePasswordViewModel.clearMessage()
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,6 +90,7 @@ fun RestorePasswordScreen() {
         }
     }
 }
+
 @Preview(
     name = "Light Theme",
     showBackground = true,
@@ -96,6 +102,7 @@ fun RestorePasswordScreenPreviewLight() {
         RestorePasswordScreen()
     }
 }
+
 @Preview(
     name = "Dark Theme",
     showBackground = true,

@@ -38,7 +38,6 @@ fun PasswordInput(
 
     Text(
         text = label,
-        //color = Color.White,
         color = MaterialTheme.colorScheme.onBackground,
         fontSize = 18.sp,
         modifier = Modifier
