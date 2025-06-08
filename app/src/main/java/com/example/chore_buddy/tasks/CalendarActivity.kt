@@ -51,6 +51,7 @@ import com.example.chore_buddy.R
 import com.example.chore_buddy.auth.AuthRepository
 import com.example.chore_buddy.groups.CreateOrJoinGroupActivity
 import com.example.chore_buddy.groups.GroupMembersActivity
+import com.example.chore_buddy.settings.MainSettingsActivity
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.users.UserProfileActivity
 
@@ -109,6 +110,13 @@ fun CalendarScreen() {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 NavbarMenu(items = listOf(
+                    MenuItem(
+                        text = "Settings",
+                        onClick = {
+                            val intent = Intent(context, MainSettingsActivity::class.java)
+                            context.startActivity(intent)
+                        },
+                    ),
                     MenuItem(
                         text = "Check Your Profile",
                         onClick = {
