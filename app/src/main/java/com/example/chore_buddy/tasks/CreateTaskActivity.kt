@@ -3,6 +3,7 @@ package com.example.chore_buddy.tasks
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -50,38 +51,69 @@ class CreateTaskActivity : ComponentActivity() {
 
 @Composable
 fun CreateTaskScreen() {
+    val activity = LocalActivity.current
     val context = LocalContext.current
-    val createTaskViewModel : CreateTaskViewModel = viewModel()
+    val createTaskViewModel: CreateTaskViewModel = viewModel()
+    createTaskViewModel.loadTaskData()
+
+    LaunchedEffect(createTaskViewModel.errorMessage) {
+        if (createTaskViewModel.errorMessage != null) {
+            Toast.makeText(
+                context,
+                createTaskViewModel.errorMessage,
+                Toast.LENGTH_LONG
+            ).show()
+            createTaskViewModel.resetError()
+        }
+    }
+
+    LaunchedEffect(createTaskViewModel.wasSuccessful) {
+        if (createTaskViewModel.wasSuccessful) {
+            Toast.makeText(
+                context,
+                "Task was successfully created.",
+                Toast.LENGTH_LONG
+            ).show()
+            activity?.finish()
+        }
+    }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             result.data?.getStringExtra("USER_ID")?.let { value ->
-                createTaskViewModel.assignedUserId = value
+                createTaskViewModel.taskAssignedToId = value
             }
             result.data?.getStringExtra("USER_NAME")?.let { value ->
-                createTaskViewModel.assignedUserName = value
+                createTaskViewModel.taskAssignedToName = value
             }
         }
     }
 
     CreateTaskContent(
-        task = createTaskViewModel.currentTask,
-        assignedUser = createTaskViewModel.assignedUserName,
+        taskTitle = createTaskViewModel.taskTitle,
+        taskDescription = createTaskViewModel.taskDescription,
+        assignedUser = createTaskViewModel.taskAssignedToName,
+        createTaskViewModel = createTaskViewModel,
         assignMemberCallback = {
             val intent = Intent(context, AssignUserActivity::class.java)
             launcher.launch(intent)
-        }
+        },
+        createTaskCallback = {
+            createTaskViewModel.createCurrentTask()
+        },
     )
 }
 
 @Composable
 fun CreateTaskContent(
-    task: Task,
-    assignedUser: String?,
+    taskTitle: String = "",
+    taskDescription: String = "",
+    assignedUser: String? = null,
     assignMemberCallback: () -> Unit = {},
-    createTaskCallback: () -> Unit = {}
+    createTaskCallback: () -> Unit = {},
+    createTaskViewModel: CreateTaskViewModel? = null,
 ) {
     val activity = LocalActivity.current
     var showDialog by remember { mutableStateOf(false) }
@@ -116,13 +148,13 @@ fun CreateTaskContent(
         Column(modifier = Modifier.fillMaxWidth()) {
             UserInput(
                 label = "Task title",
-                value = task.title,
-                onValueChange = { task.title = it }
+                value = taskTitle,
+                onValueChange = { createTaskViewModel?.taskTitle = it }
             )
             MultiLineInput(
                 label = "Description",
-                value = task.description,
-                onValueChange = { task.description = it },
+                value = taskDescription,
+                onValueChange = { createTaskViewModel?.taskDescription = it },
                 modifier = Modifier.height(120.dp)
             )
         }
@@ -151,8 +183,10 @@ fun CreateTaskContent(
                     dismissText = "Cancel"
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            CustomButton(text = "ASSIGN MEMBER", onClick = assignMemberCallback)
+            if (createTaskViewModel?.taskGroupId != null) {
+                Spacer(modifier = Modifier.height(12.dp))
+                CustomButton(text = "ASSIGN MEMBER", onClick = assignMemberCallback)
+            }
             Spacer(modifier = Modifier.height(12.dp))
             CustomButton(text = "CREATE", onClick = createTaskCallback)
             Spacer(modifier = Modifier.height(12.dp))
@@ -169,10 +203,8 @@ fun CreateTaskPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         CreateTaskContent(
-            task = Task(
-                title = "Clean the dishes",
-                description = "Remember to use the new sponge"
-            ),
+            taskTitle = "Clean the dishes",
+            taskDescription = "Remember to use the new sponge",
             assignedUser = "John Doe"
         )
     }
@@ -184,10 +216,8 @@ fun CreateTaskPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         CreateTaskContent(
-            task = Task(
-                title = "Clean the dishes",
-                description = "Remember to use the new sponge"
-            ),
+            taskTitle = "Clean the dishes",
+            taskDescription = "Remember to use the new sponge",
             assignedUser = "John Doe"
         )
     }
