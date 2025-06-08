@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +27,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +38,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,6 +52,7 @@ import com.example.chore_buddy.groups.CreateOrJoinGroupActivity
 import com.example.chore_buddy.groups.GroupMembersActivity
 import com.example.chore_buddy.settings.MainSettingsActivity
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.ui.theme.ThemeState
 import com.example.chore_buddy.users.UserProfileActivity
 
 class CalendarActivity : ComponentActivity() {
@@ -60,14 +60,13 @@ class CalendarActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChoreBuddyTheme {
+            ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 CalendarScreen()
             }
         }
     }
 }
 
-@Preview(apiLevel = 34)
 @Composable
 fun CalendarScreen() {
     val calendarViewModel : CalendarViewModel = viewModel()
@@ -91,7 +90,7 @@ fun CalendarScreen() {
     }
 
     Scaffold(
-        containerColor = Color.Black,
+        containerColor = colorScheme.background,
         topBar = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -101,7 +100,7 @@ fun CalendarScreen() {
                     .padding(systemBarPadding)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.chore_buddy_logo),
+                    painter = painterResource(id = if (ThemeState.isDarkTheme) R.drawable.chore_buddy_logo else R.drawable.chore_buddy_logo_light),
                     contentDescription = "Chore Buddy Logo",
                     modifier = Modifier
                         .height(80.dp)
@@ -181,23 +180,19 @@ fun NavbarMenu(items: List<MenuItem>) {
                 imageVector = Icons.Default.Menu,
                 contentDescription = "Menu",
                 modifier = Modifier.size(36.dp),
-                tint = Color.White
+                tint = colorScheme.onBackground
             )
         }
         DropdownMenu(
             expanded = isOpen,
             onDismissRequest = { isOpen = false },
             modifier = Modifier
-                .width(192.dp)
-                .background(Color.DarkGray),
+                .width(192.dp),
         ) {
             items.forEachIndexed { index, item ->
                 DropdownMenuItem(
                     text = {
-                        Text(
-                            text = item.text,
-                            color = Color.White
-                        )
+                        Text(item.text)
                     },
                     onClick = {
                         item.onClick()
@@ -209,5 +204,23 @@ fun NavbarMenu(items: List<MenuItem>) {
                 }
             }
         }
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun CalendarActivityPreviewLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        CalendarScreen()
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun CalendarActivityPreviewDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        CalendarScreen()
     }
 }

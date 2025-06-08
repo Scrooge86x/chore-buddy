@@ -13,11 +13,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +31,7 @@ import com.example.chore_buddy.components.MultiLineInput
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.components.TimeInputCustomDialog
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.ui.theme.ThemeState
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,7 +41,7 @@ class CreateTaskActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChoreBuddyTheme {
+            ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 CreateTaskScreen()
             }
         }
@@ -89,7 +90,7 @@ fun CreateTaskContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(colorScheme.background)
             .verticalScroll(rememberScrollState())
             .imePadding()
             .padding(16.dp),
@@ -102,13 +103,13 @@ fun CreateTaskContent(
         Spacer(modifier = Modifier.height(10.dp))
         if (assignedUser != null) {
             Text(
-                text = "Assigned user id",
-                color = Color.White,
+                text = "Assigned user",
+                color = colorScheme.onBackground,
                 fontSize = 22.sp
             )
             Text(
                 text = assignedUser,
-                color = Color(0xFFCCCCCC),
+                color = colorScheme.onBackground,
                 fontSize = 20.sp
             )
         }
@@ -130,7 +131,7 @@ fun CreateTaskContent(
             selectedTime?.let {
                 Text(
                     text = "Due time: ${SimpleDateFormat("HH:mm", Locale.getDefault()).format(it)}",
-                    color = Color.White,
+                    color = colorScheme.onBackground,
                     fontSize = 20.sp,
                     modifier = Modifier
                         .padding(bottom = 16.dp)
@@ -162,10 +163,26 @@ fun CreateTaskContent(
     }
 }
 
-@Preview(apiLevel = 34)
+@Preview(apiLevel = 34, showBackground = true)
 @Composable
-fun CreateTaskPreview() {
-    ChoreBuddyTheme {
+fun CreateTaskPreviewLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        CreateTaskContent(
+            task = Task(
+                title = "Clean the dishes",
+                description = "Remember to use the new sponge"
+            ),
+            assignedUser = "John Doe"
+        )
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun CreateTaskPreviewDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         CreateTaskContent(
             task = Task(
                 title = "Clean the dishes",

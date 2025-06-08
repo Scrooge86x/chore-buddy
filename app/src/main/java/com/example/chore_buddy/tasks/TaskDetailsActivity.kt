@@ -13,11 +13,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -30,13 +30,14 @@ import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.MultiLineInput
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.ui.theme.ThemeState
 
 class TaskDetailsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChoreBuddyTheme {
+            ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 TaskDetailsScreen()
             }
         }
@@ -52,13 +53,13 @@ fun DateView(
 ) {
     Text(
         text = label,
-        color = Color.White,
+        color = colorScheme.onBackground,
         fontSize = 18.sp,
         style = TextStyle(fontFamily = interFontFamily)
     )
     Text(
         text = date,
-        color = Color.LightGray,
+        color = colorScheme.onBackground,
         fontSize = 18.sp,
         style = TextStyle(fontFamily = interFontFamily),
         modifier = Modifier.padding(bottom = 16.dp)
@@ -77,7 +78,7 @@ fun StatusCheckbox(
     ) {
         Text(
             text = "Status",
-            color = Color.White,
+            color = colorScheme.onBackground,
             fontSize = 16.sp,
             style = TextStyle(fontFamily = interFontFamily),
             modifier = Modifier.padding(bottom = 4.dp)
@@ -87,7 +88,7 @@ fun StatusCheckbox(
                 .size(64.dp)
                 .border(
                     width = 2.dp,
-                    color = Color.LightGray,
+                    color = colorScheme.onBackground,
                     shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
                 ),
             contentAlignment = Alignment.Center
@@ -96,9 +97,9 @@ fun StatusCheckbox(
                 Icon(
                     imageVector = Icons.Default.Check,
                     contentDescription = "Checked",
-                    tint = Color.Black,
+                    tint = colorScheme.background,
                     modifier = Modifier
-                        .background(Color.LightGray, shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
+                        .background(colorScheme.onBackground, shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
                         .fillMaxSize()
                         .padding(8.dp)
                 )
@@ -112,8 +113,6 @@ fun StatusCheckbox(
     }
 }
 
-
-@Preview(apiLevel = 34)
 @Composable
 fun TaskDetailsScreen(
     isAdmin: Boolean = false
@@ -127,7 +126,7 @@ fun TaskDetailsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(colorScheme.background)
             .verticalScroll(rememberScrollState())
             .imePadding()
             .padding(16.dp),
@@ -161,7 +160,7 @@ fun TaskDetailsScreen(
         Box(modifier = Modifier
             .fillMaxWidth()
             .height(1.dp)
-            .background(Color.Gray)
+            .background(colorScheme.onBackground)
         )
         Spacer(modifier = Modifier.height(16.dp))
         MultiLineInput(
@@ -181,5 +180,23 @@ fun TaskDetailsScreen(
                 }
             )
         }
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun TaskDetailsPreviewLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        TaskDetailsScreen()
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun TaskDetailsPreviewDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        TaskDetailsScreen()
     }
 }

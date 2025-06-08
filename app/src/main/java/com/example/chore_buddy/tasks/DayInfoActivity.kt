@@ -12,10 +12,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -27,20 +27,20 @@ import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.components.NotYourTaskRow
+import com.example.chore_buddy.ui.theme.ThemeState
 
 class DayInfoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChoreBuddyTheme {
+            ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 DayInfoScreen()
             }
         }
     }
 }
 
-@Preview(apiLevel = 34)
 @Composable
 fun DayInfoScreen() {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
@@ -57,7 +57,7 @@ fun DayInfoScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(colorScheme.background)
     ) {
         Column(
             modifier = Modifier
@@ -70,28 +70,28 @@ fun DayInfoScreen() {
                 Spacer(modifier = Modifier.height(48.dp))
                 Text(
                     text = date,
-                    color = Color.White,
+                    color = colorScheme.onBackground,
                     fontSize = 24.sp,
                     fontFamily = interFontFamily,
                     fontWeight = FontWeight.Bold
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(thickness = 1.dp, color = Color.White)
+            HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             tasks.forEach { (isUserTask, taskName) ->
                 if (isUserTask) {
                     CustomUserRow(userName = taskName, avatarIndex)
                 } else {
                     NotYourTaskRow(taskName = taskName)
                 }
-                HorizontalDivider(thickness = 1.dp, color = Color.White)
+                HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             }
             Spacer(modifier = Modifier.weight(1f))
         }
         FloatingActionButton(
             onClick = { /* TODO: action */ },
-            containerColor = Color.LightGray,
-            contentColor = Color.Black,
+            containerColor = colorScheme.onBackground,
+            contentColor = colorScheme.background,
             shape = CircleShape,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -99,5 +99,23 @@ fun DayInfoScreen() {
         ) {
             Icon(Icons.Filled.Add, contentDescription = "Add")
         }
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun DayInfoPreviewLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        DayInfoScreen()
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun DayInfoPreviewDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        DayInfoScreen()
     }
 }
