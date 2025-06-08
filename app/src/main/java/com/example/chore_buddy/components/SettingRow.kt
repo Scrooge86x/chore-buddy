@@ -22,11 +22,20 @@ import com.example.chore_buddy.ui.theme.ThemeState
 @Composable
 fun SettingRow(
     taskName: String,
-    isChecked: Boolean,
+    initialState: Boolean = false,
+    resetTrigger: Boolean = false,
     onCheckedChange: (Boolean) -> Unit
 ) {
     val colorScheme = MaterialTheme.colorScheme
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
+    var isChecked by remember { mutableStateOf(!initialState) }
+
+    LaunchedEffect(resetTrigger) {
+        if (isChecked != initialState) {
+            onCheckedChange(!isChecked)
+            isChecked = !isChecked
+        }
+    }
 
     Row(
         modifier = Modifier
@@ -46,7 +55,10 @@ fun SettingRow(
                 ),
             contentAlignment = Alignment.Center
         ) {
-            IconButton(onClick = { onCheckedChange(!isChecked) }) {
+            IconButton(onClick = {
+                isChecked = !isChecked
+                onCheckedChange(isChecked)
+            }) {
                 if (isChecked) {
                     Icon(
                         imageVector = Icons.Default.Check,
@@ -76,12 +88,9 @@ fun SettingRow(
 fun SettingRowPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        var isChecked by remember { mutableStateOf(true) }
-
         SettingRow(
             taskName = "Enable notifications",
-            isChecked = isChecked,
-            onCheckedChange = { isChecked = it }
+            onCheckedChange = {}
         )
     }
 }
@@ -91,12 +100,9 @@ fun SettingRowPreviewLight() {
 fun SettingRowPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        var isChecked by remember { mutableStateOf(true) }
-
         SettingRow(
             taskName = "Enable notifications",
-            isChecked = isChecked,
-            onCheckedChange = { isChecked = it }
+            onCheckedChange = {}
         )
     }
 }
