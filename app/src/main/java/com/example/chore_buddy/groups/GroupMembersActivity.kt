@@ -56,9 +56,6 @@ fun GroupMembersScreen() {
     val groupMembersViewModel: GroupMembersViewModel = viewModel()
     groupMembersViewModel.getCurrentGroupData()
 
-    val group = groupMembersViewModel.group
-    val members = groupMembersViewModel.members
-
     LaunchedEffect(groupMembersViewModel.errorMessage) {
         if (groupMembersViewModel.errorMessage != null) {
             Toast.makeText(
@@ -89,10 +86,11 @@ fun GroupMembersScreen() {
         }
     }
 
+    val group = groupMembersViewModel.group
     if (group != null) {
         GroupMembersContent(
             group = group,
-            users = members
+            users = groupMembersViewModel.members
         )
     } else {
         GroupMembersContent(

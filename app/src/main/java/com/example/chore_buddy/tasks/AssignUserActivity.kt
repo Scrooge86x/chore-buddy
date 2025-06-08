@@ -26,7 +26,6 @@ import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 
-import com.example.chore_buddy.components.UserRow
 import com.example.chore_buddy.users.User
 
 class AssignUserActivity : ComponentActivity() {
@@ -45,7 +44,6 @@ class AssignUserActivity : ComponentActivity() {
 fun AssignUserScreen() {
     val context = LocalContext.current
     val assignUserViewModel: AssignUserViewModel = viewModel()
-    val AvatarIndex = 1
 
     LaunchedEffect(assignUserViewModel.errorMessage) {
         if (assignUserViewModel.errorMessage != null) {

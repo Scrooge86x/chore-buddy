@@ -3,13 +3,13 @@ package com.example.chore_buddy.groups
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -45,12 +45,11 @@ class CreateOrJoinGroupActivity : ComponentActivity() {
 
 @Composable
 fun CreateOrJoinGroupScreen() {
-    val createOrJoinGroupViewModel: CreateOrJoinGroupViewModel = viewModel()
-
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
-
     val context = LocalContext.current
-    val activity = context as? ComponentActivity
+    val activity = LocalActivity.current
+
+    val createOrJoinGroupViewModel: CreateOrJoinGroupViewModel = viewModel()
 
     LaunchedEffect(createOrJoinGroupViewModel.errorMessage) {
         if (createOrJoinGroupViewModel.errorMessage != null) {

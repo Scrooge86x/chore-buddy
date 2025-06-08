@@ -21,6 +21,7 @@ import com.example.chore_buddy.ui.theme.ThemeState
 fun NotYourTaskRow(taskName: String) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val colorScheme = MaterialTheme.colorScheme
+
     Row(
         modifier = Modifier
             .fillMaxWidth()

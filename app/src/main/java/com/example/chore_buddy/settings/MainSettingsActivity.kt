@@ -84,7 +84,6 @@ fun MainSettingsScreen(
                 )
                 HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             }
-
             Spacer(modifier = Modifier.weight(1f))
             Column(
                 modifier = Modifier.padding(24.dp)

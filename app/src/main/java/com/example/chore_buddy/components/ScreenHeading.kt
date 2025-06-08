@@ -20,6 +20,7 @@ fun ScreenHeading(
     val interFontFamily = FontFamily(
         androidx.compose.ui.text.font.Font(R.font.inter_regular),
     )
+
     Text(
         text = text,
         color = MaterialTheme.colorScheme.onBackground,

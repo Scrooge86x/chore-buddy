@@ -39,7 +39,6 @@ class LoginActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-
         if (AuthRepository.getCurrentUser() == null)
             return
 
@@ -105,7 +104,6 @@ fun LoginScreen() {
             )
             Spacer(modifier = Modifier.height(16.dp))
         }
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -127,7 +125,6 @@ fun LoginScreen() {
                 Text("REGISTER ACCOUNT", color = colorScheme.onBackground)
             }
         }
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween

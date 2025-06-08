@@ -43,10 +43,10 @@ class RegisterUserActivity : ComponentActivity() {
 
 @Composable
 fun RegisterUserScreen() {
-    val registerUserViewModel: RegisterUserViewModel = viewModel()
-
     val context = LocalContext.current
     val activity = context as? ComponentActivity
+
+    val registerUserViewModel: RegisterUserViewModel = viewModel()
 
     LaunchedEffect(registerUserViewModel.errorMessage) {
         if (registerUserViewModel.errorMessage != null) {

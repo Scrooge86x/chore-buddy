@@ -38,6 +38,7 @@ fun avatarIndexToDrawable(index: Int): Int {
 @Composable
 fun UserAvatar(avatarIndex: Int) {
     val imageResId = avatarIndexToDrawable(avatarIndex)
+
     Image(
         painter = painterResource(id = imageResId),
         contentDescription = "User Avatar",

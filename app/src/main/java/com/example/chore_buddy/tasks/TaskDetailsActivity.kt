@@ -43,9 +43,7 @@ class TaskDetailsActivity : ComponentActivity() {
     }
 }
 
-
 val interFontFamily = FontFamily(Font(R.font.inter_regular))
-
 
 @Composable
 fun DateView(
@@ -105,7 +103,6 @@ fun StatusCheckbox(
                         .padding(8.dp)
                 )
             }
-
             when {
                 isAdmin && isChecked -> IconButton(onClick = onClick) { checkedIcon() }
                 isAdmin -> IconButton(onClick = onClick) {}

@@ -42,9 +42,9 @@ class RestorePasswordActivity : ComponentActivity() {
 
 @Composable
 fun RestorePasswordScreen() {
+    val context = LocalContext.current
     val restorePasswordViewModel: RestorePasswordViewModel = viewModel()
 
-    val context = LocalContext.current
     LaunchedEffect(restorePasswordViewModel.errorMessage) {
         if (restorePasswordViewModel.errorMessage != null) {
             Toast.makeText(context, restorePasswordViewModel.errorMessage, Toast.LENGTH_LONG).show()

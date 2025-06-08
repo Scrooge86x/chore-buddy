@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.components.UserRow
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.components.NotYourTaskRow
 

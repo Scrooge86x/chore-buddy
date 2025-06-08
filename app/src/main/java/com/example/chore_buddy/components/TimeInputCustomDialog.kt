@@ -31,6 +31,7 @@ fun TimeInputCustomDialog(
         initialMinute = initialMinute,
         is24Hour = true
     )
+
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             modifier = Modifier
@@ -51,7 +52,6 @@ fun TimeInputCustomDialog(
                     fontWeight = FontWeight.Bold,
                     color = colorScheme.onSurface
                 )
-
                 Spacer(modifier = Modifier.height(16.dp))
                 TimeInput(state = state)
                 Spacer(modifier = Modifier.height(2.dp))

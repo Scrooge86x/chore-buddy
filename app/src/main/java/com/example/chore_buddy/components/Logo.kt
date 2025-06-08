@@ -20,6 +20,7 @@ fun Logo(
     } else {
         R.drawable.chore_buddy_logo_light
     }
+
     Image(
         painter = painterResource(id = logoRes),
         contentDescription = "Chore Buddy Logo",
