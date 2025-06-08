@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
@@ -68,6 +70,8 @@ fun ChangePasswordScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(colorScheme.background)
+            .verticalScroll(rememberScrollState())
+            .imePadding()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
