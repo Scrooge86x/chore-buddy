@@ -1,6 +1,8 @@
 package com.example.chore_buddy.tasks
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,20 +16,26 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
 import com.example.chore_buddy.users.User
+import com.example.chore_buddy.users.UserProfileActivity
+import com.example.chore_buddy.users.UserProfileViewModel
+import com.example.chore_buddy.users.UserRepository
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -53,10 +61,33 @@ class DayInfoActivity : ComponentActivity() {
 
 @Composable
 fun DayInfoScreen(date: LocalDate) {
+    val dayInfoViewModel: DayInfoViewModel = viewModel()
+
+    val context = LocalContext.current
+
+    LaunchedEffect(dayInfoViewModel.errorMessage) {
+        dayInfoViewModel.errorMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            Log.e("error", it)
+            dayInfoViewModel.resetError()
+        }
+    }
+
+    dayInfoViewModel.getCurrentUser()
+    val user = dayInfoViewModel.user
+
+    if (user != null)
+        dayInfoViewModel.getTasks(user.id, date.year, date.monthValue - 1, date.dayOfMonth)
+    val tasks = dayInfoViewModel.tasks
+
     DayInfoContent(
         date = date,
-        currentUser = User(), // TODO: get this from viewModel using UserRepository
-        tasks = emptyList(), // TODO: get this from viewModel using TaskRepository
+        currentUser = user ?: User(
+            name = "Invalid User",
+            email = "Not registered yet",
+            role = "Unassigned",
+        ),
+        tasks = tasks,
     )
 }
 
