@@ -1,5 +1,6 @@
 package com.example.chore_buddy.tasks
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -33,9 +34,6 @@ import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
 import com.example.chore_buddy.users.User
-import com.example.chore_buddy.users.UserProfileActivity
-import com.example.chore_buddy.users.UserProfileViewModel
-import com.example.chore_buddy.users.UserRepository
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -96,6 +94,9 @@ fun DayInfoContent(date: LocalDate, currentUser: User, tasks: List<Task>) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
+    val context = LocalContext.current
+    val activity = context as? ComponentActivity
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -121,11 +122,16 @@ fun DayInfoContent(date: LocalDate, currentUser: User, tasks: List<Task>) {
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             tasks.forEach { task ->
-                if (task.assignedToId == currentUser.id) {
-                    CustomUserRow(userName = task.assignedToName, avatarIcon = currentUser.avatarIcon)
-                } else {
-                    CustomUserRow(userName = task.assignedToName)
-                }
+                CustomUserRow(
+                    userName = task.assignedToName,
+                    if (task.assignedToId == currentUser.id) currentUser.avatarIcon else -1,
+                    onClick = {
+                        Intent(context, TaskDetailsActivity::class.java).apply {
+                            putExtra("TASK_ID", task.id)
+                            context.startActivity(this)
+                        }
+                    }
+                )
                 HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             }
             Spacer(modifier = Modifier.weight(1f))

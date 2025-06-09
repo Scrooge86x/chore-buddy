@@ -36,9 +36,12 @@ class TaskDetailsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val taskId = intent.getStringExtra("TASK_ID")
+
         setContent {
             ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-                TaskDetailsScreen()
+                TaskDetailsScreen(taskId = taskId ?: "null")
             }
         }
     }
@@ -115,6 +118,7 @@ fun StatusCheckbox(
 
 @Composable
 fun TaskDetailsScreen(
+    taskId: String,
     isAdmin: Boolean = false
 ) {
     var isChecked by remember { mutableStateOf(false) }
@@ -188,7 +192,7 @@ fun TaskDetailsScreen(
 fun TaskDetailsPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        TaskDetailsScreen()
+        TaskDetailsScreen("null")
     }
 }
 
@@ -197,6 +201,6 @@ fun TaskDetailsPreviewLight() {
 fun TaskDetailsPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        TaskDetailsScreen()
+        TaskDetailsScreen("null")
     }
 }
