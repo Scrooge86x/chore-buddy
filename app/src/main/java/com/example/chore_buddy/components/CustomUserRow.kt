@@ -3,7 +3,7 @@ package com.example.chore_buddy.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,9 +19,8 @@ import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
 
 @Composable
-fun CustomUserRow(userName: String, avatarIndex: Int, onClick: () -> Unit = {}) {
+fun CustomUserRow(userName: String, avatarIcon: Int = -1, onClick: () -> Unit = {}) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
-    val colorScheme = MaterialTheme.colorScheme
 
     Row(
         modifier = Modifier
@@ -33,7 +32,11 @@ fun CustomUserRow(userName: String, avatarIndex: Int, onClick: () -> Unit = {}) 
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.width(16.dp))
-        UserAvatar(avatarIndex = avatarIndex)
+        if (avatarIcon != -1) {
+            UserAvatar(avatarIndex = avatarIcon)
+        } else {
+            Spacer(modifier = Modifier.width(56.dp))
+        }
         Spacer(modifier = Modifier.width(24.dp))
         Text(
             text = userName,
@@ -50,10 +53,10 @@ fun CustomUserRow(userName: String, avatarIndex: Int, onClick: () -> Unit = {}) 
 fun CustomUserRowPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-            CustomUserRow(userName = "User 1", avatarIndex = 0)
-            CustomUserRow(userName = "User 2", avatarIndex = 1)
-            CustomUserRow(userName = "User 3", avatarIndex = 2)
+        Column(modifier = Modifier.background(colorScheme.background)) {
+            CustomUserRow(userName = "User 1", avatarIcon = 0)
+            CustomUserRow(userName = "User 2")
+            CustomUserRow(userName = "User 3", avatarIcon = 2)
         }
     }
 }
@@ -63,10 +66,10 @@ fun CustomUserRowPreviewLight() {
 fun CustomUserRowPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-            CustomUserRow(userName = "User 1", avatarIndex = 0)
-            CustomUserRow(userName = "User 2", avatarIndex = 1)
-            CustomUserRow(userName = "User 3", avatarIndex = 2)
+        Column(modifier = Modifier.background(colorScheme.background)) {
+            CustomUserRow(userName = "User 1", avatarIcon = 0)
+            CustomUserRow(userName = "User 2")
+            CustomUserRow(userName = "User 3", avatarIcon = 2)
         }
     }
 }

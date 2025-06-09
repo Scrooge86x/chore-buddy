@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.components.NotYourTaskRow
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
 import com.example.chore_buddy.users.User
@@ -92,9 +91,9 @@ fun DayInfoContent(date: LocalDate, currentUser: User, tasks: List<Task>) {
             HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             tasks.forEach { task ->
                 if (task.assignedToId == currentUser.id) {
-                    CustomUserRow(userName = task.assignedToName, avatarIndex = currentUser.avatarIcon)
+                    CustomUserRow(userName = task.assignedToName, avatarIcon = currentUser.avatarIcon)
                 } else {
-                    NotYourTaskRow(taskName = task.assignedToName)
+                    CustomUserRow(userName = task.assignedToName)
                 }
                 HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             }
@@ -128,6 +127,7 @@ fun DayInfoPreviewLight() {
         DayInfoContent(
             date = LocalDate.of(2000, 1, 1),
             currentUser = User(
+                id = "345",
                 name = "user2",
                 avatarIcon = 2,
             ),
@@ -144,6 +144,7 @@ fun DayInfoPreviewDark() {
         DayInfoContent(
             date = LocalDate.of(2000, 1, 1),
             currentUser = User(
+                id = "345",
                 name = "user2",
                 avatarIcon = 2,
             ),

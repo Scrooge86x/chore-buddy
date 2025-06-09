@@ -132,7 +132,7 @@ fun GroupMembersContent(group: Group, users: List<User>?) {
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(thickness = 1.dp, color = colorScheme.outline)
         users?.forEach { user ->
-            CustomUserRow(userName = user.name, avatarIndex = 1,
+            CustomUserRow(userName = user.name, avatarIcon = user.avatarIcon,
                 onClick = {
                     val intent = Intent(context, UserProfileActivity::class.java)
                     intent.putExtra("USER_ID", user.id)
@@ -145,13 +145,12 @@ fun GroupMembersContent(group: Group, users: List<User>?) {
     }
 }
 
-@Composable
 fun sampleUsers() = listOf(
-    User(id = "1", name = "User 1", groupId = "group2", email = "admin@example.com", role = "Admin"),
-    User(id = "2", name = "User 2", groupId = "group2", email = "jan@example.com", role = "User"),
-    User(id = "3", name = "User 3", groupId = "group2", email = "anna@example.com", role = "User"),
-    User(id = "4", name = "User 4", groupId = "group2", email = "piotr@example.com", role = "User"),
-    User(id = "5", name = "User 5", groupId = "group2", email = "maria@example.com", role = "User")
+    User(id = "1", name = "User 1", groupId = "group2", email = "admin@example.com", role = "Admin", avatarIcon = 0),
+    User(id = "2", name = "User 2", groupId = "group2", email = "jan@example.com", role = "User", avatarIcon = 1),
+    User(id = "3", name = "User 3", groupId = "group2", email = "anna@example.com", role = "User", avatarIcon = 2),
+    User(id = "4", name = "User 4", groupId = "group2", email = "piotr@example.com", role = "User", avatarIcon = 3),
+    User(id = "5", name = "User 5", groupId = "group2", email = "maria@example.com", role = "User", avatarIcon = 4)
 )
 
 @Preview(name = "Light Theme", showBackground = true, apiLevel = 34)
@@ -160,8 +159,8 @@ fun GroupMembersPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         GroupMembersContent(
-            Group(groupId = "123456"),
-            sampleUsers()
+            group = Group(groupId = "123456"),
+            users = sampleUsers()
         )
     }
 }
@@ -172,8 +171,8 @@ fun GroupMembersPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         GroupMembersContent(
-            Group(groupId = "123456"),
-            sampleUsers()
+            group = Group(groupId = "123456"),
+            users = sampleUsers()
         )
     }
 }

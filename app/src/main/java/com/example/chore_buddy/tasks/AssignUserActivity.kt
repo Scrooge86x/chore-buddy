@@ -85,7 +85,7 @@ fun AssignUserContent(users: List<User>) {
         users.forEach { user ->
             CustomUserRow(
                 userName = user.name,
-                avatarIndex = 1,
+                avatarIcon = 1,
                 onClick = {
                     val returnedValue = Intent().apply {
                         putExtra("USER_ID", user.id)
