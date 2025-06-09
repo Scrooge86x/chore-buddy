@@ -85,7 +85,7 @@ fun AssignUserContent(users: List<User>) {
         users.forEach { user ->
             CustomUserRow(
                 userName = user.name,
-                avatarIcon = 1,
+                avatarIcon = user.avatarIcon,
                 onClick = {
                     val returnedValue = Intent().apply {
                         putExtra("USER_ID", user.id)
@@ -102,11 +102,11 @@ fun AssignUserContent(users: List<User>) {
 }
 
 fun sampleUsers() = listOf(
-    User(id = "1", name = "User 1", groupId = "group2", email = "admin@example.com", role = "Admin"),
-    User(id = "2", name = "User 2", groupId = "group2", email = "jan@example.com", role = "User"),
-    User(id = "3", name = "User 3", groupId = "group2", email = "anna@example.com", role = "User"),
-    User(id = "4", name = "User 4", groupId = "group2", email = "piotr@example.com", role = "User"),
-    User(id = "5", name = "User 5", groupId = "group2", email = "maria@example.com", role = "User")
+    User(id = "1", name = "User 1", groupId = "group2", email = "admin@example.com", role = "Admin", avatarIcon = 0),
+    User(id = "2", name = "User 2", groupId = "group2", email = "jan@example.com", role = "User", avatarIcon = 1),
+    User(id = "3", name = "User 3", groupId = "group2", email = "anna@example.com", role = "User", avatarIcon = 2),
+    User(id = "4", name = "User 4", groupId = "group2", email = "piotr@example.com", role = "User", avatarIcon = 3),
+    User(id = "5", name = "User 5", groupId = "group2", email = "maria@example.com", role = "User", avatarIcon = 4)
 )
 
 @Preview(apiLevel = 34, showBackground = true)
