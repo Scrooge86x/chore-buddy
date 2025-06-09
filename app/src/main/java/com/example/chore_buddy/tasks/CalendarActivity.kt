@@ -153,13 +153,6 @@ fun CalendarScreen() {
                             }
                         },
                     ),
-                    MenuItem(
-                        text = "Create New Task",
-                        onClick = {
-                            val intent = Intent(context, CreateTaskActivity::class.java)
-                            context.startActivity(intent)
-                        },
-                    ),
                 ))
             }
         }

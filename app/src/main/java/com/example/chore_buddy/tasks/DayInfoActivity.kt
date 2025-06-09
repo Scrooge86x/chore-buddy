@@ -1,12 +1,15 @@
 package com.example.chore_buddy.tasks
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -43,22 +46,16 @@ class DayInfoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        val dateMillis = intent.getLongExtra("SELECTED_DATE", 0)
-        val date = Instant.ofEpochMilli(dateMillis)
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate()
-
         setContent {
             ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-                DayInfoScreen(date)
+                DayInfoScreen(intent.getLongExtra("SELECTED_DATE", 0))
             }
         }
     }
 }
 
 @Composable
-fun DayInfoScreen(date: LocalDate) {
+fun DayInfoScreen(dateMillis: Long) {
     val dayInfoViewModel: DayInfoViewModel = viewModel()
 
     val context = LocalContext.current
@@ -71,31 +68,48 @@ fun DayInfoScreen(date: LocalDate) {
         }
     }
 
-    dayInfoViewModel.getCurrentUser()
-    val user = dayInfoViewModel.user
+    val date = Instant.ofEpochMilli(dateMillis)
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate()
 
-    if (user != null)
-        dayInfoViewModel.getTasks(user.id, date.year, date.monthValue - 1, date.dayOfMonth)
-    val tasks = dayInfoViewModel.tasks
+    dayInfoViewModel.getTasks(date.year, date.monthValue - 1, date.dayOfMonth)
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            dayInfoViewModel.getTasks(date.year, date.monthValue - 1, date.dayOfMonth)
+        }
+    }
 
     DayInfoContent(
         date = date,
-        currentUser = user ?: User(
+        currentUser = dayInfoViewModel.user ?: User(
             name = "Invalid User",
             email = "Not registered yet",
             role = "Unassigned",
         ),
-        tasks = tasks,
+        tasks = dayInfoViewModel.tasks,
+        onAddTaskClicked = {
+            Intent(context, CreateTaskActivity::class.java).apply {
+                putExtra("TASK_DATE", dateMillis)
+                launcher.launch(this)
+            }
+        }
     )
 }
 
 @Composable
-fun DayInfoContent(date: LocalDate, currentUser: User, tasks: List<Task>) {
+fun DayInfoContent(
+    date: LocalDate,
+    currentUser: User,
+    tasks: List<Task>,
+    onAddTaskClicked: () -> Unit = {},
+) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
     val context = LocalContext.current
-    val activity = context as? ComponentActivity
 
     Box(
         modifier = Modifier
@@ -137,7 +151,7 @@ fun DayInfoContent(date: LocalDate, currentUser: User, tasks: List<Task>) {
             Spacer(modifier = Modifier.weight(1f))
         }
         FloatingActionButton(
-            onClick = { /* TODO: action */ },
+            onClick = onAddTaskClicked,
             containerColor = colorScheme.onBackground,
             contentColor = colorScheme.background,
             shape = CircleShape,
