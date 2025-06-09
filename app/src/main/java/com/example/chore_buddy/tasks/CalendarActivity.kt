@@ -22,16 +22,21 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,6 +72,7 @@ class CalendarActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalendarScreen() {
     val calendarViewModel : CalendarViewModel = viewModel()
@@ -74,18 +80,29 @@ fun CalendarScreen() {
 
     val context = LocalContext.current
     val systemBarPadding = WindowInsets.systemBars.asPaddingValues()
+    val datePickerState = rememberDatePickerState()
 
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
                 calendarViewModel.checkIfInGroup()
+                datePickerState.selectedDateMillis = null
             }
         }
 
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    LaunchedEffect(datePickerState.selectedDateMillis) {
+        datePickerState.selectedDateMillis?.let { selectedDate ->
+            Intent(context, DayInfoActivity::class.java).apply {
+                putExtra("SELECTED_DATE", selectedDate)
+                context.startActivity(this)
+            }
         }
     }
 
@@ -153,7 +170,38 @@ fun CalendarScreen() {
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // TODO: Add a working DatePicker
+            DatePicker(
+                state = datePickerState,
+                title = null,
+                // TODO: These are TEMPORARY colors, change them please
+                colors = DatePickerDefaults.colors(
+                    containerColor = colorScheme.onBackground,
+                    titleContentColor = colorScheme.onBackground,
+                    headlineContentColor = colorScheme.onBackground,
+                    weekdayContentColor = colorScheme.onBackground,
+                    subheadContentColor = colorScheme.onBackground,
+                    navigationContentColor = colorScheme.onBackground,
+                    yearContentColor = colorScheme.onBackground,
+                    disabledYearContentColor = colorScheme.onBackground,
+                    currentYearContentColor = colorScheme.onBackground,
+                    selectedYearContentColor = colorScheme.onBackground,
+                    disabledSelectedYearContentColor = colorScheme.onBackground,
+                    selectedYearContainerColor = colorScheme.onBackground,
+                    disabledSelectedYearContainerColor = colorScheme.onBackground,
+                    dayContentColor = colorScheme.onBackground,
+                    disabledDayContentColor = colorScheme.onBackground,
+                    selectedDayContentColor = colorScheme.onBackground,
+                    disabledSelectedDayContentColor = colorScheme.onBackground,
+                    selectedDayContainerColor = colorScheme.onBackground,
+                    disabledSelectedDayContainerColor = colorScheme.onBackground,
+                    todayContentColor = colorScheme.onBackground,
+                    todayDateBorderColor = colorScheme.onBackground,
+                    dayInSelectionRangeContentColor = colorScheme.onBackground,
+                    dayInSelectionRangeContainerColor = colorScheme.onBackground,
+                    dividerColor = colorScheme.onBackground,
+                    dateTextFieldColors = null,
+                )
+            )
         }
     }
 }
