@@ -1,5 +1,6 @@
 package com.example.chore_buddy.tasks
 
+import android.util.Log
 import com.example.chore_buddy.firestore.FirestoreCollections
 
 import com.google.firebase.Timestamp
@@ -41,24 +42,26 @@ object TaskRepository {
         }
     }
 
-    suspend fun getTasksForDay(userId: String, year: Int, month: Int, day: Int): TaskResult<List<Map<String, Any>>> {
+    suspend fun getTasksForDay(userId: String, year: Int, month: Int, day: Int): TaskResult<List<Task>> {
         return try {
             val calendar = Calendar.getInstance().apply {
                 set(year, month, day, 0, 0, 0)
             }
             val startDate = Timestamp(calendar.time)
 
+            Log.d("startDate", startDate.toDate().toString())
+
             calendar.set(year, month, day, 23, 59, 59)
             val endDate = Timestamp(calendar.time)
 
             val documents = firestore.collection(FirestoreCollections.TASKS)
-                .whereEqualTo("assignedTo", userId)
+                .whereEqualTo("assignedToId", userId)
                 .whereGreaterThanOrEqualTo("dueDate", startDate)
                 .whereLessThanOrEqualTo("dueDate", endDate)
                 .get()
                 .await()
 
-            val result = documents.documents.map { it.data ?: emptyMap() }
+            val result = documents.documents.mapNotNull { it.toObject<Task>() }
 
             TaskResult.Success(result)
         } catch (e: Exception) {
@@ -66,7 +69,7 @@ object TaskRepository {
         }
     }
 
-    suspend fun getTasksForMonth(userId: String, year: Int, month: Int): TaskResult<List<Map<String, Any>>> {
+    suspend fun getTasksForMonth(userId: String, year: Int, month: Int): TaskResult<List<Task>> {
         return try {
             val calendar = Calendar.getInstance().apply {
                 set(year, month, 1, 0, 0, 0)
@@ -77,13 +80,13 @@ object TaskRepository {
             val endDate = Timestamp(calendar.time)
 
             val documents = firestore.collection(FirestoreCollections.TASKS)
-                .whereEqualTo("assignedTo", userId)
+                .whereEqualTo("assignedToId", userId)
                 .whereGreaterThanOrEqualTo("dueDate", startDate)
                 .whereLessThanOrEqualTo("dueDate", endDate)
                 .get()
                 .await()
 
-            val result = documents.documents.map { it.data ?: emptyMap() }
+            val result = documents.documents.mapNotNull { it.toObject<Task>() }
             TaskResult.Success(result)
         } catch (e: Exception) {
             TaskResult.Error(e)
