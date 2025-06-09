@@ -1,7 +1,6 @@
 package com.example.chore_buddy.tasks
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,6 +34,8 @@ import com.example.chore_buddy.components.MultiLineInput
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
+import com.google.firebase.Timestamp
+import java.util.Calendar
 
 class TaskDetailsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,9 +55,7 @@ class TaskDetailsActivity : ComponentActivity() {
 val interFontFamily = FontFamily(Font(R.font.inter_regular))
 
 @Composable
-fun TaskDetailsScreen(
-    taskId: String
-) {
+fun TaskDetailsScreen(taskId: String) {
     val taskDetailsViewModel: TaskDetailsViewModel = viewModel()
 
     val context = LocalContext.current
@@ -69,13 +68,29 @@ fun TaskDetailsScreen(
     }
 
     taskDetailsViewModel.getTask(taskId)
-
-    val task = taskDetailsViewModel.task ?: Task(
-        title = "For unknown reason there is no task."
-    )
-
     taskDetailsViewModel.checkIfIsAdminOrSelf()
 
+    val task = taskDetailsViewModel.task
+    if (task != null) {
+        TaskDetailsContent(
+            task = task,
+            isAdminOrSelf = taskDetailsViewModel.isAdminOrSelf,
+            taskDetailsViewModel = taskDetailsViewModel,
+        )
+    } else {
+        TaskDetailsContent(
+            task = Task(title = "Invalid task, please report."),
+            isAdminOrSelf = false,
+        )
+    }
+}
+
+@Composable
+fun TaskDetailsContent(
+    task: Task,
+    isAdminOrSelf: Boolean,
+    taskDetailsViewModel: TaskDetailsViewModel? = null,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,6 +109,13 @@ fun TaskDetailsScreen(
             verticalAlignment = Alignment.Top
         ) {
             Column {
+                Text(
+                    text = "Assigned to: ${task.assignedToName}",
+                    color = colorScheme.onBackground,
+                    fontSize = 18.sp,
+                    style = TextStyle(fontFamily = interFontFamily),
+                    modifier = Modifier.padding(bottom = 16.dp),
+                )
                 DateView(
                     label = "Creation Date",
                     date = task.createdAt.toDate().toString(),
@@ -105,8 +127,8 @@ fun TaskDetailsScreen(
             }
             StatusCheckbox(
                 isChecked = task.status,
-                isAdmin = taskDetailsViewModel.isAdminOrSelf,
-                onClick = { taskDetailsViewModel.changeIsChecked(task.id) }
+                isAdmin = isAdminOrSelf,
+                onClick = { taskDetailsViewModel?.changeIsChecked(task.id) }
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -119,17 +141,17 @@ fun TaskDetailsScreen(
         MultiLineInput(
             label = "Task Description",
             value = task.description,
-            onValueChange = { if (taskDetailsViewModel.isAdminOrSelf) task.description = it },
+            onValueChange = { if (isAdminOrSelf) task.description = it },
             placeholderText = "Task details...",
             modifier = Modifier.padding(horizontal = 4.dp),
-            isEnabled = taskDetailsViewModel.isAdminOrSelf,
+            isEnabled = isAdminOrSelf,
         )
-        if (taskDetailsViewModel.isAdminOrSelf) {
+        if (isAdminOrSelf) {
             Spacer(modifier = Modifier.height(48.dp))
             CustomButton(
                 text = "SAVE",
                 onClick = {
-                    taskDetailsViewModel.updateDescription(task.id)
+                    taskDetailsViewModel?.updateDescription(task.id)
                 }
             )
         }
@@ -203,12 +225,27 @@ fun StatusCheckbox(
     }
 }
 
+fun sampleTask() = Task(
+    title = "Clean the dishes.",
+    description = "Please do it carefully this time.",
+    assignedToName = "John Doe",
+    createdAt = Timestamp(Calendar.getInstance().apply {
+        set(2025, 10, 20, 12, 44, 10)
+    }.time),
+    dueDate = Timestamp(Calendar.getInstance().apply {
+        set(2025, 10, 25, 12, 0, 0)
+    }.time),
+)
+
 @Preview(apiLevel = 34, showBackground = true)
 @Composable
 fun TaskDetailsPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        TaskDetailsScreen("null")
+        TaskDetailsContent(
+            task = sampleTask(),
+            isAdminOrSelf = true,
+        )
     }
 }
 
@@ -217,6 +254,9 @@ fun TaskDetailsPreviewLight() {
 fun TaskDetailsPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        TaskDetailsScreen("null")
+        TaskDetailsContent(
+            task = sampleTask(),
+            isAdminOrSelf = true,
+        )
     }
 }
