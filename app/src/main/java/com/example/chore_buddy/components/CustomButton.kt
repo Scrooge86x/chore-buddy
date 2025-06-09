@@ -23,11 +23,13 @@ fun CustomButton(
     pressedBackgroundColor: Color = Color(0xff3c3b3b),
     textColor: Color = Color.White,
     height: Dp = 60.dp,
-    cornerRadius: Dp = 16.dp
+    cornerRadius: Dp = 16.dp,
+    enabled: Boolean = true,
 ) {
     var isPressed by remember { mutableStateOf(false) }
 
     Button(
+        enabled = enabled,
         onClick = {
             isPressed = true
             onClick()
