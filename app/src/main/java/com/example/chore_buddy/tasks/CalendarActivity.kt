@@ -173,6 +173,8 @@ fun CalendarScreen() {
             DatePicker(
                 state = datePickerState,
                 title = null,
+                headline = null,
+                showModeToggle = false,
                 // TODO: These are TEMPORARY colors, change them please
                 colors = DatePickerDefaults.colors(
                     containerColor = colorScheme.onBackground,
