@@ -25,34 +25,46 @@ import androidx.compose.ui.unit.sp
 import com.example.chore_buddy.R
 import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.components.NotYourTaskRow
+import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
+import com.example.chore_buddy.users.User
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class DayInfoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val dateMillis = intent.getLongExtra("SELECTED_DATE", 0)
+        val date = Instant.ofEpochMilli(dateMillis)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+
         setContent {
             ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-                DayInfoScreen()
+                DayInfoScreen(date)
             }
         }
     }
 }
 
 @Composable
-fun DayInfoScreen() {
-    val interFontFamily = FontFamily(Font(R.font.inter_regular))
-    val tasks = listOf(
-        false to "Not your task 1",
-        false to "Not your task 2",
-        true to "Your task 1",
-        false to "Not your task 3",
-        true to "Your task 2"
+fun DayInfoScreen(date: LocalDate) {
+    DayInfoContent(
+        date = date,
+        currentUser = User(), // TODO: get this from viewModel using UserRepository
+        tasks = emptyList(), // TODO: get this from viewModel using TaskRepository
     )
-    val date = "01/01/2000"
-    val avatarIndex = 1
+}
+
+@Composable
+fun DayInfoContent(date: LocalDate, currentUser: User, tasks: List<Task>) {
+    val interFontFamily = FontFamily(Font(R.font.inter_regular))
+    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
     Box(
         modifier = Modifier
@@ -69,7 +81,7 @@ fun DayInfoScreen() {
                 Logo()
                 Spacer(modifier = Modifier.height(48.dp))
                 Text(
-                    text = date,
+                    text = date.format(formatter),
                     color = colorScheme.onBackground,
                     fontSize = 24.sp,
                     fontFamily = interFontFamily,
@@ -78,11 +90,11 @@ fun DayInfoScreen() {
             }
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
-            tasks.forEach { (isUserTask, taskName) ->
-                if (isUserTask) {
-                    CustomUserRow(userName = taskName, avatarIndex)
+            tasks.forEach { task ->
+                if (task.assignedToId == currentUser.id) {
+                    CustomUserRow(userName = task.assignedToName, avatarIndex = currentUser.avatarIcon)
                 } else {
-                    NotYourTaskRow(taskName = taskName)
+                    NotYourTaskRow(taskName = task.assignedToName)
                 }
                 HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             }
@@ -102,12 +114,25 @@ fun DayInfoScreen() {
     }
 }
 
+fun sampleTasks() = listOf(
+    Task(title = "1 task title", description = "1 task description", assignedToId = "123", assignedToName = "user", createdBy = "321", groupId = "1234"),
+    Task(title = "2 task title", description = "2 task description", assignedToId = "345", assignedToName = "user2", createdBy = "321", groupId = "1234"),
+    Task(title = "3 task title", description = "3 task description", assignedToId = "123", assignedToName = "user3", createdBy = "321", groupId = "1234")
+)
+
 @Preview(apiLevel = 34, showBackground = true)
 @Composable
 fun DayInfoPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        DayInfoScreen()
+        DayInfoContent(
+            date = LocalDate.of(2000, 1, 1),
+            currentUser = User(
+                name = "user2",
+                avatarIcon = 2,
+            ),
+            tasks = sampleTasks(),
+        )
     }
 }
 
@@ -116,6 +141,13 @@ fun DayInfoPreviewLight() {
 fun DayInfoPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-        DayInfoScreen()
+        DayInfoContent(
+            date = LocalDate.of(2000, 1, 1),
+            currentUser = User(
+                name = "user2",
+                avatarIcon = 2,
+            ),
+            tasks = sampleTasks(),
+        )
     }
 }
