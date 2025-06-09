@@ -78,6 +78,7 @@ fun CreateTaskScreen(date: Date) {
                 "Task was successfully created.",
                 Toast.LENGTH_LONG
             ).show()
+            activity?.setResult(Activity.RESULT_OK)
             activity?.finish()
         }
     }
