@@ -19,7 +19,7 @@ import java.util.*
 @Composable
 fun TimeInputCustomDialog(
     onDismiss: () -> Unit,
-    onConfirm: (Date) -> Unit,
+    onConfirm: (Int, Int) -> Unit,
     initialHour: Int = 12,
     initialMinute: Int = 0,
     confirmText: String = "OK",
@@ -64,13 +64,7 @@ fun TimeInputCustomDialog(
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     TextButton(onClick = {
-                        val cal = Calendar.getInstance().apply {
-                            set(Calendar.HOUR_OF_DAY, state.hour)
-                            set(Calendar.MINUTE, state.minute)
-                            set(Calendar.SECOND, 0)
-                            set(Calendar.MILLISECOND, 0)
-                        }
-                        onConfirm(cal.time)
+                        onConfirm(state.hour, state.minute)
                     }) {
                         Text(confirmText, color = colorScheme.onSurface)
                     }
@@ -87,7 +81,7 @@ fun TimeInputDialogPreviewLight() {
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         TimeInputCustomDialog(
             onDismiss = {},
-            onConfirm = {}
+            onConfirm = { hour, minute -> }
         )
     }
 }
@@ -99,7 +93,7 @@ fun TimeInputDialogPreviewDark() {
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         TimeInputCustomDialog(
             onDismiss = {},
-            onConfirm = {}
+            onConfirm = { hour, minute -> }
         )
     }
 }

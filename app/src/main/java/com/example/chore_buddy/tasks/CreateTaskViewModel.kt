@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.chore_buddy.auth.AuthRepository
 import com.example.chore_buddy.users.User
 import com.example.chore_buddy.users.UserRepository
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class CreateTaskViewModel : ViewModel() {
     var taskTitle by mutableStateOf("")
@@ -16,6 +18,7 @@ class CreateTaskViewModel : ViewModel() {
     var taskAssignedToId by mutableStateOf("")
     var taskAssignedToName by mutableStateOf("")
     var taskGroupId by mutableStateOf<String?>(null)
+    var taskDueDate by mutableStateOf<Date>(Date())
 
     var errorMessage by mutableStateOf<String?>(null)
         private set
@@ -42,6 +45,8 @@ class CreateTaskViewModel : ViewModel() {
                 if (currentUser == null) {
                     throw Exception("Current user was null.")
                 }
+                taskAssignedToId = currentUser.id
+                taskAssignedToName = currentUser.name
                 taskGroupId = currentUser.groupId
             } catch (e: Exception) {
                 errorMessage = e.message ?: "Unknown error occurred."
@@ -58,6 +63,10 @@ class CreateTaskViewModel : ViewModel() {
                     throw Exception("Current user uid was invalid.")
                 }
 
+                if (taskTitle.isEmpty()) {
+                    throw Exception("Task title cannot be empty.")
+                }
+
                 val newTask = Task(
                     title = taskTitle,
                     description = taskDescription,
@@ -65,6 +74,7 @@ class CreateTaskViewModel : ViewModel() {
                     assignedToName = taskAssignedToName,
                     createdBy = currentUserUid,
                     groupId = taskGroupId,
+                    dueDate = Timestamp(taskDueDate),
                 )
 
                 when(val result = TaskRepository.createTask(newTask)) {

@@ -27,13 +27,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.components.MultiLineInput
 import com.example.chore_buddy.components.ScreenHeading
 import com.example.chore_buddy.components.TimeInputCustomDialog
+import com.example.chore_buddy.components.UserInput
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -41,30 +44,31 @@ class CreateTaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val dateMillis = intent.getLongExtra("TASK_DATE", 0)
+        val instantDate = Instant.ofEpochMilli(dateMillis)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+            .atStartOfDay(ZoneId.systemDefault())
+            .toInstant()
+
         setContent {
             ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
-                CreateTaskScreen()
+                CreateTaskScreen(Date.from(instantDate))
             }
         }
     }
 }
 
 @Composable
-fun CreateTaskScreen() {
+fun CreateTaskScreen(date: Date) {
     val activity = LocalActivity.current
     val context = LocalContext.current
     val createTaskViewModel: CreateTaskViewModel = viewModel()
     createTaskViewModel.loadTaskData()
 
-    LaunchedEffect(createTaskViewModel.errorMessage) {
-        if (createTaskViewModel.errorMessage != null) {
-            Toast.makeText(
-                context,
-                createTaskViewModel.errorMessage,
-                Toast.LENGTH_LONG
-            ).show()
-            createTaskViewModel.resetError()
-        }
+    LaunchedEffect(Unit) {
+        createTaskViewModel.taskDueDate = date
     }
 
     LaunchedEffect(createTaskViewModel.wasSuccessful) {
@@ -103,6 +107,15 @@ fun CreateTaskScreen() {
         createTaskCallback = {
             createTaskViewModel.createCurrentTask()
         },
+        timeChosenCallback = { hour, minute ->
+            createTaskViewModel.taskDueDate = Calendar.getInstance().apply {
+                time = date
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE, minute)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }.time
+        }
     )
 }
 
@@ -113,11 +126,25 @@ fun CreateTaskContent(
     assignedUser: String? = null,
     assignMemberCallback: () -> Unit = {},
     createTaskCallback: () -> Unit = {},
+    timeChosenCallback: (Int, Int) -> Unit = { hour, minute -> },
     createTaskViewModel: CreateTaskViewModel? = null,
 ) {
+    val context = LocalContext.current
     val activity = LocalActivity.current
     var showDialog by remember { mutableStateOf(false) }
-    var selectedTime by remember { mutableStateOf<Date?>(null) }
+    var createButtonEnabled by remember { mutableStateOf(true) }
+
+    LaunchedEffect(createTaskViewModel?.errorMessage) {
+        if (createTaskViewModel?.errorMessage != null) {
+            Toast.makeText(
+                context,
+                createTaskViewModel.errorMessage,
+                Toast.LENGTH_LONG
+            ).show()
+            createTaskViewModel.resetError()
+            createButtonEnabled = true
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -160,9 +187,9 @@ fun CreateTaskContent(
         }
         Column {
             Spacer(modifier = Modifier.height(12.dp))
-            selectedTime?.let {
+            createTaskViewModel?.let {
                 Text(
-                    text = "Due time: ${SimpleDateFormat("HH:mm", Locale.getDefault()).format(it)}",
+                    text = "Due time: ${SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault()).format(it.taskDueDate)}",
                     color = colorScheme.onBackground,
                     fontSize = 20.sp,
                     modifier = Modifier
@@ -175,8 +202,8 @@ fun CreateTaskContent(
             if (showDialog) {
                 TimeInputCustomDialog(
                     onDismiss = { showDialog = false },
-                    onConfirm = {
-                        selectedTime = it
+                    onConfirm = { hour, minute ->
+                        timeChosenCallback(hour, minute)
                         showDialog = false
                     },
                     confirmText = "OK",
@@ -188,7 +215,14 @@ fun CreateTaskContent(
                 CustomButton(text = "ASSIGN MEMBER", onClick = assignMemberCallback)
             }
             Spacer(modifier = Modifier.height(12.dp))
-            CustomButton(text = "CREATE", onClick = createTaskCallback)
+            CustomButton(
+                text = "CREATE",
+                enabled = createButtonEnabled,
+                onClick = {
+                    createButtonEnabled = false
+                    createTaskCallback()
+                },
+            )
             Spacer(modifier = Modifier.height(12.dp))
             CustomButton(text = "CANCEL", onClick = {
                 activity?.finish()
