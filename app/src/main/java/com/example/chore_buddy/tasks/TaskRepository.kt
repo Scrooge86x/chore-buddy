@@ -46,6 +46,7 @@ object TaskRepository {
         return try {
             val calendar = Calendar.getInstance().apply {
                 set(year, month, day, 0, 0, 0)
+                set(Calendar.MILLISECOND, 0)
             }
             val startDate = Timestamp(calendar.time)
 
