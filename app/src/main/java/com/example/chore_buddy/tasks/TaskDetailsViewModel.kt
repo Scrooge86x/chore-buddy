@@ -18,6 +18,8 @@ class TaskDetailsViewModel : ViewModel() {
     var task by mutableStateOf<Task?>(null)
         private set
 
+    var description by mutableStateOf<String?>(null)
+
     var isChecked by mutableStateOf<Boolean>(false)
         private set
 
@@ -33,6 +35,7 @@ class TaskDetailsViewModel : ViewModel() {
                 when (val result = TaskRepository.getTaskById(taskId)) {
                     is TaskRepository.TaskResult.Success -> {
                         task = result.data
+                        description = task?.description ?: ""
                         isChecked = task?.status ?: false
                     }
                     is TaskRepository.TaskResult.Error -> errorMessage = result.exception.message ?:
@@ -72,12 +75,14 @@ class TaskDetailsViewModel : ViewModel() {
             isLoading = true
             errorMessage = null
 
-            val update = mapOf("description" to task!!.description)
+            val update = mapOf("description" to description.toString())
 
             try {
                 when (val result = TaskRepository.updateTask(taskId, update)) {
-                    is TaskRepository.TaskResult.Success -> errorMessage =
-                        "Changing description ended successfully"
+                    is TaskRepository.TaskResult.Success -> {
+                        errorMessage = "Changing description ended successfully"
+                        getTask(taskId)
+                    }
                     is TaskRepository.TaskResult.Error -> errorMessage = result.exception.message ?:
                         "Unknown error occurred while changing description"
                 }

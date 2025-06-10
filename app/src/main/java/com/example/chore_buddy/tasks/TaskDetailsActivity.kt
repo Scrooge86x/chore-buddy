@@ -126,7 +126,7 @@ fun TaskDetailsContent(
                 )
             }
             StatusCheckbox(
-                isChecked = task.status,
+                isChecked = taskDetailsViewModel?.isChecked ?: false,
                 isAdmin = isAdminOrSelf,
                 onClick = { taskDetailsViewModel?.changeIsChecked(task.id) }
             )
@@ -140,8 +140,9 @@ fun TaskDetailsContent(
         Spacer(modifier = Modifier.height(16.dp))
         MultiLineInput(
             label = "Task Description",
-            value = task.description,
-            onValueChange = { if (isAdminOrSelf) task.description = it },
+            value = taskDetailsViewModel?.description ?: "",
+            onValueChange = { if (isAdminOrSelf && taskDetailsViewModel != null)
+                taskDetailsViewModel.description = it },
             placeholderText = "Task details...",
             modifier = Modifier.padding(horizontal = 4.dp),
             isEnabled = isAdminOrSelf,
