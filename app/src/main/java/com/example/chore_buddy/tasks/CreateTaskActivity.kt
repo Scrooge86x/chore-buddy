@@ -65,10 +65,10 @@ fun CreateTaskScreen(date: Date) {
     val activity = LocalActivity.current
     val context = LocalContext.current
     val createTaskViewModel: CreateTaskViewModel = viewModel()
-    createTaskViewModel.loadTaskData()
 
     LaunchedEffect(Unit) {
         createTaskViewModel.taskDueDate = date
+        createTaskViewModel.loadTaskData()
     }
 
     LaunchedEffect(createTaskViewModel.wasSuccessful) {
