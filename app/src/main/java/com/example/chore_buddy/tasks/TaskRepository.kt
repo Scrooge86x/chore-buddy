@@ -42,7 +42,7 @@ object TaskRepository {
         }
     }
 
-    suspend fun getTasksForDay(userId: String, year: Int, month: Int, day: Int): TaskResult<List<Task>> {
+    suspend fun getTasksForDay(groupId: String, year: Int, month: Int, day: Int): TaskResult<List<Task>> {
         return try {
             val calendar = Calendar.getInstance().apply {
                 set(year, month, day, 0, 0, 0)
@@ -55,7 +55,7 @@ object TaskRepository {
             val endDate = Timestamp(calendar.time)
 
             val documents = firestore.collection(FirestoreCollections.TASKS)
-                .whereEqualTo("assignedToId", userId)
+                .whereEqualTo("groupId", groupId)
                 .whereGreaterThanOrEqualTo("dueDate", startDate)
                 .whereLessThanOrEqualTo("dueDate", endDate)
                 .get()

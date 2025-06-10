@@ -45,12 +45,12 @@ class DayInfoViewModel : ViewModel() {
             }
 
             try {
-                val userId = user?.id
-                if (userId == null) {
+                val groupId = user?.groupId
+                if (groupId == null) {
                     throw Exception("User id was null.")
                 }
 
-                when (val result = TaskRepository.getTasksForDay(userId, year, month, day)) {
+                when (val result = TaskRepository.getTasksForDay(groupId, year, month, day)) {
                     is TaskRepository.TaskResult.Success -> tasks = result.data
                     is TaskRepository.TaskResult.Error -> errorMessage = result.exception.message ?:
                         "Failed to get tasks"
