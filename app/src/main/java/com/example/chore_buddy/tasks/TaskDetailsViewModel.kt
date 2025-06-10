@@ -15,6 +15,9 @@ class TaskDetailsViewModel : ViewModel() {
     var errorMessage by mutableStateOf<String?>(null)
         private set
 
+    var successMessage by mutableStateOf<String?>(null)
+        private set
+
     var task by mutableStateOf<Task?>(null)
         private set
 
@@ -80,7 +83,7 @@ class TaskDetailsViewModel : ViewModel() {
             try {
                 when (val result = TaskRepository.updateTask(taskId, update)) {
                     is TaskRepository.TaskResult.Success -> {
-                        errorMessage = "Changing description ended successfully"
+                        successMessage = "Description updated successfully"
                         getTask(taskId)
                     }
                     is TaskRepository.TaskResult.Error -> errorMessage = result.exception.message ?:
@@ -118,5 +121,9 @@ class TaskDetailsViewModel : ViewModel() {
 
     fun resetError() {
         errorMessage = null
+    }
+
+    fun resetSuccessMessage() {
+        successMessage = null
     }
 }

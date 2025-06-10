@@ -67,6 +67,13 @@ fun TaskDetailsScreen(taskId: String) {
         }
     }
 
+    LaunchedEffect(taskDetailsViewModel.successMessage) {
+        taskDetailsViewModel.successMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+            taskDetailsViewModel.resetSuccessMessage()
+        }
+    }
+
     taskDetailsViewModel.getTask(taskId)
     taskDetailsViewModel.checkIfIsAdminOrSelf()
 
@@ -126,7 +133,7 @@ fun TaskDetailsContent(
                 )
             }
             StatusCheckbox(
-                isChecked = taskDetailsViewModel?.isChecked ?: false,
+                isChecked = taskDetailsViewModel?.isChecked == true,
                 isAdmin = isAdminOrSelf,
                 onClick = { taskDetailsViewModel?.changeIsChecked(task.id) }
             )
