@@ -28,7 +28,7 @@ fun SettingRow(
 ) {
     val colorScheme = MaterialTheme.colorScheme
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
-    var isChecked by remember { mutableStateOf(!initialState) }
+    var isChecked by remember { mutableStateOf(initialState) }
 
     LaunchedEffect(resetTrigger) {
         if (isChecked != initialState) {
