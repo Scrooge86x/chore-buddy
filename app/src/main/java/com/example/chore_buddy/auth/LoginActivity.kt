@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.components.*
-import com.example.chore_buddy.groups.CreateOrJoinGroupActivity
 import com.example.chore_buddy.settings.MainSettingsActivity
 import com.example.chore_buddy.tasks.CalendarActivity
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme

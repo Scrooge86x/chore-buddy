@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
-import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

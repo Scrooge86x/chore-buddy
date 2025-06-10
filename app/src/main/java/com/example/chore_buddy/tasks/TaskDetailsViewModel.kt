@@ -39,7 +39,7 @@ class TaskDetailsViewModel : ViewModel() {
                     is TaskRepository.TaskResult.Success -> {
                         task = result.data
                         description = task?.description ?: ""
-                        isChecked = task?.status ?: false
+                        isChecked = task?.status == true
                     }
                     is TaskRepository.TaskResult.Error -> errorMessage = result.exception.message ?:
                         "Unknown error occurred while getting task."
@@ -105,8 +105,8 @@ class TaskDetailsViewModel : ViewModel() {
             try {
                 when (val result = UserRepository.getCurrentUser()) {
                     is UserRepository.UserResult.Success -> {
-                        isAdminOrSelf = if (result.data?.role == "Admin" ||
-                            result.data?.id == task?.assignedToId) true else false
+                        isAdminOrSelf = result.data?.role == "Admin" ||
+                            result.data?.id == task?.assignedToId
                     }
                     is UserRepository.UserResult.Error -> errorMessage = result.exception.message ?:
                         "Unknown error occurred while checking if it's yours task or if you are Admin"

@@ -70,30 +70,6 @@ object TaskRepository {
         }
     }
 
-    suspend fun getTasksForMonth(userId: String, year: Int, month: Int): TaskResult<List<Task>> {
-        return try {
-            val calendar = Calendar.getInstance().apply {
-                set(year, month, 1, 0, 0, 0)
-            }
-            val startDate = Timestamp(calendar.time)
-
-            calendar.set(year, month + 1, 0, 23, 59, 59)
-            val endDate = Timestamp(calendar.time)
-
-            val documents = firestore.collection(FirestoreCollections.TASKS)
-                .whereEqualTo("assignedToId", userId)
-                .whereGreaterThanOrEqualTo("dueDate", startDate)
-                .whereLessThanOrEqualTo("dueDate", endDate)
-                .get()
-                .await()
-
-            val result = documents.documents.mapNotNull { it.toObject<Task>() }
-            TaskResult.Success(result)
-        } catch (e: Exception) {
-            TaskResult.Error(e)
-        }
-    }
-
     suspend fun updateTask(taskId: String, updates: Map<String, Any>): TaskResult<Unit> {
         return try {
             firestore.collection(FirestoreCollections.TASKS)
