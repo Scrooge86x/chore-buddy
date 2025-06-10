@@ -125,26 +125,20 @@ fun LoginScreen() {
                 Text("REGISTER ACCOUNT", color = colorScheme.onBackground)
             }
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+    }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 44.dp, end = 8.dp),
+        horizontalArrangement = Arrangement.End
+    ) {
+        TextButton(
+            onClick = {
+                val intent = Intent(context, MainSettingsActivity::class.java)
+                context.startActivity(intent)
+            }
         ) {
-            TextButton(
-                onClick = {
-                    val intent = Intent(context, MainSettingsActivity::class.java)
-                    context.startActivity(intent)
-                }
-            ) {
-                Text("SETTINGS", color = colorScheme.onBackground)
-            }
-            TextButton(
-                onClick = {
-                    val intent = Intent(context, CreateOrJoinGroupActivity::class.java)
-                    context.startActivity(intent)
-                }
-            ) {
-                Text("WORK IN PROGRESS", color = colorScheme.onBackground)
-            }
+            Text("SETTINGS", color = colorScheme.onBackground)
         }
     }
 }
