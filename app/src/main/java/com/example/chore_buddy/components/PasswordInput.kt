@@ -6,7 +6,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -25,12 +24,12 @@ fun PasswordInput(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholderText: String = "Enter your password",
-    placeholderColor: Color = Color(0xffcccccc),
-    focusedBorderColor: Color = Color(0xff76ffdf),
-    unfocusedBorderColor: Color = Color(0xffcccccc),
+    placeholderColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    focusedBorderColor: Color = MaterialTheme.colorScheme.primary,
+    unfocusedBorderColor: Color = MaterialTheme.colorScheme.outline,
     textStyle: TextStyle = LocalTextStyle.current.copy(
         fontFamily = FontFamily.SansSerif,
-        color = Color(0xffb79fff)
+        color = MaterialTheme.colorScheme.onSurface
     )
 ) {
     val interFontFamily = FontFamily(
@@ -39,7 +38,7 @@ fun PasswordInput(
 
     Text(
         text = label,
-        color = Color.White,
+        color = MaterialTheme.colorScheme.onBackground,
         fontSize = 18.sp,
         modifier = Modifier
             .fillMaxWidth()
@@ -56,7 +55,6 @@ fun PasswordInput(
             Text(
                 text = placeholderText,
                 color = placeholderColor,
-                //fontFamily = FontFamily.Serif,
                 style = TextStyle(
                     fontFamily = interFontFamily
                 )

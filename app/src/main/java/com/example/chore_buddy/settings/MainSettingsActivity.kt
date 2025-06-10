@@ -5,39 +5,43 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.chore_buddy.components.CustomButton
 import com.example.chore_buddy.components.Logo
-import com.example.chore_buddy.components.NotYourTaskRow
 import com.example.chore_buddy.components.ScreenHeading
+import com.example.chore_buddy.components.SettingRow
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
+import com.example.chore_buddy.ui.theme.ThemeState
 
 class MainSettingsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ChoreBuddyTheme {
+            ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 MainSettingsScreen()
             }
         }
     }
 }
 
-@Preview(apiLevel = 34)
 @Composable
 fun MainSettingsScreen() {
-    val userSettings = listOf("Setting 1", "Setting 2", "Setting 3", "Setting 4")
+    var resetTrigger by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(colorScheme.background)
+            .verticalScroll(rememberScrollState())
+            .imePadding()
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -46,30 +50,47 @@ fun MainSettingsScreen() {
             Logo()
             ScreenHeading(text = "Settings")
             Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(thickness = 1.dp, color = Color.White)
-            userSettings.forEach { userSet ->
-                NotYourTaskRow(taskName = userSet)
-                HorizontalDivider(thickness = 1.dp, color = Color.White)
-            }
+            HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
+            SettingRow(
+                taskName = "Dark Theme",
+                initialState = ThemeState.isDarkTheme,
+                resetTrigger = resetTrigger,
+                onCheckedChange = { isChecked ->
+                    ThemeState.isDarkTheme = isChecked
+                }
+            )
+            HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             Spacer(modifier = Modifier.weight(1f))
-            Column (
+            Column(
                 modifier = Modifier.padding(24.dp)
             ) {
-                CustomButton(
-                    text = "SAVE",
-                    onClick = { /* TODO: Change password */ }
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                CustomButton(
-                    text = "CANCEL",
-                    onClick = { /* TODO: Logout */ }
-                )
                 Spacer(modifier = Modifier.height(16.dp))
                 CustomButton(
                     text = "RESTORE DEFAULT",
-                    onClick = { /* TODO: Logout */ }
+                    onClick = {
+                        resetTrigger = !resetTrigger
+                        ThemeState.isDarkTheme = true
+                    }
                 )
             }
         }
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun PreviewMainSettingsScreenLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        MainSettingsScreen()
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun PreviewMainSettingsScreenDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        MainSettingsScreen()
     }
 }

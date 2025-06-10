@@ -4,47 +4,44 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
-
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.components.PasswordInput
 import com.example.chore_buddy.components.CustomButton
-
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.components.ScreenHeading
-
+import com.example.chore_buddy.ui.theme.ThemeState
 
 class ChangePasswordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ChoreBuddyTheme {
+            ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
                 ChangePasswordScreen()
             }
         }
     }
 }
 
-
-@Preview(apiLevel = 34)
 @Composable
 fun ChangePasswordScreen() {
-    var changePasswordViewModel: ChangePasswordViewModel = viewModel()
+    val changePasswordViewModel: ChangePasswordViewModel = viewModel()
     val context = LocalContext.current
 
     LaunchedEffect(changePasswordViewModel.passwordChangingSuccess) {
@@ -54,7 +51,6 @@ fun ChangePasswordScreen() {
             changePasswordViewModel.oldPassword = ""
             changePasswordViewModel.errorMessage = null
             changePasswordViewModel.passwordChangingSuccess = null
-
             Toast.makeText(
                 context,
                 changePasswordViewModel.passwordChangingSuccess,
@@ -73,7 +69,9 @@ fun ChangePasswordScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(colorScheme.background)
+            .verticalScroll(rememberScrollState())
+            .imePadding()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
@@ -109,5 +107,23 @@ fun ChangePasswordScreen() {
             )
             Spacer(modifier = Modifier.height(64.dp))
         }
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun PreviewChangePasswordScreenLight() {
+    ThemeState.isDarkTheme = false
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        ChangePasswordScreen()
+    }
+}
+
+@Preview(apiLevel = 34, showBackground = true)
+@Composable
+fun PreviewChangePasswordScreenDark() {
+    ThemeState.isDarkTheme = true
+    ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
+        ChangePasswordScreen()
     }
 }
