@@ -156,9 +156,7 @@ fun CreateTaskContent(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Logo(
-            modifier = Modifier.offset(y = (-8).dp)
-        )
+        Logo()
         ScreenHeading(text = "New Task")
         Spacer(modifier = Modifier.height(10.dp))
         if (assignedUser != null) {

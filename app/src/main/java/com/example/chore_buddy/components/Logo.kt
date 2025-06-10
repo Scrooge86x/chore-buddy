@@ -14,6 +14,9 @@ import com.example.chore_buddy.ui.theme.ThemeState
 @Composable
 fun Logo(
     modifier: Modifier = Modifier
+        .padding(top = 48.dp)
+        .height(80.dp)
+        .size(300.dp)
 ) {
     val logoRes = if (ThemeState.isDarkTheme) {
         R.drawable.chore_buddy_logo
@@ -25,8 +28,5 @@ fun Logo(
         painter = painterResource(id = logoRes),
         contentDescription = "Chore Buddy Logo",
         modifier = modifier
-            .padding(top = 48.dp)
-            .height(80.dp)
-            .size(300.dp)
     )
 }

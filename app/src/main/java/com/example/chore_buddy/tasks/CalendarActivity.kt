@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
@@ -53,6 +54,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
 import com.example.chore_buddy.auth.AuthRepository
+import com.example.chore_buddy.components.Logo
 import com.example.chore_buddy.groups.CreateOrJoinGroupActivity
 import com.example.chore_buddy.groups.GroupMembersActivity
 import com.example.chore_buddy.settings.MainSettingsActivity
@@ -116,9 +118,7 @@ fun CalendarScreen() {
                     .fillMaxWidth()
                     .padding(systemBarPadding)
             ) {
-                Image(
-                    painter = painterResource(id = if (ThemeState.isDarkTheme) R.drawable.chore_buddy_logo else R.drawable.chore_buddy_logo_light),
-                    contentDescription = "Chore Buddy Logo",
+                Logo(
                     modifier = Modifier
                         .height(80.dp)
                         .padding(start = 30.dp)
@@ -164,6 +164,7 @@ fun CalendarScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             DatePicker(
+                modifier = Modifier.offset(y = (-24).dp),
                 state = datePickerState,
                 title = null,
                 headline = null,
