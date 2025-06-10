@@ -35,9 +35,9 @@ class LoginViewModel() : ViewModel() {
                 }
                 is AuthRepository.AuthResult.Error -> {
                     loginError = when (result.exception) {
-                        is com.google.firebase.auth.FirebaseAuthInvalidUserException -> "Użytkownik nie istnieje lub jest zablokowany."
-                        is com.google.firebase.auth.FirebaseAuthInvalidCredentialsException -> "Nieprawidłowy email lub hasło."
-                        else -> result.exception.message ?: "Wystąpił nieznany błąd logowania."
+                        is com.google.firebase.auth.FirebaseAuthInvalidUserException -> "User does not exist."
+                        is com.google.firebase.auth.FirebaseAuthInvalidCredentialsException -> "Invalid email or password."
+                        else -> result.exception.message ?: "Unknown error occurred."
                     }
                 }
             }
