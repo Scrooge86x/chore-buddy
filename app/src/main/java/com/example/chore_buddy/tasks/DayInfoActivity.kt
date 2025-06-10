@@ -11,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.runtime.Composable
@@ -180,7 +182,7 @@ fun TaskInfoRow(
             .height(80.dp)
             .background(colorScheme.background)
             .clickable(onClick = onClick)
-            .padding(horizontal = 0.dp),
+            .padding(end = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.width(16.dp))
@@ -191,7 +193,7 @@ fun TaskInfoRow(
         }
         Spacer(modifier = Modifier.width(24.dp))
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
@@ -209,13 +211,36 @@ fun TaskInfoRow(
                 fontWeight = FontWeight.Medium
             )
         }
+        Spacer(Modifier.weight(1f))
+        Box(
+            modifier = Modifier
+                .size(44.dp)
+                .border(
+                    width = 2.dp,
+                    color = colorScheme.onBackground,
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            if (task.status) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Checked",
+                    tint = colorScheme.background,
+                    modifier = Modifier
+                        .background(colorScheme.onBackground, shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
+                        .fillMaxSize()
+                        .padding(8.dp)
+                )
+            }
+        }
     }
 }
 
 fun sampleTasks() = listOf(
-    Task(title = "1 task title", description = "1 task description", assignedToId = "123", assignedToName = "user", createdBy = "321", groupId = "1234"),
-    Task(title = "2 task title", description = "2 task description", assignedToId = "345", assignedToName = "user2", createdBy = "321", groupId = "1234"),
-    Task(title = "3 task title", description = "3 task description", assignedToId = "123", assignedToName = "user3", createdBy = "321", groupId = "1234")
+    Task(title = "1 task title", description = "1 task description", assignedToId = "123", assignedToName = "user", createdBy = "321", groupId = "1234", status = true),
+    Task(title = "2 task title", description = "2 task description", assignedToId = "345", assignedToName = "user2", createdBy = "321", groupId = "1234", status = false),
+    Task(title = "3 task title", description = "3 task description", assignedToId = "123", assignedToName = "user3", createdBy = "321", groupId = "1234", status = true)
 )
 
 @Preview(apiLevel = 34, showBackground = true)
