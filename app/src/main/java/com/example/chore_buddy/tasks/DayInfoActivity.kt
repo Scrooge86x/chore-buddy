@@ -11,7 +11,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -32,8 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.chore_buddy.R
-import com.example.chore_buddy.components.CustomUserRow
 import com.example.chore_buddy.components.Logo
+import com.example.chore_buddy.components.UserAvatar
 import com.example.chore_buddy.ui.theme.ChoreBuddyTheme
 import com.example.chore_buddy.ui.theme.ThemeState
 import com.example.chore_buddy.users.User
@@ -136,9 +138,9 @@ fun DayInfoContent(
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
             tasks.forEach { task ->
-                CustomUserRow(
-                    userName = task.assignedToName,
-                    if (task.assignedToId == currentUser.id) currentUser.avatarIcon else -1,
+                TaskInfoRow(
+                    task = task,
+                    avatarIcon = if (task.assignedToId == currentUser.id) currentUser.avatarIcon else -1,
                     onClick = {
                         Intent(context, TaskDetailsActivity::class.java).apply {
                             putExtra("TASK_ID", task.id)
@@ -160,6 +162,52 @@ fun DayInfoContent(
                 .padding(24.dp)
         ) {
             Icon(Icons.Filled.Add, contentDescription = "Add")
+        }
+    }
+}
+
+@Composable
+fun TaskInfoRow(
+    task: Task,
+    avatarIcon: Int = -1,
+    onClick: () -> Unit = {}
+) {
+    val interFontFamily = FontFamily(Font(R.font.inter_regular))
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .background(colorScheme.background)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 0.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Spacer(modifier = Modifier.width(16.dp))
+        if (avatarIcon != -1) {
+            UserAvatar(avatarIndex = avatarIcon)
+        } else {
+            Spacer(modifier = Modifier.width(56.dp))
+        }
+        Spacer(modifier = Modifier.width(24.dp))
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = task.assignedToName,
+                fontSize = 16.sp,
+                color = colorScheme.onBackground,
+                fontFamily = interFontFamily,
+                fontWeight = FontWeight.Medium
+            )
+            Text(
+                text = task.title,
+                fontSize = 22.sp,
+                color = colorScheme.onBackground,
+                fontFamily = interFontFamily,
+                fontWeight = FontWeight.Medium
+            )
         }
     }
 }
