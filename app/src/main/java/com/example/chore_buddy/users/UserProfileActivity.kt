@@ -145,7 +145,7 @@ fun UserProfileContent(
                     )
                 }
             }
-            if (userProfileViewModel?.isAdminView == true) {
+            if (userProfileViewModel?.isAdminView == true && !isSelf) {
                 Spacer(modifier = Modifier.height(16.dp))
                 CustomButton(
                     text = "REMOVE FROM GROUP",
