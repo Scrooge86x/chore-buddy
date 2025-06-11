@@ -1,6 +1,5 @@
 package com.example.chore_buddy.tasks
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -81,9 +80,7 @@ fun DayInfoScreen(dateMillis: Long) {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            dayInfoViewModel.getTasks(date.year, date.monthValue - 1, date.dayOfMonth)
-        }
+        dayInfoViewModel.getTasks(date.year, date.monthValue - 1, date.dayOfMonth)
     }
 
     DayInfoContent(
@@ -99,6 +96,12 @@ fun DayInfoScreen(dateMillis: Long) {
                 putExtra("TASK_DATE", dateMillis)
                 launcher.launch(this)
             }
+        },
+        onTaskRowClicked = { taskId ->
+            Intent(context, TaskDetailsActivity::class.java).apply {
+                putExtra("TASK_ID", taskId)
+                launcher.launch(this)
+            }
         }
     )
 }
@@ -108,12 +111,11 @@ fun DayInfoContent(
     date: LocalDate,
     currentUser: User,
     tasks: List<Task>,
+    onTaskRowClicked: (String) -> Unit = {},
     onAddTaskClicked: () -> Unit = {},
 ) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-
-    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -144,10 +146,7 @@ fun DayInfoContent(
                     task = task,
                     avatarIcon = if (task.assignedToId == currentUser.id) currentUser.avatarIcon else -1,
                     onClick = {
-                        Intent(context, TaskDetailsActivity::class.java).apply {
-                            putExtra("TASK_ID", task.id)
-                            context.startActivity(this)
-                        }
+                        onTaskRowClicked(task.id)
                     }
                 )
                 HorizontalDivider(thickness = 1.dp, color = colorScheme.onBackground)
