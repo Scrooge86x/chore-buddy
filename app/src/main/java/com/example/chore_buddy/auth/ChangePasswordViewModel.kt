@@ -20,7 +20,7 @@ class ChangePasswordViewModel(): ViewModel() {
     var errorMessage by mutableStateOf<String?>(null)
 
     fun changePassword() {
-        if (validate()) {
+        if (!isPasswordValid()) {
             return
         }
 
@@ -36,28 +36,29 @@ class ChangePasswordViewModel(): ViewModel() {
                     errorMessage = result.exception.message ?: "Changing password error."
                 }
             }
+            isLoading = false
         }
     }
 
-    private fun validate(): Boolean {
+    private fun isPasswordValid(): Boolean {
         return when {
             oldPassword.isEmpty() || newPassword.isEmpty() -> {
                 errorMessage = "You need to give all passwords."
-                true
+                false
             }
             newPassword != newPasswordRepeat -> {
                 errorMessage = "Passwords don't match"
-                true
+                false
             }
             newPassword.length < 6 -> {
                 errorMessage = "Password must be at least 6 characters"
-                true
+                false
             }
             newPassword == oldPassword -> {
                 errorMessage = "New password MUST BE NEW"
-                true
+                false
             }
-            else -> false
+            else -> true
         }
     }
 }
