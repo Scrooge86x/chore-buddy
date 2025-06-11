@@ -50,12 +50,12 @@ fun ChangePasswordScreen() {
             changePasswordViewModel.newPasswordRepeat = ""
             changePasswordViewModel.oldPassword = ""
             changePasswordViewModel.errorMessage = null
-            changePasswordViewModel.passwordChangingSuccess = null
             Toast.makeText(
                 context,
                 changePasswordViewModel.passwordChangingSuccess,
                 Toast.LENGTH_LONG
             ).show()
+            changePasswordViewModel.passwordChangingSuccess = null
         }
     }
 
