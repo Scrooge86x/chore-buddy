@@ -116,6 +116,14 @@ fun GroupMembersContent(group: Group, users: List<User>?) {
         Logo()
         Spacer(modifier = Modifier.height(16.dp))
         Text(
+            text = group.name,
+            color = colorScheme.onBackground,
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold,
+            style = TextStyle(fontFamily = interFontFamily),
+            modifier = Modifier.padding(bottom = 16.dp),
+        )
+        Text(
             text = "Group ID",
             color = colorScheme.onBackground,
             fontSize = 20.sp,
@@ -159,7 +167,10 @@ fun GroupMembersPreviewLight() {
     ThemeState.isDarkTheme = false
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         GroupMembersContent(
-            group = Group(groupId = "123456"),
+            group = Group(
+                groupId = "123456",
+                name = "Group Name",
+            ),
             users = sampleUsers()
         )
     }
@@ -171,7 +182,10 @@ fun GroupMembersPreviewDark() {
     ThemeState.isDarkTheme = true
     ChoreBuddyTheme(darkTheme = ThemeState.isDarkTheme) {
         GroupMembersContent(
-            group = Group(groupId = "123456"),
+            group = Group(
+                groupId = "123456",
+                name = "Group Name",
+            ),
             users = sampleUsers()
         )
     }
