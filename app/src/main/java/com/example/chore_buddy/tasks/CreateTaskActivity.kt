@@ -100,6 +100,7 @@ fun CreateTaskScreen(date: Date) {
         taskTitle = createTaskViewModel.taskTitle,
         taskDescription = createTaskViewModel.taskDescription,
         assignedUser = createTaskViewModel.taskAssignedToName,
+        taskGroupId = createTaskViewModel.taskGroupId,
         createTaskViewModel = createTaskViewModel,
         assignMemberCallback = {
             val intent = Intent(context, AssignUserActivity::class.java)
@@ -125,6 +126,7 @@ fun CreateTaskContent(
     taskTitle: String = "",
     taskDescription: String = "",
     assignedUser: String? = null,
+    taskGroupId: String? = null,
     assignMemberCallback: () -> Unit = {},
     createTaskCallback: () -> Unit = {},
     timeChosenCallback: (Int, Int) -> Unit = { hour, minute -> },
@@ -209,7 +211,7 @@ fun CreateTaskContent(
                     dismissText = "Cancel"
                 )
             }
-            if (createTaskViewModel?.taskGroupId != null) {
+            if (taskGroupId != null) {
                 Spacer(modifier = Modifier.height(12.dp))
                 CustomButton(text = "ASSIGN MEMBER", onClick = assignMemberCallback)
             }
@@ -238,7 +240,8 @@ fun CreateTaskPreviewLight() {
         CreateTaskContent(
             taskTitle = "Clean the dishes",
             taskDescription = "Remember to use the new sponge",
-            assignedUser = "John Doe"
+            assignedUser = "John Doe",
+            taskGroupId = "123456",
         )
     }
 }
@@ -251,7 +254,8 @@ fun CreateTaskPreviewDark() {
         CreateTaskContent(
             taskTitle = "Clean the dishes",
             taskDescription = "Remember to use the new sponge",
-            assignedUser = "John Doe"
+            assignedUser = "John Doe",
+            taskGroupId = "123456",
         )
     }
 }
