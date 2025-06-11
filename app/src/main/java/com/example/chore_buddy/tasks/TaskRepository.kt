@@ -1,6 +1,7 @@
 package com.example.chore_buddy.tasks
 
 import android.util.Log
+import com.example.chore_buddy.auth.AuthRepository
 import com.example.chore_buddy.firestore.FirestoreCollections
 
 import com.google.firebase.Timestamp
@@ -57,6 +58,37 @@ object TaskRepository {
 
             val documents = firestore.collection(FirestoreCollections.TASKS)
                 .whereEqualTo("groupId", groupId)
+                .whereGreaterThanOrEqualTo("dueDate", startDate)
+                .whereLessThanOrEqualTo("dueDate", endDate)
+                .get()
+                .await()
+
+            val result = documents.documents.mapNotNull { it.toObject<Task>() }
+
+            TaskResult.Success(result)
+        } catch (e: Exception) {
+            TaskResult.Error(e)
+        }
+    }
+
+    suspend fun getCurrentUserTasksForDay(year: Int, month: Int, day: Int): TaskResult<List<Task>> {
+        return try {
+            val calendar = Calendar.getInstance().apply {
+                set(year, month, day, 0, 0, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+            val startDate = Timestamp(calendar.time)
+
+            calendar.set(year, month, day, 23, 59, 59)
+            val endDate = Timestamp(calendar.time)
+
+            val currentUser = AuthRepository.getCurrentUser()
+            if (currentUser == null) {
+                throw Exception("Current user was null.")
+            }
+
+            val documents = firestore.collection(FirestoreCollections.TASKS)
+                .whereEqualTo("assignedToId", currentUser.uid)
                 .whereGreaterThanOrEqualTo("dueDate", startDate)
                 .whereLessThanOrEqualTo("dueDate", endDate)
                 .get()

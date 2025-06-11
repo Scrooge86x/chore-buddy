@@ -47,13 +47,17 @@ class DayInfoViewModel : ViewModel() {
             try {
                 val groupId = user?.groupId
                 if (groupId == null) {
-                    throw Exception("User id was null.")
-                }
-
-                when (val result = TaskRepository.getTasksForDay(groupId, year, month, day)) {
-                    is TaskRepository.TaskResult.Success -> tasks = result.data
-                    is TaskRepository.TaskResult.Error -> errorMessage = result.exception.message ?:
-                        "Failed to get tasks"
+                    when (val result = TaskRepository.getCurrentUserTasksForDay(year, month, day)) {
+                        is TaskRepository.TaskResult.Success -> tasks = result.data
+                        is TaskRepository.TaskResult.Error -> errorMessage = result.exception.message ?:
+                                "Failed to get tasks"
+                    }
+                } else {
+                    when (val result = TaskRepository.getTasksForDay(groupId, year, month, day)) {
+                        is TaskRepository.TaskResult.Success -> tasks = result.data
+                        is TaskRepository.TaskResult.Error -> errorMessage = result.exception.message ?:
+                                "Failed to get tasks"
+                    }
                 }
             } catch (e: Exception) {
                 errorMessage = e.message ?: "Unknown error occurred"
