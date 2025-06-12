@@ -71,6 +71,7 @@ fun GroupMembersScreen() {
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
+                groupMembersViewModel.getCurrentGroupData()
                 lifecycleOwner.lifecycleScope.launch {
                     if (!groupMembersViewModel.checkIfIsInGroup()) {
                         val activity = context as? ComponentActivity
