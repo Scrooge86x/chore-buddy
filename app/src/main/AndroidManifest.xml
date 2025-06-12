@@ -10,12 +10,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/chore_buddy_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Chorebuddy"
+        android:theme="@style/Theme.ChoreBuddy"
         tools:targetApi="31">
         <activity
             android:name=".auth.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.Chorebuddy">
+            android:theme="@style/Theme.ChoreBuddy">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
