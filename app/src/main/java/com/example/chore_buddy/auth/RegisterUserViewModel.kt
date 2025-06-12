@@ -12,6 +12,7 @@ import com.example.chore_buddy.users.User
 import com.example.chore_buddy.users.UserRepository
 
 import com.google.firebase.auth.FirebaseUser
+import kotlin.random.Random
 
 class RegisterUserViewModel() : ViewModel() {
     var email by mutableStateOf("")
@@ -41,7 +42,7 @@ class RegisterUserViewModel() : ViewModel() {
                         null,
                         email,
                         "User",
-                        0
+                        Random.nextInt(0, 11)
                     )
 
                     when (val creationResult = UserRepository.createUser(user)) {
