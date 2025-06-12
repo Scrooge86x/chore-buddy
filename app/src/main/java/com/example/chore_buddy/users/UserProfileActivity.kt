@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -82,8 +83,7 @@ fun UserProfileContent(
 ) {
     val interFontFamily = FontFamily(Font(R.font.inter_regular))
     val context = LocalContext.current
-    val activity = context as? ComponentActivity
-    val avatarIndex = 1
+    val activity = LocalActivity.current
 
     Box(
         modifier = Modifier
@@ -100,7 +100,7 @@ fun UserProfileContent(
             Logo(modifier = Modifier.align(Alignment.CenterHorizontally))
             Spacer(modifier = Modifier.height(32.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                UserAvatar(avatarIndex)
+                UserAvatar(user.avatarIcon)
                 Spacer(modifier = Modifier.width(24.dp))
                 Text(
                     text = user.name,
